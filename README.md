@@ -60,7 +60,7 @@ The next descriptions refer to Linux, but can certainly also be applied to windo
 ![Layer 0](layer_0.png)
 ![Layer 1](layer_1.png)
 ![Layer 2](layer_2.png)
-![Layer 3](Layer_3.png)
+![Layer 3](layer_3.png)
 
 ### Flash firmware
 
@@ -86,7 +86,7 @@ ls /dev/tty*
 Navigate to the directory where the firmware is downloaded or compiled. Quickly connect GND + RST pins on the Pro Micro to enter the Bootloader mode and execute the following command to flash the firmware:
 
 ```bash
-doas avrdude -p atmega32u4 -P /dev/ttyACM0 -c avr109 -U flash:w:zenith_usb.hex
+sudo avrdude -p atmega32u4 -P /dev/ttyACM0 -c avr109 -U flash:w:zenith_usb.hex
 ```
 
 ## Links
