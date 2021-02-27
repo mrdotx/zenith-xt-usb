@@ -70,7 +70,7 @@ First (if not already done) install the Arduino environment to compile and flash
 sudo pacman -S arduino-avr-core
 ```
 
-Download the precompiled firmware from [zenith-usb/firmware](https://github.com/mrdotx/zenith-usb/tree/master/firmware) or build it by yourself:
+Download the precompiled firmware from [zenith-xt-usb/firmware](https://github.com/mrdotx/zenith-xt-usb/tree/master/firmware) or build it by yourself:
 
 ```bash
 make clean
