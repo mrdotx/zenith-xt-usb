@@ -1,0 +1,8 @@
+# path:   /home/klassiker/.local/share/repos/zenith-xt-usb/.gitmodules
+# author: klassiker [mrdotx]
+# github: https://github.com/mrdotx/zenith-usb
+# date:   2021-02-27T13:48:32+0100
+
+[submodule "tmk_core"]
+	path = tmk_core
+	url = https://github.com/tmk/tmk_core.git

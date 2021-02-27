@@ -1,0 +1,14 @@
+# path:   /home/klassiker/.local/share/repos/zenith-xt-usb/.gitignore
+# author: klassiker [mrdotx]
+# github: https://github.com/mrdotx/zenith-usb
+# date:   2021-02-27T13:43:21+0100
+
+.dep
+obj_*
+*.eep
+*.elf
+*.hex
+*.lss
+*.map
+*.sym
+!firmware/*.hex
