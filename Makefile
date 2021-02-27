@@ -1,7 +1,7 @@
-# path:   /home/klassiker/.local/share/repos/zenith-usb/Makefile
+# path:   /home/klassiker/.local/share/repos/zenith-xt-usb/Makefile
 # author: klassiker [mrdotx]
 # github: https://github.com/mrdotx/zenith-usb
-# date:   2021-02-26T19:46:54+0100
+# date:   2021-02-27T18:38:52+0100
 
 # Target file name (without extension).
 TARGET = zenith_usb
@@ -17,7 +17,6 @@ SRC = protocol/ibmpc.c \
       zenith_usb.c
 
 CONFIG_H = config.h
-
 
 # MCU name
 # MCU = at90usb1286
@@ -36,7 +35,6 @@ MCU = atmega32u4
 #     reflect the processor speed set externally so that the code can use accurate
 #     software delays.
 F_CPU = 16000000
-
 
 #
 # LUFA specific
@@ -57,7 +55,6 @@ ARCH = AVR8
 #     CPU clock adjust registers or the clock division fuses), this will be equal to F_CPU.
 F_USB = $(F_CPU)
 
-
 # This improves response of keyboard when wakeup
 OPT_DEFS += -DSUSPEND_MODE_STANDBY
 
@@ -70,7 +67,6 @@ OPT_DEFS += -DSUSPEND_MODE_STANDBY
 # Bootloader size can be calculated from fuse bits
 #BOOTLOADER_SIZE ?= 4096
 #OPT_DEFS += -DBOOTLOADER_SIZE=$(BOOTLOADER_SIZE)
-
 
 # Build Options
 #   comment out to disable the options.
@@ -85,10 +81,8 @@ NKRO_ENABLE = yes      # USB Nkey Rollover
 KEYMAP_SECTION_ENABLE = yes
 UNIMAP_ENABLE = yes
 
-
 # Optimize size but this may cause error "relocation truncated to fit"
 #EXTRALDFLAGS = -Wl,--relax
-
 
 #
 # Keymap file
@@ -107,7 +101,6 @@ ifdef KEYMAP
 else
     SRC := $(KEYMAP_FILE)_plain.c $(SRC)
 endif
-
 
 # Search Path
 VPATH += $(TARGET_DIR)

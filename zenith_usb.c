@@ -1,8 +1,8 @@
 /*
- * path:   /home/klassiker/.local/share/repos/zenith-usb/zenith_usb.c
+ * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/zenith_usb.c
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-02-26T19:39:49+0100
+ * date:   2021-02-27T18:37:23+0100
  */
 
 #include <stdint.h>
@@ -18,14 +18,12 @@
 #include "action.h"
 #include "zenith_usb.h"
 
-
 static void matrix_make(uint8_t code);
 static void matrix_break(uint8_t code);
 
 static int8_t process_cs1(uint8_t code);
 static int8_t process_cs2(uint8_t code);
 static int8_t process_cs3(uint8_t code);
-
 
 static uint8_t matrix[MATRIX_ROWS];
 #define ROW(code)      ((code>>3)&0x0F)
@@ -118,7 +116,6 @@ uint8_t matrix_scan(void)
         LOOP,
     } state = INIT;
     static uint16_t init_time;
-
 
     if (ibmpc_error) {
         xprintf("\nERR:%02X ISR:%04X ", ibmpc_error, ibmpc_isr_debug);
@@ -391,7 +388,6 @@ uint8_t matrix_key_count(void)
     return count;
 }
 
-
 inline
 static void matrix_make(uint8_t code)
 {
@@ -437,7 +433,6 @@ void led_set(uint8_t usb_led)
         ibmpc_led |= (1<<IBMPC_LED_CAPS_LOCK);
     ibmpc_host_set_led(ibmpc_led);
 }
-
 
 /*******************************************************************************
  * XT: Scan Code Set 1
@@ -602,7 +597,6 @@ static int8_t process_cs1(uint8_t code)
     }
     return 0;
 }
-
 
 /*******************************************************************************
  * AT, PS/2: Scan Code Set 2

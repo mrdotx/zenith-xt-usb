@@ -1,8 +1,8 @@
 /*
- * path:   /home/klassiker/.local/share/repos/zenith-usb/config.h
+ * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/config.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-02-26T19:38:29+0100
+ * date:   2021-02-27T18:40:11+0100
  */
 
 #ifndef CONFIG_H
@@ -17,11 +17,9 @@
 #define PRODUCT         Zenith keyboard converter
 #define DESCRIPTION     convert Zenith keyboard to USB
 
-
 /* matrix size */
 #define MATRIX_ROWS 16  // keycode bit: 6-3
 #define MATRIX_COLS 8   // keycode bit: 2-0
-
 
 /* key combination for command */
 #define IS_COMMAND() ( \
@@ -31,7 +29,6 @@
 
 // G80-2551 terminal keyboard support
 #define G80_2551_SUPPORT
-
 
 /*
  * Pin and interrupt configuration

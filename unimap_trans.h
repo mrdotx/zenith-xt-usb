@@ -1,8 +1,8 @@
 /*
- * path:   /home/klassiker/.local/share/repos/zenith-usb/unimap_trans.h
+ * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_trans.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-02-26T19:39:40+0100
+ * date:   2021-02-27T18:37:47+0100
  */
 
 #ifndef UNIMAP_TRANS_H
@@ -13,8 +13,6 @@
 #include "unimap.h"
 #include "action.h"
 #include "zenith_usb.h"
-
-
 
 /*
  * Scan Code Set 1:
@@ -100,7 +98,6 @@ const uint8_t PROGMEM unimap_cs1[MATRIX_ROWS][MATRIX_COLS] = {
     { UNIMAP_PGDN,  UNIMAP_HENK,  UNIMAP_RCTL,  UNIMAP_MHEN,  UNIMAP_RALT,  UNIMAP_JYEN,  UNIMAP_PCMM,  UNIMAP_PSLS  }, /* 78-7F */
 };
 
-
 /*
  * Scan Code Set 2:
  *         ,-----------------------------------------------.
@@ -160,7 +157,6 @@ const uint8_t PROGMEM unimap_cs2[MATRIX_ROWS][MATRIX_COLS] = {
     { UNIMAP_F11,   UNIMAP_PPLS,  UNIMAP_P3,    UNIMAP_PMNS,  UNIMAP_PAST,  UNIMAP_P9,    UNIMAP_SLCK,  UNIMAP_PSCR  }, /* 78-7F */
 };
 
-
 /*
  * Scan Code Set 3:
  *               ,-----------------------------------------------.
@@ -218,7 +214,6 @@ const uint8_t PROGMEM unimap_cs3[MATRIX_ROWS][MATRIX_COLS] = {
     { UNIMAP_P0,    UNIMAP_PDOT,  UNIMAP_P2,    UNIMAP_P5,    UNIMAP_P6,    UNIMAP_P8,    UNIMAP_ESC,   UNIMAP_NLCK  }, /* 70-77 */
     { UNIMAP_PEQL,  UNIMAP_PENT,  UNIMAP_P3,    UNIMAP_PMNS,  UNIMAP_PPLS,  UNIMAP_P9,    UNIMAP_SLCK,  UNIMAP_PAST  }, /* 78-7F */
 };
-
 
 extern const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS];
 action_t action_for_key(uint8_t layer, keypos_t key)
