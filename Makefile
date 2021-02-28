@@ -1,7 +1,7 @@
 # path:   /home/klassiker/.local/share/repos/zenith-xt-usb/Makefile
 # author: klassiker [mrdotx]
 # github: https://github.com/mrdotx/zenith-usb
-# date:   2021-02-27T18:38:52+0100
+# date:   2021-02-28T12:46:55+0100
 
 # Target file name (without extension).
 TARGET = zenith_usb
@@ -71,7 +71,7 @@ OPT_DEFS += -DSUSPEND_MODE_STANDBY
 # Build Options
 #   comment out to disable the options.
 #
-# BOOTMAGIC_ENABLE ?= yes # Virtual DIP switch configuration(+1000)
+# BOOTMAGIC_ENABLE = yes # Virtual DIP switch configuration(+1000)
 MOUSEKEY_ENABLE = yes  # Mouse keys(+4700)
 EXTRAKEY_ENABLE = yes  # Audio control and System control(+450)
 CONSOLE_ENABLE = yes   # Console for debug(+400)
