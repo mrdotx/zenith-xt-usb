@@ -2,19 +2,23 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_plain.c
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-02-28T11:56:21+0100
+ * date:   2021-02-28T18:26:51+0100
  */
 
 #include "unimap_trans.h"
 
 enum macro_id {
+    AUTOSTART,
+    OPENSSH,
     SETKB,
 };
 
 #define AC_T1   ACTION_LAYER_TOGGLE(1)
 #define AC_LT1  ACTION_LAYER_TAP_KEY(1, KC_TAB)
 #define AC_LT2  ACTION_LAYER_TAP_KEY(2, KC_INS)
-#define AC_M1   ACTION_MACRO(SETKB)
+#define AC_M1   ACTION_MACRO(AUTOSTART)
+#define AC_M2   ACTION_MACRO(OPENSSH)
+#define AC_M11  ACTION_MACRO(SETKB)
 
 #ifdef KEYMAP_SECTION_ENABLE
 const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] __attribute__ ((section (".keymap.keymaps"))) = {
@@ -43,12 +47,12 @@ const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] PROGMEM = {
     /* mouse functions with tap key INS(LT2) */
     UNIMAP(
               NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,
-    PWR,      TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,NO,  NO,            NO,  SLEP,NO,           NO,  NO,  NO,
+    PWR,      M1,  M2,  TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,NO,  NO,            NO,  SLEP,NO,           NO,  NO,  NO,
     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,NO,  TRNS,     NO,  NO,  NO,      TRNS,NO,  TRNS,WH_U,
     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     TRNS,     NO,  NO,  NO,      BTN2,MS_U,BTN3,WH_D,
     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     NO,  TRNS,                        MS_L,WH_L,MS_R,NO,
     TRNS,NO,  TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,ACL0,ACL1,ACL2,     NO,  TRNS,          NO,           BTN1,MS_D,WH_R,NO,
-    TRNS,NO,  TRNS,NO,            TRNS,          NO,  NO  ,NO,  NO,  NO,  NO,       NO,  NO,  NO,           TRNS,M1,  NO
+    TRNS,NO,  TRNS,NO,            TRNS,          NO,  NO  ,NO,  NO,  NO,  NO,       NO,  NO,  NO,           TRNS,M11, NO
     ),
 };
 
@@ -60,11 +64,49 @@ const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] PROGMEM = {
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
     switch (id) {
+        case AUTOSTART:
+            return (record->event.pressed ?
+                    MACRO( \
+                        /* set interval */
+                        I(1), \
+                        /* go to desktop 2 */
+                        D(RGUI), T(2), U(RGUI), \
+                        /* open terminal and wait for x milliseconds */
+                        D(RGUI), T(ENT), U(RGUI), W(255), \
+                        /* type 'ranger' and press enter */
+                        T(SPC), \
+                        T(R), T(A), T(N), T(G), T(E), T(R), T(ENT), \
+                        /* open another terminal and wait for x milliseconds */
+                        D(RGUI), T(ENT), U(RGUI), W(255), \
+                        /* type 'cinfo' and press enter */
+                        T(SPC), \
+                        T(C), T(I), T(N), T(F), T(O), T(ENT), \
+                        /* open system monitor */
+                        D(RGUI), T(T), U(RGUI), \
+                        /* open webbrowser */
+                        D(RGUI), T(W), U(RGUI), \
+                        /* go to desktop 2 */
+                        D(RGUI), T(2), U(RGUI), \
+                        END ) :
+                    MACRO_NONE );
+        case OPENSSH:
+            return (record->event.pressed ?
+                    MACRO( \
+                        /* set interval */
+                        I(1), \
+                        /* open ssh to hermes */
+                        D(RGUI), T(H), U(RGUI), \
+                        /* open ssh to prometheus */
+                        D(RGUI), D(LSFT), T(H), U(LSFT), U(RGUI), \
+                        END ) :
+                    MACRO_NONE );
         case SETKB:
             return (record->event.pressed ?
                     MACRO( \
-                        /* open terminal, wait for x milliseconds and set interval */
-                        D(RGUI), T(ENT), U(RGUI), W(255), I(1), \
+                        /* set interval */
+                        I(1), \
+                        /* open terminal and wait for x milliseconds */
+                        D(RGUI), T(ENT), U(RGUI), W(255), \
                         /* type 'xset r rate 200 50;' */
                         T(SPC), \
                         T(X), T(S), T(E), T(T), T(SPC), \
