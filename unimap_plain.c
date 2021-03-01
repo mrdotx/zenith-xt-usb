@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_plain.c
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-01T09:27:32+0100
+ * date:   2021-03-01T12:59:21+0100
  */
 
 #include "unimap_trans.h"
@@ -68,7 +68,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
             return (record->event.pressed ?
                     MACRO( \
                         /* set interval */
-                        I(1), \
+                        I(5), \
                         /* open terminal and wait for x milliseconds */
                         D(RGUI), T(ENT), U(RGUI), W(255), \
                         /* type 'xset r rate 200 50;' */
@@ -96,7 +96,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
             return (record->event.pressed ?
                     MACRO( \
                         /* set interval */
-                        I(1), \
+                        I(5), \
                         /* go to desktop 2 */
                         D(RGUI), T(2), U(RGUI), \
                         /* open terminal and wait for x milliseconds */
@@ -121,7 +121,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
             return (record->event.pressed ?
                     MACRO( \
                         /* set interval */
-                        I(1), \
+                        I(5), \
                         /* open ssh to hermes */
                         D(RGUI), T(H), U(RGUI), \
                         /* open ssh to prometheus */
