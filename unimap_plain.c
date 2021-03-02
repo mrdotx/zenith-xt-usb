@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_plain.c
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-02T00:04:50+0100
+ * date:   2021-03-02T11:07:32+0100
  */
 
 #include "unimap_trans.h"
@@ -13,9 +13,14 @@ enum macro_id {
     OPENSSH,
 };
 
-#define AC_T1   ACTION_LAYER_TOGGLE(1)
-#define AC_LT1  ACTION_LAYER_TAP_KEY(1, KC__MUTE)
-#define AC_LT2  ACTION_LAYER_TAP_KEY(2, KC_INS)
+#define AC_LT1  ACTION_LAYER_TOGGLE(1)
+#define AC_LTK1 ACTION_LAYER_TAP_KEY(2, KC_INS)
+#define AC_LTK2 ACTION_LAYER_TAP_KEY(2, KC_0)
+
+#define AC_MON  ACTION_KEY(MOD_LGUI | KC_P)
+#define AC_PLUS ACTION_KEY(MOD_LSFT | KC_EQL)
+#define AC_AST  ACTION_KEY(MOD_LSFT | KC_8)
+
 #define AC_M0   ACTION_MACRO(SETKB)
 #define AC_M1   ACTION_MACRO(AUTOSTART)
 #define AC_M2   ACTION_MACRO(OPENSSH)
@@ -27,32 +32,32 @@ const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] PROGMEM = {
 #endif
     UNIMAP(
               NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,
-    ESC,      F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, NO,  NO,            NO,  LT1, NO,           NO,  NO,  NO,
-    GRV, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, NO,  BSPC,     NO,  NO,  NO,      T1,  NO,  PSCR,VOLD,
+    ESC,      F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, NO,  NO,            NO,  SLCK,NO,           NO,  NO,  NO,
+    GRV, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, NO,  BSPC,     NO,  NO,  NO,      LT1, NO,  PSCR,VOLD,
     TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,     LGUI,     NO,  NO,  NO,      HOME,UP,  PGUP,VOLU,
-    CAPS,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,     NO,  ENT,                         LEFT,PAUS,RGHT,NO,
+    CAPS,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,     NO,  ENT,                         LEFT,DOWN,RGHT,NO,
     LSFT,NO,  Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,     NO,  RSFT,          NO,           END, DOWN,PGDN,NO,
-    LCTL,NO,  LALT,NO,            SPC,           NO,  NO,  NO  ,NO  ,NO,  NO,       NO,  NO,  NO,           LT2, DEL, NO
+    LCTL,NO,  LALT,NO,            SPC,           NO,  NO,  NO  ,NO  ,NO,  NO,       NO,  NO,  NO,           LTK1,DEL, NO
     ),
-    /* function keys and num pad with tab key TAB(LT1) and layer toggle NUM LOCK(T1) */
+    /* num pad with layer toggle NUM LOCK(LT1) */
     UNIMAP(
               NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,
-    TRNS,     F11, F12, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,NO,  NO,            NO,  SLCK,NO,           NO,  NO,  NO,
-    TRNS,P1,  P2,  P3,  P4,  P5,  P6,  P7,  P8,  P9,  P0,  TRNS,TRNS,NO,  TRNS,     NO,  NO,  NO,      TRNS,NO,  PAST,PMNS,
-    TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     LGUI,     NO,  NO,  NO,      7,   8,   9,   PPLS,
+    TRNS,     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,NO,  NO,            NO,  PAUS,NO,           NO,  NO,  NO,
+    TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,NO,  TRNS,     NO,  NO,  NO,      TRNS,NO,  AST, MINS,
+    TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     LGUI,     NO,  NO,  NO,      7,   8,   9,   PLUS,
     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     NO,  TRNS,                        4,   5,   6,   NO,
-    TRNS,NO,  TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PDOT,TRNS,     NO,  TRNS,          NO,           1,   2,   3,   NO,
-    TRNS,NO,  TRNS,NO,            TRNS,          NO,  NO  ,NO,  NO,  NO,  NO,       NO,  NO,  NO,           0,   DOT, NO
+    TRNS,NO,  TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     NO,  TRNS,          NO,           1,   2,   3,   NO,
+    TRNS,NO,  TRNS,NO,            TRNS,          NO,  NO  ,NO,  NO,  NO,  NO,       NO,  NO,  NO,           LTK2, DOT, NO
     ),
-    /* mouse functions with tap key INS(LT2) */
+    /* function, macros and mouse with tap key INS(LTK1) or 0(LTK2) */
     UNIMAP(
               NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,
-    PWR,      M1,  M2,  TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,NO,  NO,            NO,  SLEP,NO,           NO,  NO,  NO,
-    TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,NO,  TRNS,     NO,  NO,  NO,      NLCK,NO,  TRNS,WH_U,
-    RGUI,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     BSLS,     NO,  NO,  NO,      BTN2,MS_U,BTN3,WH_D,
-    BTLD,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     NO,  TRNS,                        MS_L,WH_L,MS_R,NO,
-    TRNS,NO,  TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,ACL0,ACL1,ACL2,     NO,  TRNS,          NO,           BTN1,MS_D,WH_R,NO,
-    RCTL,NO,  RALT,NO,            TRNS,          NO,  NO  ,NO,  NO,  NO,  NO,       NO,  NO,  NO,           TRNS,M0,  NO
+    NO,       F11, F12, NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,            NO,  SLEP,NO,           NO,  NO,  NO,
+    BTN3,M1,  M2,  NO,  NO,  NO,  MON, CUT, NO,  NO,  NO,  NO,  NO,  NO,  NO,       NO,  NO,  NO,      PWR, NO,  NO,  WH_U,
+    NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,       BSLS,     NO,  NO,  NO,      BTN1,MS_U,BTN2,WH_D,
+    BTLD,NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,       NO,  NO,                          MS_L,MS_D,MS_R,NO,
+    NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  ACL0,ACL1,ACL2,     NO,  NO,            NO,           WH_L,MS_D,WH_R,NO,
+    NO,  NO,  NO,  NO,            F21,           NO,  NO  ,NO,  NO,  NO,  NO,       NO,  NO,  NO,           TRNS,M0,  NO
     ),
 };
 
