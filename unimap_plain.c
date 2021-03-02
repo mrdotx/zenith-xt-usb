@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_plain.c
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-02T11:07:32+0100
+ * date:   2021-03-02T12:33:53+0100
  */
 
 #include "unimap_trans.h"
@@ -110,6 +110,8 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                         /* type 'cinfo' and press enter */
                         T(SPC), \
                         T(C), T(I), T(N), T(F), T(O), T(ENT), \
+                        /* change terminal layout */
+                        D(RGUI), T(SPC), U(RGUI), T(LEFT), T(LEFT), T(LEFT), T(ENT), \
                         /* open system monitor */
                         D(RGUI), T(T), U(RGUI), \
                         /* open webbrowser */
