@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_plain.c
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-02T12:33:53+0100
+ * date:   2021-03-02T13:26:52+0100
  */
 
 #include "unimap_trans.h"
@@ -71,15 +71,15 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                         /* set interval */
                         I(5), \
                         /* open terminal and wait for x milliseconds */
-                        D(RGUI), T(ENT), U(RGUI), W(255), \
-                        /* type 'xset r rate 200 50;' */
+                        D(LGUI), T(ENT), U(LGUI), W(255), \
+                        /* type ' xset r rate 200 50;' */
                         T(SPC), \
                         T(X), T(S), T(E), T(T), T(SPC), \
                         T(R), T(SPC), \
                         T(R), T(A), T(T), T(E), T(SPC), \
                         T(2), T(0), T(0), T(SPC), \
                         T(5), T(0), T(SCLN), \
-                        /* type 'setxkbmap -model pc105 -layout us,de -option grp:caps_switch;' */
+                        /* type ' setxkbmap -model pc105 -layout us,de -option grp:caps_switch;' */
                         T(SPC),
                         T(S), T(E), T(T), T(X), T(K), T(B), T(M), T(A), T(P), T(SPC), \
                         T(MINS), T(M), T(O), T(D), T(E), T(L), T(SPC), \
@@ -88,7 +88,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                         T(U), T(S), T(COMM), T(D), T(E), T(SPC), \
                         T(MINS), T(O), T(P), T(T), T(I), T(O), T(N), T(SPC), \
                         T(G), T(R), T(P), D(LSFT), T(SCLN), U(LSFT), T(C), T(A), T(P), T(S), D(LSFT), T(MINS), U(LSFT), T(S), T(W), T(I), T(T), T(C), T(H), T(SCLN), \
-                        /* type 'exit' and press enter (close terminal) */
+                        /* type ' exit' and press enter (close terminal) */
                         T(SPC), \
                         T(E), T(X), T(I), T(T), T(ENT), \
                         END ) :
@@ -98,26 +98,25 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     MACRO( \
                         /* set interval */
                         I(5), \
+                        /* open webbrowser */
+                        D(LGUI), T(W), U(LGUI), \
+                        /* open system monitor */
+                        D(LGUI), T(T), U(LGUI), \
                         /* go to desktop 2 */
-                        D(RGUI), T(2), U(RGUI), \
+                        D(LGUI), T(2), U(LGUI), \
                         /* open terminal and wait for x milliseconds */
-                        D(RGUI), T(ENT), U(RGUI), W(255), \
-                        /* type 'ranger' and press enter */
+                        D(LGUI), T(ENT), U(LGUI), W(255), W(255), \
+                        /* type ' ranger' and press enter */
                         T(SPC), \
                         T(R), T(A), T(N), T(G), T(E), T(R), T(ENT), \
                         /* open another terminal and wait for x milliseconds */
-                        D(RGUI), T(ENT), U(RGUI), W(255), \
-                        /* type 'cinfo' and press enter */
+                        D(LGUI), T(ENT), U(LGUI), W(255), \
+                        /* type ' cinfo', press enter and wait for x milliseconds*/
                         T(SPC), \
-                        T(C), T(I), T(N), T(F), T(O), T(ENT), \
-                        /* change terminal layout */
-                        D(RGUI), T(SPC), U(RGUI), T(LEFT), T(LEFT), T(LEFT), T(ENT), \
-                        /* open system monitor */
-                        D(RGUI), T(T), U(RGUI), \
-                        /* open webbrowser */
-                        D(RGUI), T(W), U(RGUI), \
-                        /* go to desktop 2 */
-                        D(RGUI), T(2), U(RGUI), \
+                        T(C), T(I), T(N), T(F), T(O), T(ENT), W(100), \
+                        /* change terminal layout, wait for x milliseconds and change focus */
+                        D(LGUI), T(SPC), U(LGUI), T(LEFT), T(LEFT), T(LEFT), T(ENT), W(100), \
+                        D(LGUI), T(LEFT), U(LGUI), \
                         END ) :
                     MACRO_NONE );
         case OPENSSH:
@@ -126,9 +125,9 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                         /* set interval */
                         I(5), \
                         /* open ssh to hermes */
-                        D(RGUI), T(H), U(RGUI), \
+                        D(LGUI), T(H), U(LGUI), \
                         /* open ssh to prometheus */
-                        D(RGUI), D(LSFT), T(H), U(LSFT), U(RGUI), \
+                        D(LGUI), D(LSFT), T(H), U(LSFT), U(LGUI), \
                         END ) :
                     MACRO_NONE );
     }
