@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_plain.c
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-03T14:12:19+0100
+ * date:   2021-03-03T16:33:48+0100
  */
 
 #include "unimap_trans.h"
@@ -98,10 +98,8 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     MACRO( \
                         /* set typing interval */
                         C_INTERVAL, \
-                        /* open terminal */
-                        O_TERMINAL, \
-                        /* execute xset, setxkmap and close terminal */
-                        T_XSET, T(SCLN), T_SETXKBMAP, T(SCLN), T_EXIT, T(ENT), \
+                        /* open terminal, execute xset/setxkmap and close terminal */
+                        O_TERMINAL, T_XSET, T(SCLN), T_SETXKBMAP, T(SCLN), T_EXIT, T(ENT), \
                         END ) :
                     MACRO_NONE );
         case AUTOSTART:
@@ -109,7 +107,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     MACRO( \
                         /* set typing interval */
                         C_INTERVAL, \
-                        /* open webbrowser, system monitor and go to desktop 2 */
+                        /* open web browser, system monitor and go to desktop 2 */
                         O_WEB, O_TOP, O_DESK2, \
                         /* open terminal, clear terminal and execute ranger */
                         O_TERMINAL, T_CLEAR, T(SCLN), T_RANGER, T(ENT), W(100), \
