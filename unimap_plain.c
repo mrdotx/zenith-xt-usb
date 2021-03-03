@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_plain.c
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-02T20:49:34+0100
+ * date:   2021-03-03T08:09:56+0100
  */
 
 #include "unimap_trans.h"
@@ -71,7 +71,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                         /* set interval */
                         I(5), \
                         /* open terminal and wait for x milliseconds */
-                        D(LGUI), T(ENT), U(LGUI), W(255), \
+                        D(LGUI), T(ENT), U(LGUI), W(250), W(250), \
                         /* type ' xset r rate 200 50;' */
                         T(SPC), \
                         T(X), T(S), T(E), T(T), T(SPC), \
@@ -98,19 +98,19 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     MACRO( \
                         /* set interval */
                         I(5), \
-                        /* open webbrowser */
-                        D(LGUI), T(W), U(LGUI), \
+                        /* open webbrowser and wait for x milliseconds*/
+                        D(LGUI), T(W), U(LGUI), W(100), \
                         /* open system monitor */
-                        D(LGUI), T(T), U(LGUI), \
+                        D(LGUI), T(T), U(LGUI), W(100), \
                         /* go to desktop 2 */
-                        D(LGUI), T(2), U(LGUI), \
+                        D(LGUI), T(2), U(LGUI), W(100), \
                         /* open terminal and wait for x milliseconds */
-                        D(LGUI), T(ENT), U(LGUI), W(255), W(255), \
+                        D(LGUI), T(ENT), U(LGUI), W(250), W(250), \
                         /* type ' ranger' and press enter */
                         T(SPC), \
-                        T(R), T(A), T(N), T(G), T(E), T(R), T(ENT), \
+                        T(R), T(A), T(N), T(G), T(E), T(R), T(ENT), W(100), \
                         /* open another terminal and wait for x milliseconds */
-                        D(LGUI), T(ENT), U(LGUI), W(255), \
+                        D(LGUI), T(ENT), U(LGUI), W(250), \
                         /* type ' cinfo', press enter and wait for x milliseconds*/
                         T(SPC), \
                         T(C), T(I), T(N), T(F), T(O), T(ENT), W(100), \
@@ -125,7 +125,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                         /* set interval */
                         I(5), \
                         /* open ssh to hermes */
-                        D(LGUI), T(H), U(LGUI), \
+                        D(LGUI), T(H), U(LGUI), W(100), \
                         /* open ssh to prometheus */
                         D(LGUI), D(LSFT), T(H), U(LSFT), U(LGUI), \
                         END ) :
