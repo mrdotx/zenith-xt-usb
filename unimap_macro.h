@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-04T15:09:12+0100
+ * date:   2021-03-04T18:41:23+0100
  */
 
 #define C_INTERVAL  I(5)
@@ -21,12 +21,13 @@
 #define T_REBOOT    T(R), T(E), T(B), T(O), T(O), T(T), T(ENT), C_WAIT
 #define T_RANGER    T(R), T(G), T(ENT), C_WAIT
 #define T_CINFO     T(C), T(L), T(ENT), C_WAIT
-#define T_XSET      T(X), T(S), T(E), T(T), T(SPC), \
+/* xset r rate 200 50; setxkbmap -model pc105 -layout us,de -option grp:caps_switch */
+#define T_KEYBOARD  T(X), T(S), T(E), T(T), T(SPC), \
                     T(R), T(SPC), \
                     T(R), T(A), T(T), T(E), T(SPC), \
                     T(2), T(0), T(0), T(SPC), \
-                    T(5), T(0), T(ENT), C_WAIT
-#define T_SETXKBMAP T(S), T(E), T(T), T(X), T(K), T(B), T(M), T(A), T(P), T(SPC), \
+                    T(5), T(0), T(SCLN), T(SPC), \
+                    T(S), T(E), T(T), T(X), T(K), T(B), T(M), T(A), T(P), T(SPC), \
                     T(MINS), T(M), T(O), T(D), T(E), T(L), T(SPC), \
                     T(P), T(C), T(1), T(0), T(5), T(SPC), \
                     T(MINS), T(L), T(A), T(Y), T(O), T(U), T(T), T(SPC), \
@@ -55,7 +56,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                         /* set typing interval */
                         C_INTERVAL, \
                         /* open dmenu and set keyboard options */
-                        O_DMENU, T_XSET, O_DMENU, T_SETXKBMAP, \
+                        O_DMENU, T_KEYBOARD, \
                         END ) :
                     MACRO_NONE );
         case AUTOSTART:
