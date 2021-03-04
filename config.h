@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/config.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-02-28T12:53:40+0100
+ * date:   2021-03-04T09:40:34+0100
  */
 
 #ifndef CONFIG_H
@@ -26,12 +26,10 @@
     keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)) \
 )
 
-// G80-2551 terminal keyboard support
-#define G80_2551_SUPPORT
+/* G80-2551 terminal keyboard support */
+/* #define G80_2551_SUPPORT */
 
-/*
- * Pin and interrupt configuration
- */
+/* Pin and interrupt configuration */
 #if defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega32U2__) || defined(__AVR_AT90USB1286__)
 /* clock line */
 #define IBMPC_CLOCK_PORT  PORTD
