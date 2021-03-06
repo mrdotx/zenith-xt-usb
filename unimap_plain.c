@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_plain.c
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-06T08:57:43+0100
+ * date:   2021-03-06T19:41:41+0100
  */
 
 #include "unimap_trans.h"
@@ -45,7 +45,7 @@ const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] PROGMEM = {
     UNIMAP(
               NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,
     NO,       F11, F12, MON, CUT, NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,            NO,  SLEP,NO,           NO,  NO,  NO,
-    M3,  M1,  M2,  NO,  NO,  NO,  NO,  NO,  NO,  M4,  M5,  NO,  NO,  NO,  NO,       NO,  NO,  NO,      PWR, NO,  NO,  BRTD,
+    M3,  M1,  M2,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,       NO,  NO,  NO,      PWR, NO,  NO,  BRTD,
     NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,       BSLS,     NO,  NO,  NO,      BTN3,MS_U,WH_U,BRTI,
     BTLD,NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  WH_L,WH_R,     NO,  BTN1,                        MS_L,MS_D,MS_R,NO,
     TRNS,NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  ACL0,ACL1,ACL2,     NO,  TRNS,          NO,           BTN2,MS_D,WH_D,NO,
