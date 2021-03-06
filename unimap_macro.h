@@ -2,13 +2,14 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-04T18:41:23+0100
+ * date:   2021-03-06T09:17:51+0100
  */
 
 #define C_INTERVAL  I(5)
 #define C_WAIT      W(100)
 
 #define O_TERMINAL  D(LGUI), T(ENT), U(LGUI), W(255)
+#define O_FLOATING  D(LGUI), T(QUOT), U(LGUI), C_WAIT
 #define O_DMENU     D(LSFT), T(LGUI), U(LSFT), C_WAIT
 #define O_WEB       D(LGUI), T(W), U(LGUI), C_WAIT
 #define O_TOP       D(LGUI), T(T), U(LGUI), C_WAIT
@@ -21,6 +22,9 @@
 #define T_REBOOT    T(R), T(E), T(B), T(O), T(O), T(T), T(ENT), C_WAIT
 #define T_RANGER    T(R), T(G), T(ENT), C_WAIT
 #define T_CINFO     T(C), T(L), T(ENT), C_WAIT
+#define T_WEATHER   T(W), T(T), T(ENT), C_WAIT
+#define T_COVID     T(C), T(V), T(ENT), C_WAIT
+
 /* xset r rate 200 50; setxkbmap -model pc105 -layout us,de -option grp:caps_switch */
 #define T_KEYBOARD  T(X), T(S), T(E), T(T), T(SPC), \
                     T(R), T(SPC), \
@@ -39,12 +43,16 @@
 #define AC_M1       ACTION_MACRO(AUTOSTART)
 #define AC_M2       ACTION_MACRO(OPENSSH)
 #define AC_M3       ACTION_MACRO(REBOOT)
+#define AC_M4       ACTION_MACRO(WEATHER)
+#define AC_M5       ACTION_MACRO(COVID)
 
 enum macro_id {
     SETKB,
     AUTOSTART,
     OPENSSH,
     REBOOT,
+    COVID,
+    WEATHER,
 };
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
@@ -66,9 +74,9 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                         C_INTERVAL, \
                         /* open web browser, system monitor and go to desktop 2 */
                         O_WEB, O_TOP, O_DESK2, \
-                        /* open terminal and execute ranger */
+                        /* open terminal and open ranger */
                         O_TERMINAL, T_RANGER, \
-                        /* open another terminal and execute cinfo */
+                        /* open another terminal and open cinfo */
                         O_TERMINAL, T_CINFO, \
                         /* change terminal layout and window focus */
                         O_LAYOUT, O_FOCUS, \
@@ -88,8 +96,26 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     MACRO( \
                         /* set typing interval */
                         C_INTERVAL, \
-                        /* open dmenu and reboot */
+                        /* open dmenu and execute reboot */
                         O_DMENU, T_REBOOT, \
+                        END ) :
+                    MACRO_NONE );
+        case WEATHER:
+            return (record->event.pressed ?
+                    MACRO( \
+                        /* set typing interval */
+                        C_INTERVAL, \
+                        /* open terminal, make it floating, and open weather */
+                        O_TERMINAL, O_FLOATING, T_WEATHER, \
+                        END ) :
+                    MACRO_NONE );
+        case COVID:
+            return (record->event.pressed ?
+                    MACRO( \
+                        /* set typing interval */
+                        C_INTERVAL, \
+                        /* open terminal, make it floating and open covid */
+                        O_TERMINAL, O_FLOATING, T_COVID, \
                         END ) :
                     MACRO_NONE );
     }
