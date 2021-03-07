@@ -2,13 +2,22 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-06T19:40:19+0100
+ * date:   2021-03-07T09:31:54+0100
  */
+
+#define AC_KB       ACTION_MACRO(SETKB)
+#define AC_AUTO     ACTION_MACRO(AUTOSTART)
+#define AC_SSH      ACTION_MACRO(OPENSSH)
+#define AC_BOOT     ACTION_MACRO(REBOOT)
+#define AC_WT       ACTION_MACRO(WEATHER)
+#define AC_CV       ACTION_MACRO(COVID)
 
 #define C_INTERVAL  I(5)
 #define C_WAIT      W(100)
+#define C_WAITMAX   W(255)
 
-#define O_TERMINAL  D(LGUI), T(ENT), U(LGUI), W(255)
+#define O_TERM      D(LGUI), T(ENT), U(LGUI), C_WAITMAX
+#define O_TERMFLOAT D(LGUI), D(LSFT), T(ENT), U(LSFT), U(LGUI), C_WAITMAX
 #define O_DMENU     D(LSFT), T(LGUI), U(LSFT), C_WAIT
 #define O_WEB       D(LGUI), T(W), U(LGUI), C_WAIT
 #define O_TOP       D(LGUI), T(T), U(LGUI), C_WAIT
@@ -21,31 +30,34 @@
 #define T_REBOOT    T(R), T(E), T(B), T(O), T(O), T(T), T(ENT), C_WAIT
 #define T_RANGER    T(R), T(G), T(ENT), C_WAIT
 #define T_CINFO     T(C), T(L), T(ENT), C_WAIT
+#define T_WEATHER   T(W), T(T), T(ENT), C_WAIT
+#define T_COVID     T(C), T(V), T(ENT), C_WAIT
 
-/* xset r rate 200 50; setxkbmap -model pc105 -layout us,de -option grp:caps_switch */
-#define T_KEYBOARD  T(X), T(S), T(E), T(T), T(SPC), \
-                    T(R), T(SPC), \
-                    T(R), T(A), T(T), T(E), T(SPC), \
-                    T(2), T(0), T(0), T(SPC), \
-                    T(5), T(0), T(SCLN), T(SPC), \
-                    T(S), T(E), T(T), T(X), T(K), T(B), T(M), T(A), T(P), T(SPC), \
-                    T(MINS), T(M), T(O), T(D), T(E), T(L), T(SPC), \
-                    T(P), T(C), T(1), T(0), T(5), T(SPC), \
-                    T(MINS), T(L), T(A), T(Y), T(O), T(U), T(T), T(SPC), \
-                    T(U), T(S), T(COMM), T(D), T(E), T(SPC), \
-                    T(MINS), T(O), T(P), T(T), T(I), T(O), T(N), T(SPC), \
-                    T(G), T(R), T(P), D(LSFT), T(SCLN), U(LSFT), T(C), T(A), T(P), T(S), D(LSFT), T(MINS), U(LSFT), T(S), T(W), T(I), T(T), T(C), T(H), T(ENT), C_WAIT
-
-#define AC_M0       ACTION_MACRO(SETKB)
-#define AC_M1       ACTION_MACRO(AUTOSTART)
-#define AC_M2       ACTION_MACRO(OPENSSH)
-#define AC_M3       ACTION_MACRO(REBOOT)
+/* xset r rate 200 50; */
+/* setxkbmap -model pc105 -layout us,de -option grp:caps_switch */
+#define T_KEYBOARD  \
+    T(X), T(S), T(E), T(T), T(SPC), \
+    T(R), T(SPC), \
+    T(R), T(A), T(T), T(E), T(SPC), \
+    T(2), T(0), T(0), T(SPC), \
+    T(5), T(0), T(SCLN), \
+    T(S), T(E), T(T), T(X), T(K), T(B), T(M), T(A), T(P), T(SPC), \
+    T(MINS), T(M), T(O), T(D), T(E), T(L), T(SPC), \
+    T(P), T(C), T(1), T(0), T(5), T(SPC), \
+    T(MINS), T(L), T(A), T(Y), T(O), T(U), T(T), T(SPC), \
+    T(U), T(S), T(COMM), T(D), T(E), T(SPC), \
+    T(MINS), T(O), T(P), T(T), T(I), T(O), T(N), T(SPC), \
+    T(G), T(R), T(P), D(LSFT), T(SCLN), U(LSFT), \
+    T(C), T(A), T(P), T(S), D(LSFT), T(MINS), U(LSFT), \
+    T(S), T(W), T(I), T(T), T(C), T(H), T(ENT), C_WAIT
 
 enum macro_id {
     SETKB,
     AUTOSTART,
     OPENSSH,
     REBOOT,
+    WEATHER,
+    COVID,
 };
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
@@ -68,9 +80,9 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                         /* open web browser, system monitor and go to desktop 2 */
                         O_WEB, O_TOP, O_DESK2, \
                         /* open terminal and open ranger */
-                        O_TERMINAL, T_RANGER, \
+                        O_TERM, T_RANGER, \
                         /* open another terminal and open cinfo */
-                        O_TERMINAL, T_CINFO, \
+                        O_TERM, T_CINFO, \
                         /* change terminal layout and window focus */
                         O_LAYOUT, O_FOCUS, \
                         END ) :
@@ -91,6 +103,24 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                         C_INTERVAL, \
                         /* open dmenu and execute reboot */
                         O_DMENU, T_REBOOT, \
+                        END ) :
+                    MACRO_NONE );
+        case WEATHER:
+            return (record->event.pressed ?
+                    MACRO( \
+                        /* set typing interval */
+                        C_INTERVAL, \
+                        /* open floating terminal and open weather */
+                        O_TERMFLOAT, T_WEATHER, \
+                        END ) :
+                    MACRO_NONE );
+        case COVID:
+            return (record->event.pressed ?
+                    MACRO( \
+                        /* set typing interval */
+                        C_INTERVAL, \
+                        /* open floating terminal and open covid */
+                        O_TERMFLOAT, T_COVID, \
                         END ) :
                     MACRO_NONE );
     }
