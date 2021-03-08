@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-07T09:31:54+0100
+ * date:   2021-03-08T19:44:21+0100
  */
 
 #define AC_KB       ACTION_MACRO(SETKB)
@@ -21,9 +21,8 @@
 #define O_DMENU     D(LSFT), T(LGUI), U(LSFT), C_WAIT
 #define O_WEB       D(LGUI), T(W), U(LGUI), C_WAIT
 #define O_TOP       D(LGUI), T(T), U(LGUI), C_WAIT
+#define O_DESK1     D(LGUI), T(1), U(LGUI), C_WAIT
 #define O_DESK2     D(LGUI), T(2), U(LGUI), C_WAIT
-#define O_LAYOUT    D(LGUI), T(SPC), U(LGUI), T(LEFT), T(LEFT), T(LEFT), T(ENT), C_WAIT
-#define O_FOCUS     D(LGUI), T(LEFT), U(LGUI), C_WAIT
 #define O_PI        D(LGUI), T(H), U(LGUI), C_WAIT
 #define O_PI2       D(LGUI), D(LSFT), T(H), U(LSFT), U(LGUI), C_WAIT
 
@@ -77,14 +76,12 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     MACRO( \
                         /* set typing interval */
                         C_INTERVAL, \
-                        /* open web browser, system monitor and go to desktop 2 */
-                        O_WEB, O_TOP, O_DESK2, \
-                        /* open terminal and open ranger */
-                        O_TERM, T_RANGER, \
-                        /* open another terminal and open cinfo */
-                        O_TERM, T_CINFO, \
-                        /* change terminal layout and window focus */
-                        O_LAYOUT, O_FOCUS, \
+                        /* open web browser and tmux with system monitor */
+                        O_WEB, O_TOP, \
+                        /* go to desktop 2 and open terminal with file manager */
+                        O_DESK2, O_TERM, T_RANGER, \
+                        /* go to desktop 1 and open terminal with system info */
+                        O_DESK1, O_TERM, T_CINFO, \
                         END ) :
                     MACRO_NONE );
         case OPENSSH:
@@ -110,7 +107,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     MACRO( \
                         /* set typing interval */
                         C_INTERVAL, \
-                        /* open floating terminal and open weather */
+                        /* open floating terminal with weather info */
                         O_TERMFLOAT, T_WEATHER, \
                         END ) :
                     MACRO_NONE );
@@ -119,7 +116,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     MACRO( \
                         /* set typing interval */
                         C_INTERVAL, \
-                        /* open floating terminal and open covid */
+                        /* open floating terminal with covid stats */
                         O_TERMFLOAT, T_COVID, \
                         END ) :
                     MACRO_NONE );
