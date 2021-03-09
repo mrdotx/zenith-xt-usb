@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-09T20:00:08+0100
+ * date:   2021-03-09T20:57:10+0100
  */
 
 #define AC_KB       ACTION_MACRO(SETKB)
@@ -22,11 +22,12 @@
 #define O_WEB       D(LGUI), T(W), U(LGUI), C_WAIT
 #define O_DESK1     D(LGUI), T(1), U(LGUI), C_WAIT
 #define O_DESK2     D(LGUI), T(2), U(LGUI), C_WAIT
+#define O_DESK4     D(LGUI), T(4), U(LGUI), C_WAIT
 #define O_PI        D(LGUI), T(H), U(LGUI), C_WAIT
 #define O_PI2       D(LGUI), D(LSFT), T(H), U(LSFT), U(LGUI), C_WAIT
 
 #define T_REBOOT    T(R), T(E), T(B), T(O), T(O), T(T), T(ENT), C_WAIT
-#define T_RANGER    T(R), T(G), T(ENT), C_WAIT
+#define T_RANGER    T(R), T(G), T(ENT), C_WAITMAX, C_WAITMAX, T(QUOT), T(R), C_WAIT
 #define T_CINFO     T(C), T(L), T(ENT), C_WAIT
 #define T_WEATHER   T(W), T(T), T(ENT), C_WAIT
 #define T_COVID     T(C), T(V), T(ENT), C_WAIT
@@ -81,6 +82,8 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                         O_DESK2, O_TERM, T_RANGER, \
                         /* go to desktop 1 and open terminal with system info */
                         O_DESK1, O_TERM, T_CINFO, \
+                        /* refresh desktops */
+                        O_DESK4, O_DESK2, O_DESK1, \
                         END ) :
                     MACRO_NONE );
         case OPENSSH:
