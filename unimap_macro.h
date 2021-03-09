@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-08T19:44:21+0100
+ * date:   2021-03-09T20:00:08+0100
  */
 
 #define AC_KB       ACTION_MACRO(SETKB)
@@ -20,7 +20,6 @@
 #define O_TERMFLOAT D(LGUI), D(LSFT), T(ENT), U(LSFT), U(LGUI), C_WAITMAX
 #define O_DMENU     D(LSFT), T(LGUI), U(LSFT), C_WAIT
 #define O_WEB       D(LGUI), T(W), U(LGUI), C_WAIT
-#define O_TOP       D(LGUI), T(T), U(LGUI), C_WAIT
 #define O_DESK1     D(LGUI), T(1), U(LGUI), C_WAIT
 #define O_DESK2     D(LGUI), T(2), U(LGUI), C_WAIT
 #define O_PI        D(LGUI), T(H), U(LGUI), C_WAIT
@@ -76,8 +75,8 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     MACRO( \
                         /* set typing interval */
                         C_INTERVAL, \
-                        /* open web browser and tmux with system monitor */
-                        O_WEB, O_TOP, \
+                        /* open web browser */
+                        O_WEB, \
                         /* go to desktop 2 and open terminal with file manager */
                         O_DESK2, O_TERM, T_RANGER, \
                         /* go to desktop 1 and open terminal with system info */
