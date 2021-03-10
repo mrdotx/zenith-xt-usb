@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-10T12:13:47+0100
+ * date:   2021-03-10T13:01:05+0100
  */
 
 #define AC_KB       ACTION_MACRO(SETKB)
@@ -11,10 +11,11 @@
 #define AC_BOOT     ACTION_MACRO(REBOOT)
 #define AC_WT       ACTION_MACRO(WEATHER)
 #define AC_CV       ACTION_MACRO(COVID)
+#define AC_CO       ACTION_MACRO(TCOLOR)
 
 #define C_INTERVAL  I(5)
 #define C_WAIT_DS   W(100)
-#define C_WAIT_QS   W(250)
+#define C_WAIT_QS   W(255)
 
 #define O_TERM      D(LGUI), T(ENT), U(LGUI), C_WAIT_QS
 #define O_TERMFLOAT D(LGUI), D(LSFT), T(ENT), U(LSFT), U(LGUI), C_WAIT_QS
@@ -33,6 +34,7 @@
 #define T_CINFO     T(C), T(L), T(ENT), C_WAIT_DS
 #define T_WEATHER   T(W), T(T), T(ENT), C_WAIT_DS
 #define T_COVID     T(C), T(V), T(ENT), C_WAIT_DS
+#define T_TCOLOR    T(C), T(O), T(ENT), C_WAIT_DS
 
 /* xset r rate 200 50; */
 /* setxkbmap -model pc105 -layout us,de -option grp:caps_switch */
@@ -59,6 +61,7 @@ enum macro_id {
     REBOOT,
     WEATHER,
     COVID,
+    TCOLOR,
 };
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
@@ -120,8 +123,17 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     MACRO( \
                         /* set typing interval */
                         C_INTERVAL, \
-                        /* open floating terminal with covid stats */
+                        /* open floating terminal with covid info */
                         O_TERMFLOAT, T_CLEAR, T_COVID, \
+                        END ) :
+                    MACRO_NONE );
+        case TCOLOR:
+            return (record->event.pressed ?
+                    MACRO( \
+                        /* set typing interval */
+                        C_INTERVAL, \
+                        /* open floating terminal with color info */
+                        O_TERMFLOAT, T_CLEAR, T_TCOLOR, \
                         END ) :
                     MACRO_NONE );
     }
