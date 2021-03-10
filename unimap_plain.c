@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_plain.c
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-07T09:53:52+0100
+ * date:   2021-03-10T12:03:20+0100
  */
 
 #include "unimap_trans.h"
@@ -15,6 +15,7 @@
 #define AC_MON      ACTION_KEY(MOD_LGUI | KC_P)
 #define AC_PLUS     ACTION_KEY(MOD_LSFT | KC_EQL)
 #define AC_AST      ACTION_KEY(MOD_LSFT | KC_8)
+#define AC_GUBS     ACTION_KEY(MOD_LGUI | KC_BSLS)
 
 #ifdef KEYMAP_SECTION_ENABLE
 const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] __attribute__ ((section (".keymap.keymaps"))) = {
@@ -46,7 +47,7 @@ const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] PROGMEM = {
               NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,
     NO,       F11, F12, MON, CUT, NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,            NO,  SLEP,NO,           NO,  NO,  NO,
     BOOT,NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,       NO,  NO,  NO,      PWR, NO,  AUTO,BRTD,
-    NO,  NO,  WT,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,       BSLS,     NO,  NO,  NO,      BTN3,MS_U,WH_U,BRTI,
+    GUBS,NO,  WT,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,       BSLS,     NO,  NO,  NO,      BTN3,MS_U,WH_U,BRTI,
     BTLD,NO,  NO,  NO,  NO,  NO,  SSH, NO,  NO,  NO,  WH_L,WH_R,     NO,  BTN1,                        MS_L,MS_D,MS_R,NO,
     TRNS,NO,  NO,  NO,  CV,  NO,  NO,  NO,  NO,  ACL0,ACL1,ACL2,     NO,  TRNS,          NO,           BTN2,MS_D,WH_D,NO,
     NO,  NO,  NO,  NO,            F21,           NO,  NO  ,NO,  NO,  NO,  NO,       NO,  NO,  NO,           TRNS,KB,  NO
