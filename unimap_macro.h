@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-10T13:01:05+0100
+ * date:   2021-03-10T15:52:12+0100
  */
 
 #define AC_KB       ACTION_MACRO(SETKB)
@@ -11,7 +11,8 @@
 #define AC_BOOT     ACTION_MACRO(REBOOT)
 #define AC_WT       ACTION_MACRO(WEATHER)
 #define AC_CV       ACTION_MACRO(COVID)
-#define AC_CO       ACTION_MACRO(TCOLOR)
+#define AC_TCOL     ACTION_MACRO(TERMCOLORS)
+#define AC_VENT     ACTION_MACRO(VENTOY)
 
 #define C_INTERVAL  I(5)
 #define C_WAIT_DS   W(100)
@@ -31,11 +32,23 @@
 
 #define T_REBOOT    T(R), T(E), T(B), T(O), T(O), T(T), T(ENT), C_WAIT_DS
 #define T_RANGER    T(R), T(G), T(ENT), C_WAIT_QS, C_WAIT_QS, T(QUOT), T(R), C_WAIT_DS
-#define T_CINFO     T(C), T(L), T(ENT), C_WAIT_DS
 #define T_WEATHER   T(W), T(T), T(ENT), C_WAIT_DS
 #define T_COVID     T(C), T(V), T(ENT), C_WAIT_DS
-#define T_TCOLOR    T(C), T(O), T(ENT), C_WAIT_DS
+#define T_CINFO     T(C), T(I), T(N), T(F), T(O), T(ENT), C_WAIT_DS
 
+/* terminal_colors.sh */
+#define T_TERMCOLORS    \
+    T(T), T(E), T(R), T(M), T(I), T(N), T(A), T(L), D(LSFT), T(MINS), U(LSFT), \
+    T(C), T(O), T(L), T(O), T(R), T(S), T(DOT), T(S), T(H), T(ENT), C_WAIT_DS
+/* doas ventoyweb */
+#define T_VENTOY    \
+    T(D), T(O), T(A), T(S), T(SPC), \
+    T(V), T(E), T(N), T(T), T(O), T(Y), T(W), T(E), T(B), T(ENT), C_WAIT_DS
+/* surf.sh 127.0.0.1:24680 */
+#define T_VENTOYWEB \
+    T(S), T(U), T(R), T(F), T(DOT), T(S), T(H), T(SPC), \
+    T(1), T(2), T(7), T(DOT), T(0), T(DOT), T(0), T(DOT), T(1), D(LSFT), T(SCLN), U(LSFT), \
+    T(2), T(4), T(6), T(8), T(0), T(ENT), C_WAIT_DS
 /* xset r rate 200 50; */
 /* setxkbmap -model pc105 -layout us,de -option grp:caps_switch */
 #define T_KEYBOARD  \
@@ -61,7 +74,8 @@ enum macro_id {
     REBOOT,
     WEATHER,
     COVID,
-    TCOLOR,
+    TERMCOLORS,
+    VENTOY,
 };
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
@@ -86,7 +100,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                         /* go to desktop 2 and open terminal with file manager */
                         O_DESK2, O_TERM, T_CLEAR, T_RANGER, \
                         /* go to desktop 1 and open terminal with system info */
-                        O_DESK1, O_TERM, T_CINFO, \
+                        O_DESK1, O_TERM, T_CLEAR, T_CINFO, \
                         /* refresh desktops */
                         O_DESK4, O_DESK2, O_DESK1, \
                         END ) :
@@ -127,13 +141,24 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                         O_TERMFLOAT, T_CLEAR, T_COVID, \
                         END ) :
                     MACRO_NONE );
-        case TCOLOR:
+        case TERMCOLORS:
             return (record->event.pressed ?
                     MACRO( \
                         /* set typing interval */
                         C_INTERVAL, \
                         /* open floating terminal with color info */
-                        O_TERMFLOAT, T_CLEAR, T_TCOLOR, \
+                        O_TERMFLOAT, T_CLEAR, T_TERMCOLORS, \
+                        END ) :
+                    MACRO_NONE );
+        case VENTOY:
+            return (record->event.pressed ?
+                    MACRO( \
+                        /* set typing interval */
+                        C_INTERVAL, \
+                        /* open terminal and start ventoy server */
+                        O_TERM, T_CLEAR, T_VENTOY, \
+                        /* open dmenu and go to url with surf */
+                        O_DMENU, T_VENTOYWEB, \
                         END ) :
                     MACRO_NONE );
     }
