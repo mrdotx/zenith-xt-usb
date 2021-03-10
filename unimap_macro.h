@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-09T20:57:10+0100
+ * date:   2021-03-10T12:13:47+0100
  */
 
 #define AC_KB       ACTION_MACRO(SETKB)
@@ -13,24 +13,26 @@
 #define AC_CV       ACTION_MACRO(COVID)
 
 #define C_INTERVAL  I(5)
-#define C_WAIT      W(100)
-#define C_WAITMAX   W(255)
+#define C_WAIT_DS   W(100)
+#define C_WAIT_QS   W(250)
 
-#define O_TERM      D(LGUI), T(ENT), U(LGUI), C_WAITMAX
-#define O_TERMFLOAT D(LGUI), D(LSFT), T(ENT), U(LSFT), U(LGUI), C_WAITMAX
-#define O_DMENU     D(LSFT), T(LGUI), U(LSFT), C_WAIT
-#define O_WEB       D(LGUI), T(W), U(LGUI), C_WAIT
-#define O_DESK1     D(LGUI), T(1), U(LGUI), C_WAIT
-#define O_DESK2     D(LGUI), T(2), U(LGUI), C_WAIT
-#define O_DESK4     D(LGUI), T(4), U(LGUI), C_WAIT
-#define O_PI        D(LGUI), T(H), U(LGUI), C_WAIT
-#define O_PI2       D(LGUI), D(LSFT), T(H), U(LSFT), U(LGUI), C_WAIT
+#define O_TERM      D(LGUI), T(ENT), U(LGUI), C_WAIT_QS
+#define O_TERMFLOAT D(LGUI), D(LSFT), T(ENT), U(LSFT), U(LGUI), C_WAIT_QS
+#define O_DMENU     D(LSFT), T(LGUI), U(LSFT), C_WAIT_QS
+#define O_WEB       D(LGUI), T(W), U(LGUI), C_WAIT_QS
+#define O_DESK1     D(LGUI), T(1), U(LGUI), C_WAIT_DS
+#define O_DESK2     D(LGUI), T(2), U(LGUI), C_WAIT_DS
+#define O_DESK4     D(LGUI), T(4), U(LGUI), C_WAIT_DS
+#define O_PI        D(LGUI), T(H), U(LGUI), C_WAIT_DS
+#define O_PI2       D(LGUI), D(LSFT), T(H), U(LSFT), U(LGUI), C_WAIT_DS
 
-#define T_REBOOT    T(R), T(E), T(B), T(O), T(O), T(T), T(ENT), C_WAIT
-#define T_RANGER    T(R), T(G), T(ENT), C_WAITMAX, C_WAITMAX, T(QUOT), T(R), C_WAIT
-#define T_CINFO     T(C), T(L), T(ENT), C_WAIT
-#define T_WEATHER   T(W), T(T), T(ENT), C_WAIT
-#define T_COVID     T(C), T(V), T(ENT), C_WAIT
+#define T_CLEAR     T(SPC), T(C), T(L), T(E), T(A), T(R), T(SCLN)
+
+#define T_REBOOT    T(R), T(E), T(B), T(O), T(O), T(T), T(ENT), C_WAIT_DS
+#define T_RANGER    T(R), T(G), T(ENT), C_WAIT_QS, C_WAIT_QS, T(QUOT), T(R), C_WAIT_DS
+#define T_CINFO     T(C), T(L), T(ENT), C_WAIT_DS
+#define T_WEATHER   T(W), T(T), T(ENT), C_WAIT_DS
+#define T_COVID     T(C), T(V), T(ENT), C_WAIT_DS
 
 /* xset r rate 200 50; */
 /* setxkbmap -model pc105 -layout us,de -option grp:caps_switch */
@@ -48,7 +50,7 @@
     T(MINS), T(O), T(P), T(T), T(I), T(O), T(N), T(SPC), \
     T(G), T(R), T(P), D(LSFT), T(SCLN), U(LSFT), \
     T(C), T(A), T(P), T(S), D(LSFT), T(MINS), U(LSFT), \
-    T(S), T(W), T(I), T(T), T(C), T(H), T(ENT), C_WAIT
+    T(S), T(W), T(I), T(T), T(C), T(H), T(ENT), C_WAIT_DS
 
 enum macro_id {
     SETKB,
@@ -79,7 +81,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                         /* open web browser */
                         O_WEB, \
                         /* go to desktop 2 and open terminal with file manager */
-                        O_DESK2, O_TERM, T_RANGER, \
+                        O_DESK2, O_TERM, T_CLEAR, T_RANGER, \
                         /* go to desktop 1 and open terminal with system info */
                         O_DESK1, O_TERM, T_CINFO, \
                         /* refresh desktops */
@@ -110,7 +112,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                         /* set typing interval */
                         C_INTERVAL, \
                         /* open floating terminal with weather info */
-                        O_TERMFLOAT, T_WEATHER, \
+                        O_TERMFLOAT, T_CLEAR, T_WEATHER, \
                         END ) :
                     MACRO_NONE );
         case COVID:
@@ -119,7 +121,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                         /* set typing interval */
                         C_INTERVAL, \
                         /* open floating terminal with covid stats */
-                        O_TERMFLOAT, T_COVID, \
+                        O_TERMFLOAT, T_CLEAR, T_COVID, \
                         END ) :
                     MACRO_NONE );
     }
