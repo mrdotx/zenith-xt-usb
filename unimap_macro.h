@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-10T22:50:43+0100
+ * date:   2021-03-11T08:47:29+0100
  */
 
 #define AC_KB       ACTION_MACRO(SETKB)
@@ -14,6 +14,7 @@
 #define AC_CV       ACTION_MACRO(COVID)
 #define AC_NEOF     ACTION_MACRO(NEOFETCH)
 #define AC_TCOL     ACTION_MACRO(TERMCOLORS)
+#define AC_STAR     ACTION_MACRO(STARWARS)
 
 #define C_INTERVAL  I(5)
 #define C_WAIT_DS   W(100)
@@ -84,6 +85,12 @@
 #define T_TERMCOLORS    \
     T(T), T(E), T(R), T(M), T(I), T(N), T(A), T(L), D(LSFT), T(MINS), U(LSFT), \
     T(C), T(O), T(L), T(O), T(R), T(S), T(DOT), T(S), T(H), T(ENT), C_WAIT_DS
+/* telnet towel.blinkenlights.nl */
+#define T_STARWARS  \
+    T(T), T(E), T(L), T(N), T(E), T(T), T(SPC), \
+    T(T), T(O), T(W), T(E), T(L), T(DOT), \
+    T(B), T(L), T(I), T(N), T(K), T(E), T(N), T(L), T(I), T(G), T(H), T(T), T(S), T(DOT), \
+    T(N), T(L), T(ENT), C_WAIT_DS
 
 enum macro_id {
     SETKB,
@@ -95,6 +102,7 @@ enum macro_id {
     COVID,
     NEOFETCH,
     TERMCOLORS,
+    STARWARS,
 };
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
@@ -167,7 +175,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     MACRO( \
                         /* set typing interval */
                         C_INTERVAL, \
-                        /* open floating terminal with covid info */
+                        /* open floating terminal with covid stats */
                         O_TERMFLOAT, T_CLEAR, T_COVID, \
                         END ) :
                     MACRO_NONE );
@@ -176,7 +184,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     MACRO( \
                         /* set typing interval */
                         C_INTERVAL, \
-                        /* open floating terminal with neofetch info */
+                        /* open floating terminal with neofetch */
                         O_TERMFLOAT, T_CLEAR, T_NEOFETCH, \
                         END ) :
                     MACRO_NONE );
@@ -187,6 +195,15 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                         C_INTERVAL, \
                         /* open floating terminal with color info */
                         O_TERMFLOAT, T_CLEAR, T_TERMCOLORS, \
+                        END ) :
+                    MACRO_NONE );
+        case STARWARS:
+            return (record->event.pressed ?
+                    MACRO( \
+                        /* set typing interval */
+                        C_INTERVAL, \
+                        /* open floating terminal with starwars */
+                        O_TERMFLOAT, T_CLEAR, T_STARWARS, \
                         END ) :
                     MACRO_NONE );
     }
