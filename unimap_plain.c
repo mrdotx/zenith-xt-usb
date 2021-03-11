@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_plain.c
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-11T08:44:54+0100
+ * date:   2021-03-11T09:41:26+0100
  */
 
 #include "unimap_trans.h"
@@ -47,9 +47,9 @@ const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] PROGMEM = {
               NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,
     NO,       F11, F12, MON, CUT, NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,            NO,  SLEP,NO,           NO,  NO,  NO,
     BOOT,NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,       NO,  NO,  NO,      PWR, NO,  AUTO,BRTD,
-    GUBS,NO,  WT,  NO,  NO,  TCOL,NO,  NO,  NO,  NO,  NO,  NO,  NO,       BSLS,     NO,  NO,  NO,      BTN3,MS_U,WH_U,BRTI,
+    GUBS,NO,  WTHR,NO,  NO,  TCOL,NO,  NO,  NO,  NO,  NO,  NO,  NO,       BSLS,     NO,  NO,  NO,      BTN3,MS_U,WH_U,BRTI,
     BTLD,NO,  STAR,NO,  NO,  NO,  SSH, NO,  NO,  NO,  WH_L,WH_R,     NO,  BTN1,                        MS_L,MS_D,MS_R,NO,
-    TRNS,NO,  NO,  NO,  CV,  VENT,NO,  NEOF,NO,  ACL0,ACL1,ACL2,     NO,  TRNS,          NO,           BTN2,MS_D,WH_D,NO,
-    NO,  NO,  NO,  NO,            F21,           NO,  NO  ,NO,  NO,  NO,  NO,       NO,  NO,  NO,           TRNS,KB,  NO
+    TRNS,NO,  NO,  NO,  COV, VTOY,NO,  NEOF,NO,  ACL0,ACL1,ACL2,     NO,  TRNS,          NO,           BTN2,MS_D,WH_D,NO,
+    NO,  NO,  NO,  NO,            F21,           NO,  NO  ,NO,  NO,  NO,  NO,       NO,  NO,  NO,           TRNS,KEYB,NO
     ),
 };

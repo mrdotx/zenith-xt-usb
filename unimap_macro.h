@@ -2,19 +2,8 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-11T08:47:29+0100
+ * date:   2021-03-11T09:41:12+0100
  */
-
-#define AC_KB       ACTION_MACRO(SETKB)
-#define AC_AUTO     ACTION_MACRO(AUTOSTART)
-#define AC_SSH      ACTION_MACRO(OPENSSH)
-#define AC_BOOT     ACTION_MACRO(REBOOT)
-#define AC_VENT     ACTION_MACRO(VENTOY)
-#define AC_WT       ACTION_MACRO(WEATHER)
-#define AC_CV       ACTION_MACRO(COVID)
-#define AC_NEOF     ACTION_MACRO(NEOFETCH)
-#define AC_TCOL     ACTION_MACRO(TERMCOLORS)
-#define AC_STAR     ACTION_MACRO(STARWARS)
 
 #define C_INTERVAL  I(5)
 #define C_WAIT_DS   W(100)
@@ -92,8 +81,19 @@
     T(B), T(L), T(I), T(N), T(K), T(E), T(N), T(L), T(I), T(G), T(H), T(T), T(S), T(DOT), \
     T(N), T(L), T(ENT), C_WAIT_DS
 
+#define AC_KEYB     ACTION_MACRO(SETKEYBOARD)
+#define AC_AUTO     ACTION_MACRO(AUTOSTART)
+#define AC_SSH      ACTION_MACRO(OPENSSH)
+#define AC_BOOT     ACTION_MACRO(REBOOT)
+#define AC_VTOY     ACTION_MACRO(VENTOY)
+#define AC_WTHR     ACTION_MACRO(WEATHER)
+#define AC_COV      ACTION_MACRO(COVID)
+#define AC_NEOF     ACTION_MACRO(NEOFETCH)
+#define AC_TCOL     ACTION_MACRO(TERMCOLORS)
+#define AC_STAR     ACTION_MACRO(STARWARS)
+
 enum macro_id {
-    SETKB,
+    SETKEYBOARD,
     AUTOSTART,
     OPENSSH,
     REBOOT,
@@ -108,7 +108,7 @@ enum macro_id {
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
     switch (id) {
-        case SETKB:
+        case SETKEYBOARD:
             return (record->event.pressed ?
                     MACRO( \
                         /* set typing interval */
