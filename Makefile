@@ -1,7 +1,7 @@
 # path:   /home/klassiker/.local/share/repos/zenith-xt-usb/Makefile
 # author: klassiker [mrdotx]
 # github: https://github.com/mrdotx/zenith-usb
-# date:   2021-02-28T12:46:55+0100
+# date:   2021-03-12T20:06:34+0100
 
 # Target file name (without extension).
 TARGET = zenith_usb
@@ -80,6 +80,7 @@ NKRO_ENABLE = yes      # USB Nkey Rollover
 
 KEYMAP_SECTION_ENABLE = yes
 UNIMAP_ENABLE = yes
+KEYMAP = xt
 
 # Optimize size but this may cause error "relocation truncated to fit"
 #EXTRALDFLAGS = -Wl,--relax
