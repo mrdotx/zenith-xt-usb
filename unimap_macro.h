@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-11T09:41:12+0100
+ * date:   2021-03-14T12:49:34+0100
  */
 
 #define C_INTERVAL  I(5)
@@ -19,13 +19,9 @@
 #define O_PI        D(LGUI), T(H), U(LGUI), C_WAIT_DS
 #define O_PI2       D(LGUI), D(LSFT), T(H), U(LSFT), U(LGUI), C_WAIT_DS
 
-#define T_CLEAR     T(SPC), T(C), T(L), T(E), T(A), T(R), T(SCLN)
-
-#define T_REBOOT    T(R), T(E), T(B), T(O), T(O), T(T), T(ENT), C_WAIT_DS
-#define T_RANGER    T(R), T(G), T(ENT), C_WAIT_QS, C_WAIT_QS, T(QUOT), T(R), C_WAIT_DS
-#define T_CINFO     T(C), T(I), T(N), T(F), T(O), T(ENT), C_WAIT_DS
-#define T_NEOFETCH  T(N), T(E), T(O), T(F), T(E), T(T), T(C), T(H), T(ENT), C_WAIT_DS
-
+/*  clear; */
+#define T_CLEAR     \
+    T(SPC), T(C), T(L), T(E), T(A), T(R), T(SCLN)
 /* xset r rate 200 50; */
 /* setxkbmap -model pc105 -layout us,de -option grp:caps_switch */
 #define T_KEYBOARD  \
@@ -43,6 +39,20 @@
     T(G), T(R), T(P), D(LSFT), T(SCLN), U(LSFT), \
     T(C), T(A), T(P), T(S), D(LSFT), T(MINS), U(LSFT), \
     T(S), T(W), T(I), T(T), T(C), T(H), T(ENT), C_WAIT_DS
+/* reboot */
+#define T_REBOOT    \
+    T(R), T(E), T(B), T(O), T(O), T(T), T(ENT), C_WAIT_DS
+/* ranger_cd */
+#define T_RANGER    \
+    T(R), T(A), T(N), T(G), T(E), T(R), \
+    D(LSFT), T(MINS), U(LSFT), T(C), T(D), T(ENT), \
+    C_WAIT_QS, C_WAIT_QS, C_WAIT_QS, T(QUOT), T(R), C_WAIT_DS
+/* cinfo */
+#define T_CINFO     \
+    T(C), T(I), T(N), T(F), T(O), T(ENT), C_WAIT_DS
+/* neofetch */
+#define T_NEOFETCH  \
+    T(N), T(E), T(O), T(F), T(E), T(T), T(C), T(H), T(ENT), C_WAIT_DS
 /* doas ventoyweb */
 #define T_VENTOY    \
     T(D), T(O), T(A), T(S), T(SPC), \
@@ -122,12 +132,12 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     MACRO( \
                         /* set typing interval */
                         C_INTERVAL, \
+                        /* go to desktop 1 and open terminal with system info */
+                        O_DESK1, O_TERM, T_CLEAR, T_CINFO, \
                         /* open web browser */
                         O_WEB, \
                         /* go to desktop 2 and open terminal with file manager */
                         O_DESK2, O_TERM, T_CLEAR, T_RANGER, \
-                        /* go to desktop 1 and open terminal with system info */
-                        O_DESK1, O_TERM, T_CLEAR, T_CINFO, \
                         /* refresh desktops */
                         O_DESK4, O_DESK2, O_DESK1, \
                         END ) :
