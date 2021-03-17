@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-14T12:49:34+0100
+ * date:   2021-03-17T11:07:35+0100
  */
 
 #define C_INTERVAL  I(5)
@@ -53,15 +53,18 @@
 /* neofetch */
 #define T_NEOFETCH  \
     T(N), T(E), T(O), T(F), T(E), T(T), T(C), T(H), T(ENT), C_WAIT_DS
-/* doas ventoyweb */
+/* doas ventoyweb & surf 127.0.0.1:24680 && doas killall V2DServer */
 #define T_VENTOY    \
     T(D), T(O), T(A), T(S), T(SPC), \
-    T(V), T(E), T(N), T(T), T(O), T(Y), T(W), T(E), T(B), T(ENT), C_WAIT_DS
-/* surf.sh 127.0.0.1:24680 */
-#define T_VENTOYWEB \
-    T(S), T(U), T(R), T(F), T(DOT), T(S), T(H), T(SPC), \
+    T(V), T(E), T(N), T(T), T(O), T(Y), T(W), T(E), T(B), T(SPC), \
+    D(LSFT), T(7), U(LSFT), T(SPC), \
+    T(S), T(U), T(R), T(F), T(SPC), \
     T(1), T(2), T(7), T(DOT), T(0), T(DOT), T(0), T(DOT), T(1), D(LSFT), T(SCLN), U(LSFT), \
-    T(2), T(4), T(6), T(8), T(0), T(ENT), C_WAIT_DS
+    T(2), T(4), T(6), T(8), T(0), T(SPC), \
+    D(LSFT), T(7), T(7), U(LSFT), T(SPC), \
+    T(D), T(O), T(A), T(S), T(SPC), \
+    T(K), T(I), T(L), T(L), T(A), T(L), T(L), T(SPC), \
+    D(LSFT), T(V), U(LSFT), T(2), D(LSFT), T(D), T(S), U(LSFT), T(E), T(R), T(V), T(E), T(R), T(ENT), C_WAIT_DS
 /* curl -H "Accept-Language: de" wttr.in */
 #define T_WEATHER   \
     T(C), T(U), T(R), T(L), T(SPC), \
@@ -81,7 +84,7 @@
     D(LSFT), T(7), U(LSFT), T(M), T(I), T(N), T(I), T(M), T(A), T(L), T(EQL), \
     T(T), T(R), T(U), T(E), D(LSFT), T(QUOT), U(LSFT), T(ENT), C_WAIT_DS
 /* terminal_colors.sh */
-#define T_TERMCOLORS    \
+#define T_TERMCOLOR \
     T(T), T(E), T(R), T(M), T(I), T(N), T(A), T(L), D(LSFT), T(MINS), U(LSFT), \
     T(C), T(O), T(L), T(O), T(R), T(S), T(DOT), T(S), T(H), T(ENT), C_WAIT_DS
 /* telnet towel.blinkenlights.nl */
@@ -99,7 +102,7 @@
 #define AC_WTHR     ACTION_MACRO(WEATHER)
 #define AC_COV      ACTION_MACRO(COVID)
 #define AC_NEOF     ACTION_MACRO(NEOFETCH)
-#define AC_TCOL     ACTION_MACRO(TERMCOLORS)
+#define AC_TCOL     ACTION_MACRO(TERMCOLOR)
 #define AC_STAR     ACTION_MACRO(STARWARS)
 
 enum macro_id {
@@ -111,7 +114,7 @@ enum macro_id {
     WEATHER,
     COVID,
     NEOFETCH,
-    TERMCOLORS,
+    TERMCOLOR,
     STARWARS,
 };
 
@@ -165,10 +168,8 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     MACRO( \
                         /* set typing interval */
                         C_INTERVAL, \
-                        /* open terminal and start ventoy server */
-                        O_TERM, T_CLEAR, T_VENTOY, \
-                        /* open dmenu and go to url with surf */
-                        O_DMENU, T_VENTOYWEB, \
+                        /* open surf with ventoy */
+                        O_DMENU, T_VENTOY, \
                         END ) :
                     MACRO_NONE );
         case WEATHER:
@@ -198,13 +199,13 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                         O_TERMFLOAT, T_CLEAR, T_NEOFETCH, \
                         END ) :
                     MACRO_NONE );
-        case TERMCOLORS:
+        case TERMCOLOR:
             return (record->event.pressed ?
                     MACRO( \
                         /* set typing interval */
                         C_INTERVAL, \
                         /* open floating terminal with color info */
-                        O_TERMFLOAT, T_CLEAR, T_TERMCOLORS, \
+                        O_TERMFLOAT, T_CLEAR, T_TERMCOLOR, \
                         END ) :
                     MACRO_NONE );
         case STARWARS:
