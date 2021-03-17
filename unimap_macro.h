@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-17T11:07:35+0100
+ * date:   2021-03-17T13:17:52+0100
  */
 
 #define C_INTERVAL  I(5)
@@ -53,18 +53,14 @@
 /* neofetch */
 #define T_NEOFETCH  \
     T(N), T(E), T(O), T(F), T(E), T(T), T(C), T(H), T(ENT), C_WAIT_DS
-/* doas ventoyweb & surf 127.0.0.1:24680 && doas killall V2DServer */
+/* lsblk && doas ventoy -u /dev/sdb */
 #define T_VENTOY    \
+    T(L), T(S), T(B), T(L), T(K), T(SCLN), \
+    T(V), T(E), T(N), T(T), T(O), T(Y), T(SPC), T(MINS), T(H), T(ENT), C_WAIT_DS, \
     T(D), T(O), T(A), T(S), T(SPC), \
-    T(V), T(E), T(N), T(T), T(O), T(Y), T(W), T(E), T(B), T(SPC), \
-    D(LSFT), T(7), U(LSFT), T(SPC), \
-    T(S), T(U), T(R), T(F), T(SPC), \
-    T(1), T(2), T(7), T(DOT), T(0), T(DOT), T(0), T(DOT), T(1), D(LSFT), T(SCLN), U(LSFT), \
-    T(2), T(4), T(6), T(8), T(0), T(SPC), \
-    D(LSFT), T(7), T(7), U(LSFT), T(SPC), \
-    T(D), T(O), T(A), T(S), T(SPC), \
-    T(K), T(I), T(L), T(L), T(A), T(L), T(L), T(SPC), \
-    D(LSFT), T(V), U(LSFT), T(2), D(LSFT), T(D), T(S), U(LSFT), T(E), T(R), T(V), T(E), T(R), T(ENT), C_WAIT_DS
+    T(V), T(E), T(N), T(T), T(O), T(Y), T(SPC), \
+    T(MINS), T(U), T(SPC), \
+    T(SLSH), T(D), T(E), T(V), T(SLSH), T(S), T(D), T(B), C_WAIT_DS
 /* curl -H "Accept-Language: de" wttr.in */
 #define T_WEATHER   \
     T(C), T(U), T(R), T(L), T(SPC), \
@@ -168,8 +164,8 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     MACRO( \
                         /* set typing interval */
                         C_INTERVAL, \
-                        /* open surf with ventoy */
-                        O_DMENU, T_VENTOY, \
+                        /* open floating terminal with ventoy */
+                        O_TERMFLOAT, T_CLEAR, T_VENTOY, \
                         END ) :
                     MACRO_NONE );
         case WEATHER:
