@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-19T18:44:31+0100
+ * date:   2021-03-20T13:03:25+0100
  */
 
 #define C_INTERVAL  I(5)
@@ -16,6 +16,7 @@
 #define O_DESK1     D(LGUI), T(1), U(LGUI), C_WAIT_DS
 #define O_DESK2     D(LGUI), T(2), U(LGUI), C_WAIT_DS
 #define O_DESK4     D(LGUI), T(4), U(LGUI), C_WAIT_DS
+#define O_DESK10    D(LGUI), T(0), U(LGUI), C_WAIT_DS
 #define O_PI        D(LGUI), T(H), U(LGUI), C_WAIT_DS
 #define O_PI2       D(LGUI), D(LSFT), T(H), U(LSFT), U(LGUI), C_WAIT_DS
 
@@ -92,6 +93,14 @@
     T(T), T(O), T(W), T(E), T(L), T(DOT), \
     T(B), T(L), T(I), T(N), T(K), T(E), T(N), T(L), T(I), T(G), T(H), T(T), T(S), T(DOT), \
     T(N), T(L), T(ENT), C_WAIT_DS
+/* minetest --logfile '' */
+#define T_MINETEST \
+    T(M), T(I), T(N), T(E), T(T), T(E), T(S), T(T), T(SPC), \
+    T(MINS), T(MINS), T(L), T(O), T(G), T(F), T(I), T(L), T(E), T(SPC), \
+    T(QUOT), T(QUOT), T(ENT), C_WAIT_DS
+/* kodi */
+#define T_KODI \
+    T(K), T(O), T(D), T(I), T(ENT), C_WAIT_DS
 
 #define AC_KEYB     ACTION_MACRO(SETKEYBOARD)
 #define AC_AUTO     ACTION_MACRO(AUTOSTART)
@@ -104,6 +113,8 @@
 #define AC_NEOF     ACTION_MACRO(NEOFETCH)
 #define AC_TCOL     ACTION_MACRO(TERMCOLOR)
 #define AC_STAR     ACTION_MACRO(STARWARS)
+#define AC_MINE     ACTION_MACRO(MINETEST)
+#define AC_KODI     ACTION_MACRO(KODI)
 
 enum macro_id {
     SETKEYBOARD,
@@ -117,6 +128,8 @@ enum macro_id {
     NEOFETCH,
     TERMCOLOR,
     STARWARS,
+    MINETEST,
+    KODI,
 };
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
@@ -169,7 +182,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     MACRO( \
                         /* set typing interval */
                         C_INTERVAL, \
-                        /* open dmenu and execute */
+                        /* open dmenu and execute terminal*/
                         O_DMENU, T_ST, \
                         END ) :
                     MACRO_NONE );
@@ -225,6 +238,24 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                         C_INTERVAL, \
                         /* open floating terminal with starwars */
                         O_TERMFLOAT, T_CLEAR, T_STARWARS, \
+                        END ) :
+                    MACRO_NONE );
+        case MINETEST:
+            return (record->event.pressed ?
+                    MACRO( \
+                        /* set typing interval */
+                        C_INTERVAL, \
+                        /* open dmenu, execute minetest and go to desktop 0 */
+                        O_DMENU, T_MINETEST, O_DESK10, \
+                        END ) :
+                    MACRO_NONE );
+        case KODI:
+            return (record->event.pressed ?
+                    MACRO( \
+                        /* set typing interval */
+                        C_INTERVAL, \
+                        /* open dmenu, execute kodi and go to desktop 0 */
+                        O_DMENU, T_KODI, O_DESK10, \
                         END ) :
                     MACRO_NONE );
     }
