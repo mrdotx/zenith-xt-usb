@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-20T13:03:25+0100
+ * date:   2021-03-23T08:30:33+0100
  */
 
 #define C_INTERVAL  I(5)
@@ -23,23 +23,6 @@
 /*  clear; */
 #define T_CLEAR     \
     T(SPC), T(C), T(L), T(E), T(A), T(R), T(SCLN)
-/* xset r rate 200 50; */
-/* setxkbmap -model pc105 -layout us,de -option grp:caps_switch */
-#define T_KEYBOARD  \
-    T(X), T(S), T(E), T(T), T(SPC), \
-    T(R), T(SPC), \
-    T(R), T(A), T(T), T(E), T(SPC), \
-    T(2), T(0), T(0), T(SPC), \
-    T(5), T(0), T(SCLN), \
-    T(S), T(E), T(T), T(X), T(K), T(B), T(M), T(A), T(P), T(SPC), \
-    T(MINS), T(M), T(O), T(D), T(E), T(L), T(SPC), \
-    T(P), T(C), T(1), T(0), T(5), T(SPC), \
-    T(MINS), T(L), T(A), T(Y), T(O), T(U), T(T), T(SPC), \
-    T(U), T(S), T(COMM), T(D), T(E), T(SPC), \
-    T(MINS), T(O), T(P), T(T), T(I), T(O), T(N), T(SPC), \
-    T(G), T(R), T(P), D(LSFT), T(SCLN), U(LSFT), \
-    T(C), T(A), T(P), T(S), D(LSFT), T(MINS), U(LSFT), \
-    T(S), T(W), T(I), T(T), T(C), T(H), T(ENT), C_WAIT_DS
 /* reboot */
 #define T_REBOOT    \
     T(R), T(E), T(B), T(O), T(O), T(T), T(ENT), C_WAIT_DS
@@ -102,7 +85,6 @@
 #define T_KODI \
     T(K), T(O), T(D), T(I), T(ENT), C_WAIT_DS
 
-#define AC_KEYB     ACTION_MACRO(SETKEYBOARD)
 #define AC_AUTO     ACTION_MACRO(AUTOSTART)
 #define AC_SSH      ACTION_MACRO(OPENSSH)
 #define AC_BOOT     ACTION_MACRO(REBOOT)
@@ -117,7 +99,6 @@
 #define AC_KODI     ACTION_MACRO(KODI)
 
 enum macro_id {
-    SETKEYBOARD,
     AUTOSTART,
     OPENSSH,
     REBOOT,
@@ -135,15 +116,6 @@ enum macro_id {
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
     switch (id) {
-        case SETKEYBOARD:
-            return (record->event.pressed ?
-                    MACRO( \
-                        /* set typing interval */
-                        C_INTERVAL, \
-                        /* open dmenu and set keyboard options */
-                        O_DMENU, T_KEYBOARD, \
-                        END ) :
-                    MACRO_NONE );
         case AUTOSTART:
             return (record->event.pressed ?
                     MACRO( \
