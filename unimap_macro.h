@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-23T08:30:33+0100
+ * date:   2021-03-25T08:56:06+0100
  */
 
 #define C_INTERVAL  I(5)
@@ -13,12 +13,12 @@
 #define O_TERMFLOAT D(LGUI), D(LSFT), T(ENT), U(LSFT), U(LGUI), C_WAIT_QS
 #define O_DMENU     D(LSFT), T(LGUI), U(LSFT), C_WAIT_QS
 #define O_WEB       D(LGUI), T(W), U(LGUI), C_WAIT_QS
-#define O_DESK1     D(LGUI), T(1), U(LGUI), C_WAIT_DS
-#define O_DESK2     D(LGUI), T(2), U(LGUI), C_WAIT_DS
-#define O_DESK4     D(LGUI), T(4), U(LGUI), C_WAIT_DS
-#define O_DESK10    D(LGUI), T(0), U(LGUI), C_WAIT_DS
-#define O_PI        D(LGUI), T(H), U(LGUI), C_WAIT_DS
-#define O_PI2       D(LGUI), D(LSFT), T(H), U(LSFT), U(LGUI), C_WAIT_DS
+#define O_DESK1     D(LGUI), T(1), U(LGUI), C_WAIT_QS
+#define O_DESK2     D(LGUI), T(2), U(LGUI), C_WAIT_QS
+#define O_DESK4     D(LGUI), T(4), U(LGUI), C_WAIT_QS
+#define O_DESK10    D(LGUI), T(0), U(LGUI), C_WAIT_QS
+#define O_PI        D(LGUI), T(H), U(LGUI), C_WAIT_QS
+#define O_PI2       D(LGUI), D(LSFT), T(H), U(LSFT), U(LGUI), C_WAIT_QS
 
 /*  clear; */
 #define T_CLEAR     \
