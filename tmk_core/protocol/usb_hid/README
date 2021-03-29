@@ -1,0 +1,29 @@
+USB HID protocol
+================
+Host side of USB HID keyboard protocol implementation.
+Only standard HID Boot mode is supported at this time. This means most of normal keyboards are supported while proprietary >6KRO and NKRO is not.
+
+Third party Libraries
+---------------------
+USB_Host_Shield_2.0
+    Circuits@Home repository is git-submoduled. Do git submodule init & update to get the content.
+    https://github.com/felis/USB_Host_Shield_2.0
+
+arduino-1.8.1
+    Arduino files copied from:
+    https://github.com/arduino/ArduinoCore-avr
+
+
+USB-USB converter
+-----------------
+See converter/usb_usb/README.
+
+
+Restriction and Bug
+-------------------
+Not supported/confirmed yet: Suspend
+
+Can't compile on Windows filesystem.
+    On Linux no problem.
+    Windows doesn't know difference between common/print.h and arduino/Print.h.
+    Change file name common/print.h to something?
