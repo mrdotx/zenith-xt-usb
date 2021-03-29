@@ -2,8 +2,8 @@
 
 # path:   /home/klassiker/.local/share/repos/zenith-xt-usb/tmk_core.sh
 # author: klassiker [mrdotx]
-# github: https://github.com/mrdotx/terminal-colors
-# date:   2021-03-29T13:22:01+0200
+# github: https://github.com/mrdotx/zenith-xt-usb
+# date:   2021-03-29T19:05:18+0200
 
 clear
 rm -rf tmk_core
