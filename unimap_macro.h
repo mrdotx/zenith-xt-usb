@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-03-30T09:52:28+0200
+ * date:   2021-04-27T20:38:00+0200
  */
 
 /* general config */
@@ -67,7 +67,12 @@
 /* neofetch */
 #define T_NEOFETCH  C_INTERVAL1, \
     T(N), T(E), T(O), T(F), T(E), T(T), T(C), T(H), T(ENT), C_WAIT1
-/* lsblk && doas ventoy -u /dev/sdb */
+/* doas efistub.sh -b */
+#define T_BOOTNEXT  C_INTERVAL1, \
+    T(D), T(O), T(A), T(S), T(SPC), \
+    T(E), T(F), T(I), T(S), T(T), T(U), T(B), T(DOT), T(S), T(H), T(SPC), \
+    T(MINS), T(B), T(ENT), C_WAIT1
+/* lsblk;doas ventoy -u /dev/sdb */
 #define T_VENTOY    C_INTERVAL1, \
     T(L), T(S), T(B), T(L), T(K), T(SCLN), \
     T(V), T(E), T(N), T(T), T(O), T(Y), T(SPC), \
@@ -125,6 +130,7 @@
 #define AC_WTHR     ACTION_MACRO(WEATHER)
 #define AC_COV      ACTION_MACRO(COVID)
 #define AC_NEOF     ACTION_MACRO(NEOFETCH)
+#define AC_NEXT     ACTION_MACRO(BOOTNEXT)
 #define AC_TCOL     ACTION_MACRO(TERMCOLOR)
 #define AC_STAR     ACTION_MACRO(STARWARS)
 #define AC_MINE     ACTION_MACRO(MINETEST)
@@ -140,6 +146,7 @@ enum macro_id {
     WEATHER,
     COVID,
     NEOFETCH,
+    BOOTNEXT,
     TERMCOLOR,
     STARWARS,
     MINETEST,
@@ -204,6 +211,12 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
             return (record->event.pressed ?
                     MACRO( \
                         O_TERMFLOAT, T_CLEAR, T_NEOFETCH, \
+                        END ) :
+                    MACRO_NONE );
+        case BOOTNEXT:
+            return (record->event.pressed ?
+                    MACRO( \
+                        O_TERMFLOAT, T_CLEAR, T_BOOTNEXT, \
                         END ) :
                     MACRO_NONE );
         case TERMCOLOR:
