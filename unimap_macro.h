@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-05-02T21:54:13+0200
+ * date:   2021-05-07T20:35:03+0200
  */
 
 /* general config */
@@ -10,6 +10,8 @@
 #define C_INTERVAL2 I(25)
 #define C_WAIT1     W(100)
 #define C_WAIT2     W(255)
+#define C_WAIT3     W(255), W(255), W(255)
+#define C_WAIT4     W(255), W(255), W(255), W(255), W(255), W(255)
 
 /* open terminal */
 #define O_TERM      C_INTERVAL2, \
@@ -27,7 +29,7 @@
     D(LSFT), T(LGUI), U(LSFT), C_WAIT2
 /* open web browser */
 #define O_WEB       C_INTERVAL2, \
-    D(LGUI), T(W), U(LGUI), C_WAIT2
+    D(LGUI), T(W), U(LGUI), C_WAIT4
 /* go to desktop 1 */
 #define O_DESK1     C_INTERVAL2, \
     D(LGUI), T(1), U(LGUI), C_WAIT2
@@ -63,7 +65,7 @@
 #define T_RANGER    C_INTERVAL1, \
     T(R), T(A), T(N), T(G), T(E), T(R), \
     D(LSFT), T(MINS), U(LSFT), T(C), T(D), T(ENT), \
-    C_WAIT2, C_WAIT2, C_WAIT2, T(QUOT), T(R), C_WAIT1
+    C_WAIT3, T(QUOT), T(R), C_WAIT1
 /* cinfo */
 #define T_CINFO     C_INTERVAL1, \
     T(C), T(I), T(N), T(F), T(O), T(ENT), C_WAIT1
@@ -162,10 +164,9 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
         case AUTOSTART:
             return (record->event.pressed ?
                     MACRO( \
-                        O_DESK1, O_TERM, T_CLEAR, T_CINFO, \
                         O_WEB, \
                         O_DESK2, O_TERM, T_CLEAR, T_RANGER, \
-                        O_DESK4, O_DESK2, O_DESK1, \
+                        O_DESK1, O_TERM, T_CLEAR, T_CINFO, \
                         END ) :
                     MACRO_NONE );
         case OPENSSH:
