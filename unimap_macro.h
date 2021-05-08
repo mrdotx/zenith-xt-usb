@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-05-07T20:35:03+0200
+ * date:   2021-05-08T08:07:32+0200
  */
 
 /* general config */
@@ -11,7 +11,7 @@
 #define C_WAIT1     W(100)
 #define C_WAIT2     W(255)
 #define C_WAIT3     W(255), W(255), W(255)
-#define C_WAIT4     W(255), W(255), W(255), W(255), W(255), W(255)
+#define C_WAIT4     W(255), W(255), W(255), W(255)
 
 /* open terminal */
 #define O_TERM      C_INTERVAL2, \
@@ -29,7 +29,7 @@
     D(LSFT), T(LGUI), U(LSFT), C_WAIT2
 /* open web browser */
 #define O_WEB       C_INTERVAL2, \
-    D(LGUI), T(W), U(LGUI), C_WAIT4
+    D(LGUI), T(W), U(LGUI), C_WAIT4, C_WAIT4, C_WAIT2
 /* go to desktop 1 */
 #define O_DESK1     C_INTERVAL2, \
     D(LGUI), T(1), U(LGUI), C_WAIT2
