@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-05-11T19:41:17+0200
+ * date:   2021-05-08T08:07:32+0200
  */
 
 /* general config */
@@ -19,6 +19,11 @@
 /* open floating terminal */
 #define O_TERMFLOAT C_INTERVAL2, \
     D(LGUI), D(LSFT), T(ENT), U(LSFT), U(LGUI), C_WAIT2
+/* change terminal font size */
+#define O_FONTSIZE  C_INTERVAL2, \
+    D(LCTL), D(LSFT), \
+    T(EQL), T(EQL), T(EQL), T(EQL), T(EQL), T(EQL), T(EQL), T(EQL), \
+    U(LSFT), U(LCTL), C_WAIT2
 /* open dmenu */
 #define O_DMENU     C_INTERVAL2, \
     D(LSFT), T(LGUI), U(LSFT), C_WAIT2
@@ -125,6 +130,7 @@
 #define AC_SSH      ACTION_MACRO(OPENSSH)
 #define AC_BOOT     ACTION_MACRO(REBOOT)
 #define AC_TERM     ACTION_MACRO(TERMINAL)
+#define AC_FONT     ACTION_MACRO(FONTSIZE)
 #define AC_VTOY     ACTION_MACRO(VENTOY)
 #define AC_WTHR     ACTION_MACRO(WEATHER)
 #define AC_COV      ACTION_MACRO(COVID)
@@ -140,6 +146,7 @@ enum macro_id {
     OPENSSH,
     REBOOT,
     TERMINAL,
+    FONTSIZE,
     VENTOY,
     WEATHER,
     COVID,
@@ -178,6 +185,12 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
             return (record->event.pressed ?
                     MACRO( \
                         O_DMENU, T_ST, \
+                        END ) :
+                    MACRO_NONE );
+        case FONTSIZE:
+            return (record->event.pressed ?
+                    MACRO( \
+                        O_FONTSIZE, \
                         END ) :
                     MACRO_NONE );
         case VENTOY:
