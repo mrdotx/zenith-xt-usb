@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-05-14T12:30:55+0200
+ * date:   2021-05-14T18:50:08+0200
  */
 
 /* general config */
@@ -10,6 +10,7 @@
 #define C_INTERVAL2 I(25)
 #define C_WAIT1     W(100)
 #define C_WAIT2     W(255)
+#define C_WAIT3     W(255), W(255)
 
 /* open terminal */
 #define O_TERM      C_INTERVAL2, \
@@ -166,9 +167,9 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     MACRO( \
                         O_DESK1, O_TERM, T_CLEAR, T_CINFO, \
                         O_WEB, \
-                        O_DESK2, O_TERM, T_CLEAR, T_RANGER, C_WAIT2, \
+                        O_DESK2, O_TERM, T_CLEAR, T_RANGER, C_WAIT3, \
                         O_RANGER_R, \
-                        O_DESK4, O_DESK2, O_DESK1,
+                        O_DESK4, O_DESK2, O_DESK1, \
                         END ) :
                     MACRO_NONE );
         case OPENSSH:
