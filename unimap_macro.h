@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-05-14T18:50:08+0200
+ * date:   2021-05-16T22:22:54+0200
  */
 
 /* general config */
@@ -60,9 +60,6 @@
 /* reboot */
 #define T_REBOOT    C_INTERVAL1, \
     T(R), T(E), T(B), T(O), T(O), T(T), T(ENT), C_WAIT1
-/* st */
-#define T_ST        C_INTERVAL1, \
-    T(S), T(T), T(ENT), C_WAIT1
 /* ranger_cd */
 #define T_RANGER    C_INTERVAL1, \
     T(R), T(A), T(N), T(G), T(E), T(R), \
@@ -130,7 +127,6 @@
 #define AC_AUTO     ACTION_MACRO(AUTOSTART)
 #define AC_SSH      ACTION_MACRO(OPENSSH)
 #define AC_BOOT     ACTION_MACRO(REBOOT)
-#define AC_TERM     ACTION_MACRO(TERMINAL)
 #define AC_FONT     ACTION_MACRO(FONTSIZE)
 #define AC_VTOY     ACTION_MACRO(VENTOY)
 #define AC_WTHR     ACTION_MACRO(WEATHER)
@@ -146,7 +142,6 @@ enum macro_id {
     AUTOSTART,
     OPENSSH,
     REBOOT,
-    TERMINAL,
     FONTSIZE,
     VENTOY,
     WEATHER,
@@ -182,12 +177,6 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
             return (record->event.pressed ?
                     MACRO( \
                         O_DMENU, T_REBOOT, \
-                        END ) :
-                    MACRO_NONE );
-        case TERMINAL:
-            return (record->event.pressed ?
-                    MACRO( \
-                        O_DMENU, T_ST, \
                         END ) :
                     MACRO_NONE );
         case FONTSIZE:
