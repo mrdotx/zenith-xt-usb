@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-05-17T12:43:19+0200
+ * date:   2021-05-17T18:47:02+0200
  */
 
 /* general config */
@@ -15,8 +15,8 @@
 /* open terminal */
 #define O_TERM      C_INTERVAL2, \
     D(LGUI), T(ENT), U(LGUI), C_WAIT2
-/* open floating terminal */
-#define O_TERMFLOAT C_INTERVAL2, \
+/* open info terminal */
+#define O_TERMINFO  C_INTERVAL2, \
     D(LGUI), D(LSFT), T(ENT), U(LSFT), U(LGUI), C_WAIT2
 /* change terminal font size */
 #define O_FONTSIZE  C_INTERVAL2, \
@@ -29,12 +29,12 @@
 /* open web browser */
 #define O_WEB       C_INTERVAL2, \
     D(LGUI), T(W), U(LGUI), C_WAIT2
-/* go to desktop 1 */
-#define O_DESK1     C_INTERVAL2, \
-    D(LGUI), T(1), U(LGUI), C_WAIT2
 /* go to desktop 2 */
 #define O_DESK2     C_INTERVAL2, \
     D(LGUI), T(2), U(LGUI), C_WAIT2
+/* go to desktop 3 */
+#define O_DESK3     C_INTERVAL2, \
+    D(LGUI), T(3), U(LGUI), C_WAIT2
 /* go to desktop 4 */
 #define O_DESK4     C_INTERVAL2, \
     D(LGUI), T(4), U(LGUI), C_WAIT2
@@ -142,11 +142,11 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
         case AUTOSTART:
             return (record->event.pressed ?
                     MACRO( \
-                        O_DESK1, O_TERM, T_CLEAR, T_CINFO, \
+                        O_TERMINFO, T_CLEAR, T_CINFO, \
                         O_WEB, \
                         O_DESK2, O_TERM, T_CLEAR, T_RANGER, C_WAIT3, \
                         O_RANGER_R, \
-                        O_DESK4, O_DESK2, O_DESK1, \
+                        O_DESK4, O_DESK2, O_DESK3, \
                         END ) :
                     MACRO_NONE );
         case FONTSIZE:
@@ -170,43 +170,43 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
         case VENTOY:
             return (record->event.pressed ?
                     MACRO( \
-                        O_TERMFLOAT, T_CLEAR, T_VENTOY, \
+                        O_TERMINFO, T_CLEAR, T_VENTOY, \
                         END ) :
                     MACRO_NONE );
         case WEATHER:
             return (record->event.pressed ?
                     MACRO( \
-                        O_TERMFLOAT, T_CLEAR, T_WEATHER, \
+                        O_TERMINFO, T_CLEAR, T_WEATHER, \
                         END ) :
                     MACRO_NONE );
         case COVID:
             return (record->event.pressed ?
                     MACRO( \
-                        O_TERMFLOAT, T_CLEAR, T_COVID, \
+                        O_TERMINFO, T_CLEAR, T_COVID, \
                         END ) :
                     MACRO_NONE );
         case NEOFETCH:
             return (record->event.pressed ?
                     MACRO( \
-                        O_TERMFLOAT, T_CLEAR, T_NEOFETCH, \
+                        O_TERMINFO, T_CLEAR, T_NEOFETCH, \
                         END ) :
                     MACRO_NONE );
         case BOOTNEXT:
             return (record->event.pressed ?
                     MACRO( \
-                        O_TERMFLOAT, T_CLEAR, T_BOOTNEXT, \
+                        O_TERMINFO, T_CLEAR, T_BOOTNEXT, \
                         END ) :
                     MACRO_NONE );
         case TERMCOLOR:
             return (record->event.pressed ?
                     MACRO( \
-                        O_TERMFLOAT, T_CLEAR, T_TERMCOLOR, \
+                        O_TERMINFO, T_CLEAR, T_TERMCOLOR, \
                         END ) :
                     MACRO_NONE );
         case STARWARS:
             return (record->event.pressed ?
                     MACRO( \
-                        O_TERMFLOAT, T_CLEAR, T_STARWARS, \
+                        O_TERMINFO, T_CLEAR, T_STARWARS, \
                         END ) :
                     MACRO_NONE );
     }
