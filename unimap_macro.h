@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-05-16T22:22:54+0200
+ * date:   2021-05-17T12:43:19+0200
  */
 
 /* general config */
@@ -38,12 +38,6 @@
 /* go to desktop 4 */
 #define O_DESK4     C_INTERVAL2, \
     D(LGUI), T(4), U(LGUI), C_WAIT2
-/* go to desktop 9 */
-#define O_DESK9    C_INTERVAL2, \
-    D(LGUI), T(9), U(LGUI), C_WAIT2
-/* go to desktop 10 */
-#define O_DESK10    C_INTERVAL2, \
-    D(LGUI), T(0), U(LGUI), C_WAIT2
 /* open ssh connection 1 */
 #define O_SSH1      C_INTERVAL2, \
     D(LGUI), T(H), U(LGUI), C_WAIT2
@@ -115,19 +109,11 @@
     T(B), T(L), T(I), T(N), T(K), T(E), T(N), \
     T(L), T(I), T(G), T(H), T(T), T(S), T(DOT), \
     T(N), T(L), T(ENT), C_WAIT1
-/* kodi */
-#define T_KODI      C_INTERVAL1, \
-    T(K), T(O), T(D), T(I), T(ENT), C_WAIT1
-/* minetest --logfile '' */
-#define T_MINETEST  C_INTERVAL1, \
-    T(M), T(I), T(N), T(E), T(T), T(E), T(S), T(T), T(SPC), \
-    T(MINS), T(MINS), T(L), T(O), T(G), T(F), T(I), T(L), T(E), T(SPC), \
-    T(QUOT), T(QUOT), T(ENT), C_WAIT1
 
 #define AC_AUTO     ACTION_MACRO(AUTOSTART)
+#define AC_FONT     ACTION_MACRO(FONTSIZE)
 #define AC_SSH      ACTION_MACRO(OPENSSH)
 #define AC_BOOT     ACTION_MACRO(REBOOT)
-#define AC_FONT     ACTION_MACRO(FONTSIZE)
 #define AC_VTOY     ACTION_MACRO(VENTOY)
 #define AC_WTHR     ACTION_MACRO(WEATHER)
 #define AC_COV      ACTION_MACRO(COVID)
@@ -135,14 +121,12 @@
 #define AC_NEXT     ACTION_MACRO(BOOTNEXT)
 #define AC_TCOL     ACTION_MACRO(TERMCOLOR)
 #define AC_STAR     ACTION_MACRO(STARWARS)
-#define AC_KODI     ACTION_MACRO(KODI)
-#define AC_MINE     ACTION_MACRO(MINETEST)
 
 enum macro_id {
     AUTOSTART,
+    FONTSIZE,
     OPENSSH,
     REBOOT,
-    FONTSIZE,
     VENTOY,
     WEATHER,
     COVID,
@@ -150,8 +134,6 @@ enum macro_id {
     BOOTNEXT,
     TERMCOLOR,
     STARWARS,
-    KODI,
-    MINETEST,
 };
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
@@ -167,6 +149,12 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                         O_DESK4, O_DESK2, O_DESK1, \
                         END ) :
                     MACRO_NONE );
+        case FONTSIZE:
+            return (record->event.pressed ?
+                    MACRO( \
+                        O_FONTSIZE, \
+                        END ) :
+                    MACRO_NONE );
         case OPENSSH:
             return (record->event.pressed ?
                     MACRO( \
@@ -177,12 +165,6 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
             return (record->event.pressed ?
                     MACRO( \
                         O_DMENU, T_REBOOT, \
-                        END ) :
-                    MACRO_NONE );
-        case FONTSIZE:
-            return (record->event.pressed ?
-                    MACRO( \
-                        O_FONTSIZE, \
                         END ) :
                     MACRO_NONE );
         case VENTOY:
@@ -225,18 +207,6 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
             return (record->event.pressed ?
                     MACRO( \
                         O_TERMFLOAT, T_CLEAR, T_STARWARS, \
-                        END ) :
-                    MACRO_NONE );
-        case KODI:
-            return (record->event.pressed ?
-                    MACRO( \
-                        O_DMENU, T_KODI, O_DESK9, \
-                        END ) :
-                    MACRO_NONE );
-        case MINETEST:
-            return (record->event.pressed ?
-                    MACRO( \
-                        O_DMENU, T_MINETEST, O_DESK10, \
                         END ) :
                     MACRO_NONE );
     }
