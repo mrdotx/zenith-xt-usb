@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-05-17T18:47:02+0200
+ * date:   2021-05-18T12:37:46+0200
  */
 
 /* general config */
@@ -51,9 +51,6 @@
 /*  clear; */
 #define T_CLEAR     C_INTERVAL1, \
     T(SPC), T(C), T(L), T(E), T(A), T(R), T(SCLN)
-/* reboot */
-#define T_REBOOT    C_INTERVAL1, \
-    T(R), T(E), T(B), T(O), T(O), T(T), T(ENT), C_WAIT1
 /* ranger_cd */
 #define T_RANGER    C_INTERVAL1, \
     T(R), T(A), T(N), T(G), T(E), T(R), \
@@ -61,9 +58,9 @@
 /* cinfo */
 #define T_CINFO     C_INTERVAL1, \
     T(C), T(I), T(N), T(F), T(O), T(ENT), C_WAIT1
-/* neofetch */
-#define T_NEOFETCH  C_INTERVAL1, \
-    T(N), T(E), T(O), T(F), T(E), T(T), T(C), T(H), T(ENT), C_WAIT1
+/* reboot */
+#define T_REBOOT    C_INTERVAL1, \
+    T(R), T(E), T(B), T(O), T(O), T(T), T(ENT), C_WAIT1
 /* doas efistub.sh -b */
 #define T_BOOTNEXT  C_INTERVAL1, \
     T(D), T(O), T(A), T(S), T(SPC), \
@@ -78,6 +75,13 @@
     T(V), T(E), T(N), T(T), T(O), T(Y), T(SPC), \
     T(MINS), T(U), T(SPC), \
     T(SLSH), T(D), T(E), T(V), T(SLSH), T(S), T(D), T(B), C_WAIT1
+/* terminal_colors.sh */
+#define T_TERMCOLOR C_INTERVAL1, \
+    T(T), T(E), T(R), T(M), T(I), T(N), T(A), T(L), D(LSFT), T(MINS), U(LSFT), \
+    T(C), T(O), T(L), T(O), T(R), T(S), T(DOT), T(S), T(H), T(ENT), C_WAIT1
+/* neofetch */
+#define T_NEOFETCH  C_INTERVAL1, \
+    T(N), T(E), T(O), T(F), T(E), T(T), T(C), T(H), T(ENT), C_WAIT1
 /* curl -H "Accept-Language: de" wttr.in */
 #define T_WEATHER   C_INTERVAL1, \
     T(C), T(U), T(R), T(L), T(SPC), \
@@ -98,42 +102,29 @@
     D(LSFT), T(7), U(LSFT), T(S), T(O), T(U), T(R), T(C), T(E), T(EQL), T(2), \
     D(LSFT), T(7), U(LSFT), T(M), T(I), T(N), T(I), T(M), T(A), T(L), T(EQL), \
     T(T), T(R), T(U), T(E), D(LSFT), T(QUOT), U(LSFT), T(ENT), C_WAIT1
-/* terminal_colors.sh */
-#define T_TERMCOLOR C_INTERVAL1, \
-    T(T), T(E), T(R), T(M), T(I), T(N), T(A), T(L), D(LSFT), T(MINS), U(LSFT), \
-    T(C), T(O), T(L), T(O), T(R), T(S), T(DOT), T(S), T(H), T(ENT), C_WAIT1
-/* telnet towel.blinkenlights.nl */
-#define T_STARWARS  C_INTERVAL1, \
-    T(T), T(E), T(L), T(N), T(E), T(T), T(SPC), \
-    T(T), T(O), T(W), T(E), T(L), T(DOT), \
-    T(B), T(L), T(I), T(N), T(K), T(E), T(N), \
-    T(L), T(I), T(G), T(H), T(T), T(S), T(DOT), \
-    T(N), T(L), T(ENT), C_WAIT1
 
 #define AC_AUTO     ACTION_MACRO(AUTOSTART)
 #define AC_FONT     ACTION_MACRO(FONTSIZE)
-#define AC_SSH      ACTION_MACRO(OPENSSH)
 #define AC_BOOT     ACTION_MACRO(REBOOT)
+#define AC_NEXT     ACTION_MACRO(BOOTNEXT)
+#define AC_SSH      ACTION_MACRO(OPENSSH)
 #define AC_VTOY     ACTION_MACRO(VENTOY)
+#define AC_TCOL     ACTION_MACRO(TERMCOLOR)
+#define AC_NEOF     ACTION_MACRO(NEOFETCH)
 #define AC_WTHR     ACTION_MACRO(WEATHER)
 #define AC_COV      ACTION_MACRO(COVID)
-#define AC_NEOF     ACTION_MACRO(NEOFETCH)
-#define AC_NEXT     ACTION_MACRO(BOOTNEXT)
-#define AC_TCOL     ACTION_MACRO(TERMCOLOR)
-#define AC_STAR     ACTION_MACRO(STARWARS)
 
 enum macro_id {
     AUTOSTART,
     FONTSIZE,
-    OPENSSH,
     REBOOT,
+    BOOTNEXT,
+    OPENSSH,
     VENTOY,
+    TERMCOLOR,
+    NEOFETCH,
     WEATHER,
     COVID,
-    NEOFETCH,
-    BOOTNEXT,
-    TERMCOLOR,
-    STARWARS,
 };
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
@@ -142,7 +133,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
         case AUTOSTART:
             return (record->event.pressed ?
                     MACRO( \
-                        O_TERMINFO, T_CLEAR, T_CINFO, \
+                        O_TERMINFO, O_FONTSIZE, T_CLEAR, T_CINFO, \
                         O_WEB, \
                         O_DESK2, O_TERM, T_CLEAR, T_RANGER, C_WAIT3, \
                         O_RANGER_R, \
@@ -155,22 +146,40 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                         O_FONTSIZE, \
                         END ) :
                     MACRO_NONE );
-        case OPENSSH:
-            return (record->event.pressed ?
-                    MACRO( \
-                        O_SSH1, O_SSH2, \
-                        END ) :
-                    MACRO_NONE );
         case REBOOT:
             return (record->event.pressed ?
                     MACRO( \
                         O_DMENU, T_REBOOT, \
                         END ) :
                     MACRO_NONE );
+        case BOOTNEXT:
+            return (record->event.pressed ?
+                    MACRO( \
+                        O_TERMINFO, T_CLEAR, T_BOOTNEXT, \
+                        END ) :
+                    MACRO_NONE );
+        case OPENSSH:
+            return (record->event.pressed ?
+                    MACRO( \
+                        O_SSH1, O_SSH2, \
+                        END ) :
+                    MACRO_NONE );
         case VENTOY:
             return (record->event.pressed ?
                     MACRO( \
                         O_TERMINFO, T_CLEAR, T_VENTOY, \
+                        END ) :
+                    MACRO_NONE );
+        case TERMCOLOR:
+            return (record->event.pressed ?
+                    MACRO( \
+                        O_TERMINFO, T_CLEAR, T_TERMCOLOR, \
+                        END ) :
+                    MACRO_NONE );
+        case NEOFETCH:
+            return (record->event.pressed ?
+                    MACRO( \
+                        O_TERMINFO, T_CLEAR, T_NEOFETCH, \
                         END ) :
                     MACRO_NONE );
         case WEATHER:
@@ -183,30 +192,6 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
             return (record->event.pressed ?
                     MACRO( \
                         O_TERMINFO, T_CLEAR, T_COVID, \
-                        END ) :
-                    MACRO_NONE );
-        case NEOFETCH:
-            return (record->event.pressed ?
-                    MACRO( \
-                        O_TERMINFO, T_CLEAR, T_NEOFETCH, \
-                        END ) :
-                    MACRO_NONE );
-        case BOOTNEXT:
-            return (record->event.pressed ?
-                    MACRO( \
-                        O_TERMINFO, T_CLEAR, T_BOOTNEXT, \
-                        END ) :
-                    MACRO_NONE );
-        case TERMCOLOR:
-            return (record->event.pressed ?
-                    MACRO( \
-                        O_TERMINFO, T_CLEAR, T_TERMCOLOR, \
-                        END ) :
-                    MACRO_NONE );
-        case STARWARS:
-            return (record->event.pressed ?
-                    MACRO( \
-                        O_TERMINFO, T_CLEAR, T_STARWARS, \
                         END ) :
                     MACRO_NONE );
     }
