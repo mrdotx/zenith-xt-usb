@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-06-29T12:16:35+0200
+ * date:   2021-06-29T12:50:33+0200
  */
 
 /* general config */
@@ -89,17 +89,19 @@
     T(SLSH), D(LSFT), T(SLSH), T(A), T(F), U(LSFT), T(Q), T(2), \
     D(LSFT), T(7), U(LSFT), T(L), T(A), T(N), T(G), T(EQL), T(D), T(E), \
     D(LSFT), T(QUOT), U(LSFT), T(ENT), C_WAIT1
-/* curl "https://corona-stats.online?top=20&source=2&minimal=true" */
+/* curl -s "https://corona-stats.online?top=30&source=2&minimal=true" \ head -n32 */
 #define T_COVID     C_INTERVAL1, \
-    T(C), T(U), T(R), T(L), T(SPC), \
+    T(C), T(U), T(R), T(L), T(SPC), T(MINS), T(S), T(SPC), \
     D(LSFT), T(QUOT), U(LSFT), T(H), T(T), T(T), T(P), T(S), \
     D(LSFT), T(SCLN), U(LSFT), T(SLSH), T(SLSH), \
     T(C), T(O), T(R), T(O), T(N), T(A), T(MINS), \
     T(S), T(T), T(A), T(T), T(S), T(DOT), T(O), T(N), T(L), T(I), T(N), T(E), \
-    D(LSFT), T(SLSH), U(LSFT), T(T), T(O), T(P), T(EQL), T(2), T(0), \
+    D(LSFT), T(SLSH), U(LSFT), T(T), T(O), T(P), T(EQL), T(3), T(0), \
     D(LSFT), T(7), U(LSFT), T(S), T(O), T(U), T(R), T(C), T(E), T(EQL), T(2), \
     D(LSFT), T(7), U(LSFT), T(M), T(I), T(N), T(I), T(M), T(A), T(L), T(EQL), \
-    T(T), T(R), T(U), T(E), D(LSFT), T(QUOT), U(LSFT), T(ENT), C_WAIT1
+    T(T), T(R), T(U), T(E), D(LSFT), T(QUOT), U(LSFT), \
+    T(SPC), D(LSFT), T(BSLS), U(LSFT), T(SPC), \
+    T(H), T(E), T(A), T(D), T(SPC), T(MINS), T(N), T(3), T(2), T(ENT), C_WAIT1
 
 #define AC_AUTO     ACTION_MACRO(AUTOSTART)
 #define AC_FONT     ACTION_MACRO(FONTSIZE)
