@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-06-29T12:50:33+0200
+ * date:   2021-07-10T20:00:26+0200
  */
 
 /* general config */
@@ -51,6 +51,20 @@
 /*  clear; */
 #define T_CLEAR     C_INTERVAL1, \
     T(SPC), T(C), T(L), T(E), T(A), T(R), T(SCLN)
+/* setxkbmap -model pc105 -layout us,de -option grp:caps_switch;xset r rate 200 50 */
+#define T_KEYBOARD C_INTERVAL1, \
+    T(S), T(E), T(T), T(X), T(K), T(B), T(M), T(A), T(P), T(SPC), \
+    T(MINS), T(M), T(O), T(D), T(E), T(L), T(SPC), \
+    T(P), T(C), T(1), T(0), T(5), T(SPC), \
+    T(MINS), T(L), T(A), T(Y), T(O), T(U), T(T), T(SPC), \
+    T(U), T(S), T(COMM), T(D), T(E), T(SPC), \
+    T(MINS), T(O), T(P), T(T), T(I), T(O), T(N), T(SPC), \
+    T(G), T(R), T(P), D(LSFT), T(SCLN), U(LSFT), \
+    T(C), T(A), T(P), T(S), D(LSFT), T(MINS), U(LSFT), \
+    T(S), T(W), T(I), T(T), T(C), T(H), T(SCLN), \
+    T(X), T(S), T(E), T(T), T(SPC), T(R), T(SPC), \
+    T(R), T(A), T(T), T(E), T(SPC), \
+    T(2), T(0), T(0), T(SPC), T(5), T(0), T(ENT), C_WAIT1
 /* ranger_cd */
 #define T_RANGER    C_INTERVAL1, \
     T(R), T(A), T(N), T(G), T(E), T(R), \
@@ -103,6 +117,7 @@
     T(SPC), D(LSFT), T(BSLS), U(LSFT), T(SPC), \
     T(H), T(E), T(A), T(D), T(SPC), T(MINS), T(N), T(3), T(2), T(ENT), C_WAIT1
 
+#define AC_KEYB     ACTION_MACRO(KEYBOARD)
 #define AC_AUTO     ACTION_MACRO(AUTOSTART)
 #define AC_FONT     ACTION_MACRO(FONTSIZE)
 #define AC_BOOT     ACTION_MACRO(REBOOT)
@@ -115,6 +130,7 @@
 #define AC_COV      ACTION_MACRO(COVID)
 
 enum macro_id {
+    KEYBOARD,
     AUTOSTART,
     FONTSIZE,
     REBOOT,
@@ -130,6 +146,12 @@ enum macro_id {
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
     switch (id) {
+        case KEYBOARD:
+            return (record->event.pressed ?
+                    MACRO( \
+                        O_DMENU, T_KEYBOARD, \
+                        END ) :
+                    MACRO_NONE );
         case AUTOSTART:
             return (record->event.pressed ?
                     MACRO( \
