@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-07-10T20:00:26+0200
+ * date:   2021-07-17T18:27:37+0200
  */
 
 /* general config */
@@ -38,12 +38,9 @@
 /* go to desktop 4 */
 #define O_DESK4     C_INTERVAL2, \
     D(LGUI), T(4), U(LGUI), C_WAIT2
-/* open ssh connection 1 */
-#define O_SSH1      C_INTERVAL2, \
-    D(LGUI), T(H), U(LGUI), C_WAIT2
-/* open ssh connection 2 */
-#define O_SSH2      C_INTERVAL2, \
-    D(LGUI), D(LSFT), T(H), U(LSFT), U(LGUI), C_WAIT2
+/* open ssh connections */
+#define O_SSH       C_INTERVAL2, \
+    D(LGUI), T(H), U(LGUI), T(H), T(P), T(Q), C_WAIT2
 /* open ranger repos folder*/
 #define O_RANGER_R  C_INTERVAL2, \
     T(QUOT), T(R), C_WAIT2
@@ -183,7 +180,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
         case OPENSSH:
             return (record->event.pressed ?
                     MACRO( \
-                        O_SSH1, O_SSH2, \
+                        O_SSH, \
                         END ) :
                     MACRO_NONE );
         case VENTOY:
