@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-07-17T18:27:37+0200
+ * date:   2021-07-18T08:54:37+0200
  */
 
 /* general config */
@@ -40,7 +40,7 @@
     D(LGUI), T(4), U(LGUI), C_WAIT2
 /* open ssh connections */
 #define O_SSH       C_INTERVAL2, \
-    D(LGUI), T(H), U(LGUI), T(H), T(P), T(Q), C_WAIT2
+    D(LGUI), T(H), U(LGUI), T(M), C_WAIT2
 /* open ranger repos folder*/
 #define O_RANGER_R  C_INTERVAL2, \
     T(QUOT), T(R), C_WAIT2
