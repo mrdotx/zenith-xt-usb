@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-07-18T18:21:04+0200
+ * date:   2021-07-18T20:55:48+0200
  */
 
 /* general config */
@@ -46,7 +46,7 @@
 #define T_CLEAR     C_INTERVAL1, \
     T(SPC), T(C), T(L), T(E), T(A), T(R), T(SCLN)
 /* setxkbmap -model pc105 -layout us,de -option grp:caps_switch;xset r rate 200 50 */
-#define T_KEYBOARD C_INTERVAL1, \
+#define T_KEYBOARD  C_INTERVAL1, \
     T(S), T(E), T(T), T(X), T(K), T(B), T(M), T(A), T(P), T(SPC), \
     T(MINS), T(M), T(O), T(D), T(E), T(L), T(SPC), \
     T(P), T(C), T(1), T(0), T(5), T(SPC), \
