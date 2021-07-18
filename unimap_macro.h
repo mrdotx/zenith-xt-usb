@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-07-18T08:54:37+0200
+ * date:   2021-07-18T18:21:04+0200
  */
 
 /* general config */
@@ -38,9 +38,6 @@
 /* go to desktop 4 */
 #define O_DESK4     C_INTERVAL2, \
     D(LGUI), T(4), U(LGUI), C_WAIT2
-/* open ssh connections */
-#define O_SSH       C_INTERVAL2, \
-    D(LGUI), T(H), U(LGUI), T(M), C_WAIT2
 /* open ranger repos folder*/
 #define O_RANGER_R  C_INTERVAL2, \
     T(QUOT), T(R), C_WAIT2
@@ -119,7 +116,6 @@
 #define AC_FONT     ACTION_MACRO(FONTSIZE)
 #define AC_BOOT     ACTION_MACRO(REBOOT)
 #define AC_NEXT     ACTION_MACRO(BOOTNEXT)
-#define AC_SSH      ACTION_MACRO(OPENSSH)
 #define AC_VTOY     ACTION_MACRO(VENTOY)
 #define AC_TCOL     ACTION_MACRO(TERMCOLOR)
 #define AC_NEOF     ACTION_MACRO(NEOFETCH)
@@ -132,7 +128,6 @@ enum macro_id {
     FONTSIZE,
     REBOOT,
     BOOTNEXT,
-    OPENSSH,
     VENTOY,
     TERMCOLOR,
     NEOFETCH,
@@ -175,12 +170,6 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
             return (record->event.pressed ?
                     MACRO( \
                         O_TERMINFO, T_CLEAR, T_BOOTNEXT, \
-                        END ) :
-                    MACRO_NONE );
-        case OPENSSH:
-            return (record->event.pressed ?
-                    MACRO( \
-                        O_SSH, \
                         END ) :
                     MACRO_NONE );
         case VENTOY:
