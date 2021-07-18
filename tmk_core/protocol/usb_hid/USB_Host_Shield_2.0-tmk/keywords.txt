@@ -36,6 +36,10 @@ PS3BT	KEYWORD1
 PS3USB	KEYWORD1
 PS4BT	KEYWORD1
 PS4USB	KEYWORD1
+PS5BT	KEYWORD1
+PS5USB	KEYWORD1
+SwitchProBT	KEYWORD1
+SwitchProUSB	KEYWORD1
 
 ####################################################
 # Methods and Functions (KEYWORD2)
@@ -59,14 +63,21 @@ getTemperature	KEYWORD2
 disconnect	KEYWORD2
 
 setAllOff	KEYWORD2
+setRumble	KEYWORD2
 setRumbleOff	KEYWORD2
 setRumbleOn	KEYWORD2
+setRumbleLeft	KEYWORD2
+setRumbleRight	KEYWORD2
 setLedOff	KEYWORD2
 setLedOn	KEYWORD2
 setLedToggle	KEYWORD2
 setLedFlash	KEYWORD2
 moveSetBulb	KEYWORD2
 moveSetRumble	KEYWORD2
+
+setLedHomeOff	KEYWORD2
+setLedHomeOn	KEYWORD2
+setLedHomeToggle	KEYWORD2
 
 attachOnInit	KEYWORD2
 
@@ -134,6 +145,9 @@ T	LITERAL1
 SHARE	LITERAL1
 OPTIONS	LITERAL1
 TOUCHPAD	LITERAL1
+
+CREATE	LITERAL1
+MICROPHONE	LITERAL1
 
 LeftHatX	LITERAL1
 LeftHatY	LITERAL1
@@ -239,6 +253,12 @@ B	LITERAL1
 X	LITERAL1
 Y	LITERAL1
 
+LB	LITERAL1
+RB	LITERAL1
+
+LT	LITERAL1
+RT	LITERAL1
+
 ####################################################
 # Syntax Coloring Map For RFCOMM/SPP Library
 ####################################################
@@ -312,6 +332,7 @@ TopRight	LITERAL1
 BotRight	LITERAL1
 TopLeft	LITERAL1
 BotLeft	LITERAL1
+CAPTURE	LITERAL1
 
 ####################################################
 # Methods and Functions for the IR Camera

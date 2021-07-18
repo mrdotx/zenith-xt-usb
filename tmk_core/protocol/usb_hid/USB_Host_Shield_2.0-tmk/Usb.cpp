@@ -134,7 +134,6 @@ uint8_t USB::ctrlReq(uint8_t addr, uint8_t ep, uint8_t bmReqType, uint8_t bReque
 
         rcode = SetAddress(addr, ep, &pep, &nak_limit);
 
-        if (rcode) USBTRACE2("crSA:", rcode);
         if(rcode)
                 return rcode;
 
@@ -152,7 +151,6 @@ uint8_t USB::ctrlReq(uint8_t addr, uint8_t ep, uint8_t bmReqType, uint8_t bReque
 
         rcode = dispatchPkt(tokSETUP, ep, nak_limit); //dispatch packet
 
-        if (rcode) USBTRACE2("crSU:", rcode);
         if(rcode) //return HRSLT if not zero
                 return ( rcode);
 
@@ -160,7 +158,6 @@ uint8_t USB::ctrlReq(uint8_t addr, uint8_t ep, uint8_t bmReqType, uint8_t bReque
         {
                 if(direction) //IN transfer
                 {
-                        USBTRACE("Ci ");
                         uint16_t left = total;
 
                         pep->bmRcvToggle = 1; //bmRCVTOG1;
@@ -173,9 +170,7 @@ uint8_t USB::ctrlReq(uint8_t addr, uint8_t ep, uint8_t bmReqType, uint8_t bReque
                                 uint16_t read = (left<nbytes) ? left : nbytes;
 
                                 rcode = InTransfer(pep, nak_limit, &read, dataptr);
-                                if (rcode) USBTRACE2("crIN:", rcode);
                                 if(rcode == hrTOGERR) {
-                                        USBTRACE("T1 ");
                                         continue;
                                 }
 
@@ -193,18 +188,14 @@ uint8_t USB::ctrlReq(uint8_t addr, uint8_t ep, uint8_t bmReqType, uint8_t bReque
                         }
                 } else //OUT transfer
                 {
-                        USBTRACE("Co ");
                         pep->bmSndToggle = 1; //bmSNDTOG1;
                         rcode = OutTransfer(pep, nak_limit, nbytes, dataptr);
-                        if (rcode) USBTRACE2("crOUT:", rcode);
                 }
                 if(rcode) //return error
                         return ( rcode);
         }
         // Status stage
-        rcode = dispatchPkt((direction) ? tokOUTHS : tokINHS, ep, nak_limit); //GET if direction
-        if (rcode) USBTRACE2("crST:", rcode);
-        return rcode;
+        return dispatchPkt((direction) ? tokOUTHS : tokINHS, ep, nak_limit); //GET if direction
 }
 
 /* IN transfer to arbitrary endpoint. Assumes PERADDR is set. Handles multiple packets if necessary. Transfers 'nbytes' bytes. */
@@ -245,7 +236,6 @@ uint8_t USB::InTransfer(EpInfo *pep, uint16_t nak_limit, uint16_t *nbytesptr, ui
 #endif
                 rcode = dispatchPkt(tokIN, pep->epAddr, nak_limit); //IN packet to EP-'endpoint'. Function takes care of NAKS.
                 if(rcode == hrTOGERR) {
-                        USBTRACE("T2 ");
                         continue;
                 }
                 if(rcode) {
@@ -367,7 +357,6 @@ uint8_t USB::OutTransfer(EpInfo *pep, uint16_t nak_limit, uint16_t nbytes, uint8
                                         //return ( rcode);
                                         break;
                                 case hrTOGERR:
-                                        USBTRACE("T3 ");
                                         break;
                                 default:
                                         goto breakout;
@@ -390,6 +379,11 @@ uint8_t USB::OutTransfer(EpInfo *pep, uint16_t nak_limit, uint16_t nbytes, uint8
                 data_p += bytes_tosend;
         }//while( bytes_left...
 breakout:
+        /* If rcode(=rHRSL) is non-zero, untransmitted data remains in the SNDFIFO. */
+        if(rcode != 0) {
+            //Switch the FIFO containing the OUT data back under microcontroller control and reset pointer.
+            regWr(rSNDBC, 0);
+        }
 
         pep->bmSndToggle = (regRd(rHRSL) & bmSNDTOGRD) ? 1 : 0; //bmSNDTOG1 : bmSNDTOG0;  //update toggle
         return ( rcode); //should be 0 in all cases

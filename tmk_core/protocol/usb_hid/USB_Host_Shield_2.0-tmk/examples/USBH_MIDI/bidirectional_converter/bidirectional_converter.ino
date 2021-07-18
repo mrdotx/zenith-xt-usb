@@ -1,7 +1,7 @@
 /*
  *******************************************************************************
  * Legacy Serial MIDI and USB Host bidirectional converter
- * Copyright (C) 2013-2020 Yuuichi Akagawa
+ * Copyright (C) 2013-2021 Yuuichi Akagawa
  *
  * for use with Arduino MIDI library
  * https://github.com/FortySevenEffects/arduino_midi_library/
@@ -15,12 +15,6 @@
 #include <MIDI.h>
 #include <usbh_midi.h>
 #include <usbhub.h>
-
-// Satisfy the IDE, which needs to see the include statment in the ino too.
-#ifdef dobogusinclude
-#include <spi4teensy3.h>
-#endif
-#include <SPI.h>
 
 //Arduino MIDI library v4.2 compatibility
 #ifdef MIDI_CREATE_DEFAULT_INSTANCE
@@ -87,6 +81,11 @@ void loop()
           //SysEx is handled by event.
           break;
         default :
+          // If this is a channel messages, set the channel number.
+          if( msg[0] < 0xf0 ){
+            // The getchannel() returns 1-16, but the MIDI status byte starts at 0.
+            msg[0] |= MIDI.getChannel() - 1; 
+          }
           msg[1] = MIDI.getData1();
           msg[2] = MIDI.getData2();
           Midi.SendData(msg, 0);

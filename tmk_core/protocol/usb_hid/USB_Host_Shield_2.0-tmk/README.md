@@ -23,13 +23,15 @@ For more information about the hardware see the [Hardware Manual](https://chome.
 * __Alexei Glushchenko__ - <alex-gl@mail.ru>
     * Developers of the USB Core, HID, FTDI, ADK, ACM, and PL2303 libraries
 * __Kristian Sloth Lauszus__ - <lauszus@gmail.com>
-    * Developer of the [BTD](#bluetooth-libraries), [BTHID](#bthid-library), [SPP](#spp-library), [PS4](#ps4-library), [PS3](#ps3-library), [Wii](#wii-library), [Xbox](#xbox-library), and [PSBuzz](#ps-buzz-library) libraries
+    * Developer of the [BTD](#bluetooth-libraries), [BTHID](#bthid-library), [SPP](#spp-library), [PS5](#ps5-library), [PS4](#ps4-library), [PS3](#ps3-library), [Wii](#wii-library), [Switch Pro](#switch-pro-library), [Xbox](#xbox-library), and [PSBuzz](#ps-buzz-library) libraries
 * __Andrew Kroll__ - <xxxajk@gmail.com>
     * Major contributor to mass storage code
 * __guruthree__
     * [Xbox ONE](#xbox-one-library) controller support
 * __Yuuichi Akagawa__ - [@YuuichiAkagawa](https://twitter.com/yuuichiakagawa)
     * Developer of the [MIDI](#midi-library) library
+* __Aran Vink__ - <aranvink@gmail.com>
+    * Developer of the [amBX](#amBX-library) library
 
 
 # Table of Contents
@@ -44,6 +46,7 @@ For more information about the hardware see the [Hardware Manual](https://chome.
     * [Bluetooth libraries](#bluetooth-libraries)
     * [BTHID library](#bthid-library)
     * [SPP library](#spp-library)
+    * [PS5 Library](#ps5-library)
     * [PS4 Library](#ps4-library)
     * [PS3 Library](#ps3-library)
     * [Xbox Libraries](#xbox-libraries)
@@ -52,9 +55,11 @@ For more information about the hardware see the [Hardware Manual](https://chome.
         * [Xbox ONE Library](#xbox-one-library)
         * [Xbox ONE S Library](#xbox-one-s-library)
     * [Wii library](#wii-library)
+    * [Switch Pro Library](#switch-pro-library)
     * [PS Buzz Library](#ps-buzz-library)
     * [HID Libraries](#hid-libraries)
     * [MIDI Library](#midi-library)
+    * [amBX Library](#amBX-library)
 * [Interface modifications](#interface-modifications)
 * [FAQ](#faq)
 
@@ -115,6 +120,7 @@ Currently the following boards are supported by the library:
 * Sanguino
 * Black Widdow
 * RedBearLab nRF51822
+* Adafruit Feather nRF52840 Express
 * Digilent chipKIT
     * Please see: <https://chome.nerpa.tech/mcu/usb/running-usb-host-code-on-digilent-chipkit-board>.
 * STM32F4
@@ -171,9 +177,25 @@ More information can be found at these blog posts:
 To implement the SPP protocol I used a Bluetooth sniffing tool called [PacketLogger](http://www.tkjelectronics.com/uploads/PacketLogger.zip) developed by Apple.
 It enables me to see the Bluetooth communication between my Mac and any device.
 
+### PS5 Library
+
+The PS5 library is split up into the [PS5BT](PS5BT.h) and the [PS5USB](PS5USB.h) library. These allow you to use the Sony PS5 controller via Bluetooth and USB.
+
+The [PS5BT.ino](examples/Bluetooth/PS5BT/PS5BT.ino) and [PS5USB.ino](examples/PS5USB/PS5USB.ino) examples shows how to easily read the buttons, joysticks, touchpad and IMU on the controller via Bluetooth and USB respectively. It is also possible to control the rumble, lightbar, microphone LED and player LEDs on the controller. Furthermore the new haptic trigger effects are also supported.
+
+To pair with the PS5 controller via Bluetooth you need create the PS5BT instance like so: ```PS5BT PS5(&Btd, PAIR);``` and then hold down the Create button and then hold down the PS without releasing the Create button. The PS5 controller will then start to blink blue indicating that it is in pairing mode.
+
+It should then automatically pair the dongle with your controller. This only have to be done once.
+
+Thanks to Joseph Duchesne for the initial USB code.
+
+The driver is based on the official Sony driver for Linux: <https://patchwork.kernel.org/project/linux-input/cover/20201219062336.72568-1-roderick@gaikai.com/>.
+
+Also thanks to Ludwig Füchsl's <https://github.com/Ohjurot/DualSense-Windows> for his work on the haptic triggers.
+
 ### PS4 Library
 
-The PS4BT library is split up into the [PS4BT](PS4BT.h) and the [PS4USB](PS4USB.h) library. These allow you to use the Sony PS4 controller via Bluetooth and USB.
+The PS4 library is split up into the [PS4BT](PS4BT.h) and the [PS4USB](PS4USB.h) library. These allow you to use the Sony PS4 controller via Bluetooth and USB.
 
 The [PS4BT.ino](examples/Bluetooth/PS4BT/PS4BT.ino) and [PS4USB.ino](examples/PS4USB/PS4USB.ino) examples shows how to easily read the buttons, joysticks, touchpad and IMU on the controller via Bluetooth and USB respectively. It is also possible to control the rumble and light on the controller and get the battery level.
 
@@ -309,6 +331,21 @@ All the information about the Wii controllers are from these sites:
 * <http://wiibrew.org/wiki/Wii_Balance_Board>
 * The old library created by _Tomoyuki Tanaka_: <https://github.com/moyuchin/WiiRemote_on_Arduino> also helped a lot.
 
+### Switch Pro Library
+
+The Switch Pro library is split up into the [SwitchProBT](SwitchProBT.h) and the [SwitchProUSB](SwitchProUSB.h) library. These allow you to use the Nintendo Switch Pro controller via Bluetooth and USB.
+
+The [SwitchProBT.ino](examples/Bluetooth/SwitchProBT/SwitchProBT.ino) and [SwitchProUSB.ino](examples/SwitchProUSB/SwitchProUSB.ino) examples shows how to easily read the buttons, joysticks and IMU on the controller via Bluetooth and USB respectively. It is also possible to control the rumble and LEDs on the controller.
+
+To pair with the Switch Pro controller via Bluetooth you need create the SwitchProBT instance like so: ```SwitchProBT SwitchPro(&Btd, PAIR);``` and then press the Sync button next to the USB connector to put the controller into pairing mode.
+
+It should then automatically pair the dongle with your controller. This only have to be done once.
+
+All the information about the controller are from these sites:
+
+* <https://github.com/dekuNukem/Nintendo_Switch_Reverse_Engineering>
+* <https://github.com/Dan611/hid-procon>
+
 ### [PS Buzz Library](PSBuzz.cpp)
 
 This library implements support for the Playstation Buzz controllers via USB.
@@ -334,7 +371,14 @@ You can convert USB MIDI keyboard to legacy serial MIDI.
 * [USB_MIDI_converter.ino](examples/USBH_MIDI/USB_MIDI_converter/USB_MIDI_converter.ino)
 * [USB_MIDI_converter_multi.ino](examples/USBH_MIDI/USB_MIDI_converter_multi/USB_MIDI_converter_multi.ino)
 
-For information see the following page: <http://yuuichiakagawa.github.io/USBH_MIDI/>.
+For more information see : <https://github.com/YuuichiAkagawa/USBH_MIDI>.
+
+### [amBX Library](AMBX.cpp)
+
+This library support Philips amBX lights.
+You can set the colors of the lights individually or all at once. The rumble pad and fans are not supported.
+
+* [AMBX.ino](examples/ambx/AMBX.ino)
 
 # Interface modifications
 

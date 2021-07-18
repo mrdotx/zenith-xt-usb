@@ -40,6 +40,7 @@ const uint8_t XBOX_ONE_S_BUTTONS[] PROGMEM = {
         0x08, // A
         0x0A, // X
         0x0B, // Y
+        0, // XBOX - this is sent in another report
 };
 
 enum DPADEnum {
@@ -53,6 +54,12 @@ enum DPADEnum {
         DPAD_LEFT = 0x7,
         DPAD_LEFT_UP = 0x8,
 };
+
+int8_t XBOXONESParser::getButtonIndexXboxOneS(ButtonEnum b) {
+        const int8_t index = ButtonIndex(b);
+        if ((uint8_t) index >= (sizeof(XBOX_ONE_S_BUTTONS) / sizeof(XBOX_ONE_S_BUTTONS[0]))) return -1;
+        return index;
+}
 
 bool XBOXONESParser::checkDpad(ButtonEnum b) {
         switch (b) {
@@ -70,36 +77,38 @@ bool XBOXONESParser::checkDpad(ButtonEnum b) {
 }
 
 uint16_t XBOXONESParser::getButtonPress(ButtonEnum b) {
-        if (b == L2)
+        const int8_t index = getButtonIndexXboxOneS(b); if (index < 0) return 0;
+        if (index == ButtonIndex(L2))
                 return xboxOneSData.trigger[0];
-        else if (b == R2)
+        else if (index == ButtonIndex(R2))
                 return xboxOneSData.trigger[1];
-        else if (b <= LEFT) // Dpad
+        else if (index <= LEFT) // Dpad
                 return checkDpad(b);
-        else if (b == XBOX)
+        else if (index == ButtonIndex(XBOX))
                 return xboxButtonState;
-        return xboxOneSData.btn.val & (1UL << pgm_read_byte(&XBOX_ONE_S_BUTTONS[(uint8_t)b]));
+        return xboxOneSData.btn.val & (1UL << pgm_read_byte(&XBOX_ONE_S_BUTTONS[index]));
 }
 
 bool XBOXONESParser::getButtonClick(ButtonEnum b) {
-        if(b == L2) {
+        const int8_t index = getButtonIndexXboxOneS(b); if (index < 0) return 0;
+        if(index == ButtonIndex(L2)) {
                 if(L2Clicked) {
                         L2Clicked = false;
                         return true;
                 }
                 return false;
-        } else if(b == R2) {
+        } else if(index == ButtonIndex(R2)) {
                 if(R2Clicked) {
                         R2Clicked = false;
                         return true;
                 }
                 return false;
-        } else if (b == XBOX) {
+        } else if (index == ButtonIndex(XBOX)) {
                 bool click = xboxbuttonClickState;
                 xboxbuttonClickState = 0; // Clear "click" event
                 return click;
         }
-        uint32_t mask = 1UL << pgm_read_byte(&XBOX_ONE_S_BUTTONS[(uint8_t)b]);
+        uint32_t mask = 1UL << pgm_read_byte(&XBOX_ONE_S_BUTTONS[index]);
         bool click = buttonClickState.val & mask;
         buttonClickState.val &= ~mask; // Clear "click" event
         return click;
@@ -183,11 +192,24 @@ void XBOXONESParser::Reset() {
         oldDpad = 0;
 };
 
-#if 0
+void XBOXONESParser::setRumbleOff() {
+        // See: https://lore.kernel.org/patchwork/patch/973394/
+        uint8_t buf[8];
+        buf[0] = 0x0F; // Disable all rumble motors
+        buf[1] = 0;
+        buf[2] = 0;
+        buf[3] = 0;
+        buf[4] = 0;
+        buf[5] = 0; // Duration of effect in 10 ms
+        buf[6] = 0; // Start delay in 10 ms
+        buf[7] = 0; // Loop count
+        sendOutputReport(buf, sizeof(buf));
+}
+
 void XBOXONESParser::setRumbleOn(uint8_t leftTrigger, uint8_t rightTrigger, uint8_t leftMotor, uint8_t rightMotor) {
         // See: https://lore.kernel.org/patchwork/patch/973394/
         uint8_t buf[8];
-        buf[0] = 0x0F;//1 << 1 | 1 << 0; // Enable weak and strong feedback
+        buf[0] = 1 << 3 /* Left trigger */ | 1 << 2 /* Right trigger */ | 1 << 1 /* Left motor */ | 1 << 0 /* Right motor */;
         buf[1] = leftTrigger;
         buf[2] = rightTrigger;
         buf[3] = leftMotor;
@@ -197,4 +219,3 @@ void XBOXONESParser::setRumbleOn(uint8_t leftTrigger, uint8_t rightTrigger, uint
         buf[7] = 255; // Loop count
         sendOutputReport(buf, sizeof(buf));
 }
-#endif
