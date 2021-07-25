@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-07-20T12:09:21+0200
+ * date:   2021-07-25T10:24:40+0200
  */
 
 /* general config */
@@ -24,15 +24,15 @@
 /* open web browser */
 #define O_WEB       C_INTERVAL2, \
     D(LGUI), T(W), U(LGUI), C_WAIT2
+/* go to desktop 1 */
+#define O_DESK1     C_INTERVAL2, \
+    D(LGUI), T(1), U(LGUI), C_WAIT2
 /* go to desktop 2 */
 #define O_DESK2     C_INTERVAL2, \
     D(LGUI), T(2), U(LGUI), C_WAIT2
 /* go to desktop 3 */
 #define O_DESK3     C_INTERVAL2, \
     D(LGUI), T(3), U(LGUI), C_WAIT2
-/* go to desktop 4 */
-#define O_DESK4     C_INTERVAL2, \
-    D(LGUI), T(4), U(LGUI), C_WAIT2
 /* go to ranger repos folder*/
 #define O_RANGER_R  C_INTERVAL2, \
     T(QUOT), T(R), C_WAIT2
@@ -74,9 +74,9 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                 MACRO( \
                     O_TMUX, O_FONTSIZE, T_CLEAR, T_CINFO, \
                     O_WEB, \
-                    O_DESK2, O_TERM, T_CLEAR, T_RANGER, C_WAIT3, \
+                    O_DESK1, O_TERM, T_CLEAR, T_RANGER, C_WAIT3, \
                     O_RANGER_R, \
-                    O_DESK4, O_DESK2, O_DESK3, \
+                    O_DESK3, O_DESK1, O_DESK2, \
                     END ) :
                 MACRO_NONE );
         case FONTSIZE:
