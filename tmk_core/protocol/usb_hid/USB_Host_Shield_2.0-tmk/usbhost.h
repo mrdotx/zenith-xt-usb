@@ -503,9 +503,29 @@ int8_t MAX3421e< SPI_SS, INTR >::Init(int mseconds) {
 /* probe bus to determine device presence and speed and switch host to this speed */
 template< typename SPI_SS, typename INTR >
 void MAX3421e< SPI_SS, INTR >::busprobe() {
+        static uint8_t prev_bus = -1;
         uint8_t bus_sample;
+
+        if (regRd(rHIRQ) & bmCONDETIRQ) {
+            // device plug/unplug is detected by chip
+            // clear CONDETIRQ
+            regWr(rHIRQ, bmCONDETIRQ);
+        } else {
+            // check current bus state when no device(SE0),
+            // otherwise false-detection will arise due to bus activity.
+            // (the chip fails to detect device plug-in sometimes)
+            if (vbusState != SE0) return;
+
+            // read current bus state
+            regWr(rHCTL, bmSAMPLEBUS);
+        }
+
         bus_sample = regRd(rHRSL); //Get J,K status
         bus_sample &= (bmJSTATUS | bmKSTATUS); //zero the rest of the byte
+
+        if (prev_bus == bus_sample) { return; }
+        prev_bus = bus_sample;
+
         switch(bus_sample) { //start full-speed or low-speed host
                 case( bmJSTATUS):
                         if((regRd(rMODE) & bmLOWSPEED) == 0) {
@@ -533,7 +553,7 @@ void MAX3421e< SPI_SS, INTR >::busprobe() {
                         vbusState = SE1;
                         break;
                 case( bmSE0): //disconnected state
-                        regWr(rMODE, bmDPPULLDN | bmDMPULLDN | bmHOST | bmSEPIRQ);
+                        regWr(rMODE, MODE_FS_HOST); //start full-speed host
                         vbusState = SE0;
                         break;
         }//end switch( bus_sample )
@@ -542,6 +562,7 @@ void MAX3421e< SPI_SS, INTR >::busprobe() {
 /* MAX3421 state change task and interrupt handler */
 template< typename SPI_SS, typename INTR >
 uint8_t MAX3421e< SPI_SS, INTR >::Task(void) {
+        /*
         uint8_t rcode = 0;
         uint8_t pinvalue;
         //USB_HOST_SERIAL.print("Vbus state: ");
@@ -557,6 +578,9 @@ uint8_t MAX3421e< SPI_SS, INTR >::Task(void) {
         //    }
         //    usbSM();                                //USB state machine
         return ( rcode);
+        */
+        busprobe();
+        return 0;
 }
 
 template< typename SPI_SS, typename INTR >

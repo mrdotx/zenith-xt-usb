@@ -479,9 +479,6 @@ void USB::Task(void) //USB state machine
                         if((usb_task_state & USB_STATE_MASK) == USB_STATE_DETACHED) {
                                 delay = (uint32_t)millis() + USB_SETTLE_DELAY;
                                 usb_task_state = USB_ATTACHED_SUBSTATE_SETTLE;
-
-                                // disable bus status change interrupt until settled
-                                regWr(rHIEN, (regRd(rHIEN) & ~bmCONDETIE));
                         }
                         break;
         }// switch( tmpdata
@@ -509,9 +506,6 @@ void USB::Task(void) //USB state machine
                                 usb_task_state = USB_ATTACHED_SUBSTATE_RESET_DEVICE;
                         else break; // don't fall through
                 case USB_ATTACHED_SUBSTATE_RESET_DEVICE:
-                        // re-enable bus status change interrupt
-                        regWr(rHIEN, (regRd(rHIEN) | bmCONDETIE));
-
                         regWr(rHCTL, bmBUSRST); //issue bus reset
                         usb_task_state = USB_ATTACHED_SUBSTATE_WAIT_RESET_COMPLETE;
                         break;
