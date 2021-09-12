@@ -526,7 +526,7 @@ void USB::Task(void) //USB state machine
                                         usb_task_state = USB_STATE_CONFIGURING;
                                  */
                                 usb_task_state = USB_ATTACHED_SUBSTATE_WAIT_RESET;
-                                delay = (uint32_t)millis() + 20;
+                                delay = (uint32_t)millis() + 500;
                         }
                         break;
                 case USB_ATTACHED_SUBSTATE_WAIT_RESET:
