@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-09-24T19:53:56+0200
+ * date:   2021-09-25T09:50:27+0200
  */
 
 /* general config */
@@ -69,8 +69,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
         case AUTOSTART:
             return (record->event.pressed ?
                 MACRO( \
-                    O_DESK1, O_TERM, O_WEB, \
-                    T_CLEAR, T_RANGER, C_WAIT6, \
+                    O_DESK1, O_WEB, O_TERM, T_CLEAR, T_RANGER, C_WAIT6, \
                     O_TMUX, O_FONTSIZE, T_CLEAR, T_CINFO, \
                     O_DESK1, O_RANGER_R, O_DESK2, \
                     END ) :
