@@ -2,12 +2,12 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-09-28T20:54:34+0200
+ * date:   2021-09-29T12:44:37+0200
  */
 
 /* general config */
 #define C_INTERVAL1 I(1)
-#define C_INTERVAL2 I(12)
+#define C_INTERVAL2 I(15)
 #define C_WAIT1     W(100)
 #define C_WAIT2     W(255)
 
