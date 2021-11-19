@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-09-29T12:44:37+0200
+ * date:   2021-11-19T18:15:24+0100
  */
 
 /* general config */
@@ -13,7 +13,7 @@
 
 /* open autostart */
 #define O_AUTOSTART C_INTERVAL2, \
-    D(LSFT), D(LGUI), T(PSCR), U(LGUI), U(LSFT), C_WAIT2
+    D(LSFT), T(PSCR), U(LSFT), C_WAIT2
 /* open dmenu */
 #define O_DMENU     C_INTERVAL2, \
     D(LSFT), T(LGUI), U(LSFT), C_WAIT2
