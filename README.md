@@ -91,4 +91,4 @@ sudo avrdude -p atmega32u4 -P /dev/ttyACM0 -c avr109 -U flash:w:zenith_usb.hex
 ## Links
 
 - [hasu - IBM PC Keyboard Converter](https://geekhack.org/index.php?topic=103648.0)
-- [TMK Keymap Editor](https://www.tmk-kbd.com/tmk_keyboard/editor)
+- [TMK Keymap Editor](https://www.tmk-kbd.com/tmk_keyboard/editor/unimap/?ibmpc_usb_1286_xt)
