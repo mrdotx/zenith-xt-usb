@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-11-19T18:15:24+0100
+ * date:   2021-12-21T15:12:58+0100
  */
 
 /* general config */
@@ -11,9 +11,6 @@
 #define C_WAIT1     W(100)
 #define C_WAIT2     W(255)
 
-/* open autostart */
-#define O_AUTOSTART C_INTERVAL2, \
-    D(LSFT), T(PSCR), U(LSFT), C_WAIT2
 /* open dmenu */
 #define O_DMENU     C_INTERVAL2, \
     D(LSFT), T(LGUI), U(LSFT), C_WAIT2
@@ -27,12 +24,10 @@
 #define T_REBOOT    C_INTERVAL1, \
     T(R), T(E), T(B), T(O), T(O), T(T), T(ENT), C_WAIT1
 
-#define AC_AUTO     ACTION_MACRO(AUTOSTART)
 #define AC_BOOT     ACTION_MACRO(REBOOT)
 #define AC_FONT     ACTION_MACRO(FONTSIZE)
 
 enum macro_id {
-    AUTOSTART,
     REBOOT,
     FONTSIZE,
 };
@@ -40,12 +35,6 @@ enum macro_id {
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
     switch (id) {
-        case AUTOSTART:
-            return (record->event.pressed ?
-                MACRO( \
-                    O_AUTOSTART, \
-                    END ) :
-                MACRO_NONE );
         case REBOOT:
             return (record->event.pressed ?
                 MACRO( \
