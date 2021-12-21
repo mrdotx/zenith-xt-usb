@@ -1,10 +1,10 @@
 # path:   /home/klassiker/.local/share/repos/zenith-xt-usb/Makefile
 # author: klassiker [mrdotx]
 # github: https://github.com/mrdotx/zenith-usb
-# date:   2021-03-12T20:06:34+0100
+# date:   2021-12-21T18:59:43+0100
 
 # Target file name (without extension).
-TARGET = zenith_usb
+TARGET = firmware/zenith_usb
 
 # Directory common source filess exist
 TMK_DIR = tmk_core
