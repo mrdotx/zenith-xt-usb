@@ -2,7 +2,7 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-12-21T15:12:58+0100
+ * date:   2022-02-15T09:11:28+0100
  */
 
 /* general config */
@@ -11,18 +11,14 @@
 #define C_WAIT1     W(100)
 #define C_WAIT2     W(255)
 
-/* open dmenu */
-#define O_DMENU     C_INTERVAL2, \
-    D(LSFT), T(LGUI), U(LSFT), C_WAIT2
+/* open i3_exit */
+#define O_I3_EXIT   C_INTERVAL2, \
+    D(LCTL), D(LALT), D(DEL), U(DEL), U(LALT), U(LCTL), T(R)
 /* change terminal font size */
 #define O_FONTSIZE  C_INTERVAL2, \
     D(LCTL), D(LSFT), \
     T(EQL), T(EQL), T(EQL), T(EQL), T(EQL), T(EQL), T(EQL), T(EQL), \
     U(LSFT), U(LCTL), C_WAIT2
-
-/* reboot */
-#define T_REBOOT    C_INTERVAL1, \
-    T(R), T(E), T(B), T(O), T(O), T(T), T(ENT), C_WAIT1
 
 #define AC_BOOT     ACTION_MACRO(REBOOT)
 #define AC_FONT     ACTION_MACRO(FONTSIZE)
@@ -38,7 +34,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
         case REBOOT:
             return (record->event.pressed ?
                 MACRO( \
-                    O_DMENU, T_REBOOT, \
+                    O_I3_EXIT, \
                     END ) :
                 MACRO_NONE );
         case FONTSIZE:
