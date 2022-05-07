@@ -355,6 +355,10 @@ uint8_t HIDComposite::Release() {
         pUsb->GetAddressPool().FreeAddress(bAddress);
 
         bNumEP = 1;
+        bNumIface = 0;
+        bConfNum = 0;
+        pollInterval = 0;
+
         bAddress = 0;
         qNextPollTime = 0;
         bPollEnable = false;

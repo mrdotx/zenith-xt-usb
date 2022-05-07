@@ -31,10 +31,11 @@ bool HIDSelector::SelectInterface(uint8_t iface, uint8_t proto)
 void HIDSelector::ParseHIDData(USBHID *hid, uint8_t ep, bool is_rpt_id, uint8_t len, uint8_t *buf) {
 #if 1
   if (len && buf)  {
-    Notify(PSTR("\r\n"), 0x80);
+    Serial.print(F("\r\n"));
     for (uint8_t i = 0; i < len; i++) {
-      D_PrintHex<uint8_t > (buf[i], 0x80);
-      Notify(PSTR(" "), 0x80);
+      if (buf[i] < 16) Serial.print(F("0"));
+      Serial.print(buf[i], HEX);
+      Serial.print(F(" "));
     }
   }
 #endif

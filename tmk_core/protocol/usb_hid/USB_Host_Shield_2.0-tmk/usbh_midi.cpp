@@ -1,7 +1,7 @@
 /*
  *******************************************************************************
  * USB-MIDI class driver for USB Host Shield 2.0 Library
- * Copyright (c) 2012-2021 Yuuichi Akagawa
+ * Copyright (c) 2012-2022 Yuuichi Akagawa
  *
  * Idea from LPK25 USB-MIDI to Serial MIDI converter
  *   by Collin Cunningham - makezine.com, narbotic.com
@@ -258,10 +258,11 @@ uint8_t USBH_MIDI::Init(uint8_t parent, uint8_t port, bool lowspeed)
         if (rcode)
                 goto FailSetConfDescr;
 
+        bPollEnable = true;
+
         if(pFuncOnInit)
                 pFuncOnInit(); // Call the user function
 
-        bPollEnable = true;
         USBTRACE("Init done.\r\n");
         return 0;
 FailGetDevDescr:
@@ -275,10 +276,14 @@ FailSetConfDescr:
 /* Performs a cleanup after failed Init() attempt */
 uint8_t USBH_MIDI::Release()
 {
+        if(pFuncOnRelease && bPollEnable)
+                pFuncOnRelease(); // Call the user function
+
         pUsb->GetAddressPool().FreeAddress(bAddress);
         bAddress     = 0;
         bPollEnable  = false;
         readPtr      = 0;
+
         return 0;
 }
 
@@ -296,8 +301,9 @@ void USBH_MIDI::setupDeviceSpecific()
                         return;
                 }
 
-                // LaunchKey: 0x30-32,  0x35:Mini, 0x7B-0x7D:MK2
-                if( ( 0x30 <= pid && pid <= 0x32) || pid == 0x35 || ( 0x7B <= pid && pid <= 0x7D) ) {
+                // LaunchKey: 0x30-32,  0x35:Mini, 0x7B-0x7D:MK2, 0x0102,0x113-0x122:MiniMk3, 0x134-0x137:MK3
+                if( (0x30 <= pid && pid <= 0x32) || pid == 0x35 || (0x7B <= pid && pid <= 0x7D) 
+                  || pid == 0x102 || (0x113 <= pid && pid <= 0x122) || (0x134 <= pid && pid <= 0x137) ) {
                         bTransferTypeMask = 2;
                         return;
                 }
@@ -359,7 +365,7 @@ RecvData_return_from_buffer:
         *(outBuf++) =     recvBuf[readPtr++];
         *(outBuf++) =     recvBuf[readPtr++];
 
-        return getMsgSizeFromCin(cin);
+        return getMsgSizeFromCin(cin & 0x0f);
 }
 
 /* Send data to MIDI device */

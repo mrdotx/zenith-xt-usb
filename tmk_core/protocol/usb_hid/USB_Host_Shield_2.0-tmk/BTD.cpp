@@ -504,16 +504,21 @@ void BTD::HCI_event_task() {
                                 break;
 
                         case EV_INQUIRY_RESULT:
+                        case EV_EXTENDED_INQUIRY_RESULT:
                                 if(hcibuf[2]) { // Check that there is more than zero responses
 #ifdef EXTRADEBUG
                                         Notify(PSTR("\r\nNumber of responses: "), 0x80);
-                                        Notify(hcibuf[2], 0x80);
+                                        Notify(hcibuf[2], 0x80); // This will always be 1 for an extended inquiry result
 #endif
                                         for(uint8_t i = 0; i < hcibuf[2]; i++) {
-                                                uint8_t offset = 8 * hcibuf[2] + 3 * i;
+                                                uint8_t classOfDevice_offset;
+                                                if(hcibuf[0] == EV_INQUIRY_RESULT)
+                                                        classOfDevice_offset = 9 * hcibuf[2]; // 6-byte bd_addr, 1 byte page_scan_repetition_mode, 2 byte reserved
+                                                else
+                                                        classOfDevice_offset = 8 * hcibuf[2]; // 6-byte bd_addr, 1 byte page_scan_repetition_mode, 1 byte reserved
 
                                                 for(uint8_t j = 0; j < 3; j++)
-                                                        classOfDevice[j] = hcibuf[j + 4 + offset];
+                                                        classOfDevice[j] = hcibuf[3 + classOfDevice_offset + 3 * i + j];
 
 #ifdef EXTRADEBUG
                                                 Notify(PSTR("\r\nClass of device: "), 0x80);
@@ -524,15 +529,15 @@ void BTD::HCI_event_task() {
                                                 D_PrintHex<uint8_t > (classOfDevice[0], 0x80);
 #endif
 
-                                                if(pairWithWii && classOfDevice[2] == 0x00 && (classOfDevice[1] == 0x05) && (classOfDevice[0] & 0x0C)) { // See http://wiibrew.org/wiki/Wiimote#SDP_information
+                                                if(pairWithWii && (classOfDevice[2] == 0x00) && ((classOfDevice[1] & 0x0F) == 0x05) && (classOfDevice[0] & 0x0C)) { // See http://wiibrew.org/wiki/Wiimote#SDP_information
                                                         checkRemoteName = true; // Check remote name to distinguish between the different controllers
 
                                                         for(uint8_t j = 0; j < 6; j++)
-                                                                disc_bdaddr[j] = hcibuf[j + 3 + 6 * i];
+                                                                disc_bdaddr[j] = hcibuf[3 + 6 * i + j];
 
                                                         hci_set_flag(HCI_FLAG_DEVICE_FOUND);
                                                         break;
-                                                } else if(pairWithHIDDevice && (classOfDevice[1] & 0x0F) == 0x05 && (classOfDevice[0] & 0xC8)) { // Check if it is a mouse, keyboard or a gamepad - see: http://bluetooth-pentest.narod.ru/software/bluetooth_class_of_device-service_generator.html
+                                                } else if(pairWithHIDDevice && ((classOfDevice[1] & 0x0F) == 0x05) && (classOfDevice[0] & 0xC8)) { // Check if it is a mouse, keyboard or a gamepad - see: http://bluetooth-pentest.narod.ru/software/bluetooth_class_of_device-service_generator.html
 #ifdef DEBUG_USB_HOST
                                                         checkRemoteName = true; // Used to print name in the serial monitor if serial debugging is enabled
 
@@ -544,7 +549,7 @@ void BTD::HCI_event_task() {
                                                                 Notify(PSTR("\r\nGamepad found"), 0x80);
 #endif
                                                         for(uint8_t j = 0; j < 6; j++)
-                                                                disc_bdaddr[j] = hcibuf[j + 3 + 6 * i];
+                                                                disc_bdaddr[j] = hcibuf[3 + 6 * i + j];
 
                                                         hci_set_flag(HCI_FLAG_DEVICE_FOUND);
                                                         break;
@@ -596,7 +601,7 @@ void BTD::HCI_event_task() {
                                 for(uint8_t i = 0; i < 3; i++)
                                         classOfDevice[i] = hcibuf[i + 8];
 
-                                if((classOfDevice[1] & 0x0F) == 0x05 && (classOfDevice[0] & 0xC8)) { // Check if it is a mouse, keyboard or a gamepad
+                                if(((classOfDevice[1] & 0x0F) == 0x05) && (classOfDevice[0] & 0xC8)) { // Check if it is a mouse, keyboard or a gamepad
 #ifdef DEBUG_USB_HOST
                                         if(classOfDevice[0] & 0x80)
                                                 Notify(PSTR("\r\nMouse is connecting"), 0x80);

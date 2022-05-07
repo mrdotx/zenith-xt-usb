@@ -464,7 +464,7 @@ uint8_t HIDBoot<BOOT_PROTOCOL>::Init(uint8_t parent, uint8_t port, bool lowspeed
         for(uint8_t i = 0; i < epMUL(BOOT_PROTOCOL); i++) {
                 USBTRACE2("\r\nInterface:", i);
                 rcode = SetProtocol(i, bRptProtoEnable ? HID_RPT_PROTOCOL : USB_HID_BOOT_PROTOCOL);
-                if(rcode) goto FailSetProtocol;
+                //if(rcode) goto FailSetProtocol;
                 USBTRACE2("PROTOCOL SET HID_BOOT rcode:", rcode);
                 rcode = SetIdle(i, 0, 0);
                 USBTRACE2("SET_IDLE rcode:", rcode);
