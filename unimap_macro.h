@@ -2,35 +2,45 @@
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_macro.h
  * author: klassiker [mrdotx]
  * github: https://github.com/mrdotx/zenith-usb
- * date:   2022-05-16T10:10:34+0200
+ * date:   2022-05-17T08:24:02+0200
  */
 
 /* general config */
 #define C_INTERVAL I(15)
 #define C_WAIT     W(255)
 
-/* open i3_exit */
-#define O_I3_EXIT   C_INTERVAL, \
-    D(LCTL), D(LALT), D(DEL), U(DEL), U(LALT), U(LCTL), T(R)
-/* change terminal font size */
-#define O_FONTSIZE  C_INTERVAL, \
+/* increase terminal font size */
+#define O_INCREASETERMINALFONTSIZE  C_INTERVAL, \
     D(LCTL), D(LSFT), \
-    T(EQL), T(EQL), T(EQL), T(EQL), T(EQL), T(EQL), T(EQL), T(EQL), \
+    T(EQL), T(EQL), T(EQL), T(EQL), \
     U(LSFT), U(LCTL), C_WAIT
+/* decrease terminal font size */
+#define O_DECREASETERMINALFONTSIZE  C_INTERVAL, \
+    D(LCTL), \
+    T(MINS), T(MINS), T(MINS), T(MINS), \
+    U(LCTL), C_WAIT
 
-#define AC_FONT     ACTION_MACRO(FONTSIZE)
+#define AC_ITFS     ACTION_MACRO(INCREASETERMINALFONTSIZE)
+#define AC_DTFS     ACTION_MACRO(DECREASETERMINALFONTSIZE)
 
 enum macro_id {
-    FONTSIZE,
+    INCREASETERMINALFONTSIZE,
+    DECREASETERMINALFONTSIZE,
 };
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
     switch (id) {
-        case FONTSIZE:
+        case INCREASETERMINALFONTSIZE:
             return (record->event.pressed ?
                 MACRO( \
-                    O_FONTSIZE, \
+                    O_INCREASETERMINALFONTSIZE, \
+                    END ) :
+                MACRO_NONE );
+        case DECREASETERMINALFONTSIZE:
+            return (record->event.pressed ?
+                MACRO( \
+                    O_DECREASETERMINALFONTSIZE, \
                     END ) :
                 MACRO_NONE );
     }
