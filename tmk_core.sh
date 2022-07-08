@@ -3,9 +3,8 @@
 # path:   /home/klassiker/.local/share/repos/zenith-xt-usb/tmk_core.sh
 # author: klassiker [mrdotx]
 # github: https://github.com/mrdotx/zenith-xt-usb
-# date:   2021-11-02T10:53:16+0100
+# date:   2022-07-08T20:22:15+0200
 
-tput reset
 rm -rf tmk_core
 
 printf ':: git clone tmk_core and remove .git files/folders\n'
