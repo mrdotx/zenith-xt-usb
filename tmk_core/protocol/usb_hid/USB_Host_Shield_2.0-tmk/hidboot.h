@@ -463,16 +463,19 @@ uint8_t HIDBoot<BOOT_PROTOCOL>::Init(uint8_t parent, uint8_t port, bool lowspeed
         // Yes, mouse wants SetProtocol and SetIdle too!
         for(uint8_t i = 0; i < epMUL(BOOT_PROTOCOL); i++) {
                 USBTRACE2("\r\nInterface:", i);
+
                 rcode = SetProtocol(i, bRptProtoEnable ? HID_RPT_PROTOCOL : USB_HID_BOOT_PROTOCOL);
-                //if(rcode) goto FailSetProtocol;
-                USBTRACE2("PROTOCOL SET HID_BOOT rcode:", rcode);
+                USBTRACE2("SET_PROTOCOL: ", rcode);
+                if (rcode && rcode != hrSTALL) goto Fail;
+
                 rcode = SetIdle(i, 0, 0);
-                USBTRACE2("SET_IDLE rcode:", rcode);
-                // if(rcode) goto FailSetIdle; This can fail.
+                USBTRACE2("SET_IDLE: ", rcode);
+                if (rcode && rcode != hrSTALL) goto Fail;
+
                 // Get the RPIPE and just throw it away.
                 SinkParser<USBReadParser, uint16_t, uint16_t> sink;
                 rcode = GetReportDescr(i, &sink);
-                USBTRACE2("RPIPE rcode:", rcode);
+                USBTRACE2("RPIPE: ", rcode);
         }
 
         // Get RPIPE and throw it away.
@@ -518,17 +521,6 @@ FailSetConfDescr:
         NotifyFailSetConfDescr();
         goto Fail;
 #endif
-
-FailSetProtocol:
-#ifdef DEBUG_USB_HOST
-        USBTRACE("SetProto:");
-        goto Fail;
-#endif
-
-        //FailSetIdle:
-        //#ifdef DEBUG_USB_HOST
-        //        USBTRACE("SetIdle:");
-        //#endif
 
 Fail:
 #ifdef DEBUG_USB_HOST

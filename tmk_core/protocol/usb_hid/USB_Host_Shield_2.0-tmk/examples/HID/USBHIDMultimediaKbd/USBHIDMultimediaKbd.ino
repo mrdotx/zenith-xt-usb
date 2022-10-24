@@ -21,10 +21,7 @@ protected:
 // Return true for the interface we want to hook into
 bool HIDSelector::SelectInterface(uint8_t iface, uint8_t proto)
 {
-  if (proto != 0)
-    return true;
-
-  return false;
+  return true;
 }
 
 // Will be called for all HID data received from the USB interface
