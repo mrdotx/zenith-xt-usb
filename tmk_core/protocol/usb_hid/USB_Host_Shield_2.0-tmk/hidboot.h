@@ -202,6 +202,7 @@ class HIDBoot : public USBHID //public USBDeviceConfig, public UsbConfigXtracter
 {
         EpInfo epInfo[totalEndpoints(BOOT_PROTOCOL)];
         HIDReportParser *pRptParser[epMUL(BOOT_PROTOCOL)];
+        uint8_t bootIf[epMUL(BOOT_PROTOCOL)]; // interface number of boot endpoint
 
         uint8_t bConfNum; // configuration number
         uint8_t bIfaceNum; // Interface Number
@@ -250,6 +251,8 @@ public:
         virtual bool DEVSUBCLASSOK(uint8_t subklass) {
                 return (subklass == BOOT_PROTOCOL);
         }
+
+        uint8_t  SetLed(uint8_t *led);
 };
 
 template <const uint8_t BOOT_PROTOCOL>
@@ -295,6 +298,8 @@ uint8_t HIDBoot<BOOT_PROTOCOL>::Init(uint8_t parent, uint8_t port, bool lowspeed
 
         uint8_t num_of_conf; // number of configurations
         //uint8_t num_of_intf; // number of interfaces
+
+        bool boot_interface = true;
 
         AddressPool &addrPool = pUsb->GetAddressPool();
 
@@ -415,6 +420,20 @@ uint8_t HIDBoot<BOOT_PROTOCOL>::Init(uint8_t parent, uint8_t port, bool lowspeed
                                 pUsb->getConfDescr(bAddress, 0, i, &confDescrParserA);
                                 if(bNumEP == (uint8_t)(totalEndpoints(BOOT_PROTOCOL)))
                                         break;
+
+                                // Not boot in SubClass
+                                ConfigDescParser<
+                                        USB_CLASS_HID,
+                                        HID_BOOT_INTF_SUBCLASS,
+                                        USB_HID_PROTOCOL_KEYBOARD,
+                                        CP_MASK_COMPARE_CLASS | CP_MASK_COMPARE_PROTOCOL> confDescrParser2(this);
+
+                                pUsb->getConfDescr(bAddress, 0, i, &confDescrParser2);
+                                if(bNumEP == (uint8_t)(totalEndpoints(BOOT_PROTOCOL))) {
+                                        // not boot keyboard
+                                        boot_interface = false;
+                                        break;
+                                }
                         }
                 }
 
@@ -462,19 +481,24 @@ uint8_t HIDBoot<BOOT_PROTOCOL>::Init(uint8_t parent, uint8_t port, bool lowspeed
 
         // Yes, mouse wants SetProtocol and SetIdle too!
         for(uint8_t i = 0; i < epMUL(BOOT_PROTOCOL); i++) {
-                USBTRACE2("\r\nInterface:", i);
+                USBTRACE2("\r\nInterface:", bootIf[i]);
 
-                rcode = SetProtocol(i, bRptProtoEnable ? HID_RPT_PROTOCOL : USB_HID_BOOT_PROTOCOL);
+                if (!boot_interface) {
+                        USBTRACE("skip SET_PROTOCOL\n");
+                        goto SKIP_SET_PROTOCOL;
+                }
+                rcode = SetProtocol(bootIf[i], bRptProtoEnable ? HID_RPT_PROTOCOL : USB_HID_BOOT_PROTOCOL);
                 USBTRACE2("SET_PROTOCOL: ", rcode);
                 if (rcode && rcode != hrSTALL) goto Fail;
+SKIP_SET_PROTOCOL:
 
-                rcode = SetIdle(i, 0, 0);
+                rcode = SetIdle(bootIf[i], 0, 0);
                 USBTRACE2("SET_IDLE: ", rcode);
                 if (rcode && rcode != hrSTALL) goto Fail;
 
                 // Get the RPIPE and just throw it away.
                 SinkParser<USBReadParser, uint16_t, uint16_t> sink;
-                rcode = GetReportDescr(i, &sink);
+                rcode = GetReportDescr(bootIf[i], &sink);
                 USBTRACE2("RPIPE: ", rcode);
         }
 
@@ -551,6 +575,7 @@ void HIDBoot<BOOT_PROTOCOL>::EndpointXtract(uint8_t conf, uint8_t iface, uint8_t
                 epInfo[bNumEP].bmSndToggle = 0;
                 epInfo[bNumEP].bmRcvToggle = 0;
                 epInfo[bNumEP].bmNakPower = USB_NAK_NOWAIT;
+                bootIf[bNumEP - 1] = iface;
                 bNumEP++;
 
         }
@@ -622,6 +647,12 @@ uint8_t HIDBoot<BOOT_PROTOCOL>::Poll() {
                 qNextPollTime = (uint32_t)millis() + bInterval;
         }
         return rcode;
+}
+
+template <const uint8_t BOOT_PROTOCOL>
+uint8_t HIDBoot<BOOT_PROTOCOL>::SetLed(uint8_t *led) {
+        // ep, iface, report_type(output), report_id(0), nbytes(1), dataptr
+        return SetReport(0, bootIf[0], 2, 0, 1, led);
 }
 
 #endif // __HIDBOOTMOUSE_H__
