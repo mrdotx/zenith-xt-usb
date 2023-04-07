@@ -1,8 +1,8 @@
 /*
  * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/zenith_usb.h
  * author: klassiker [mrdotx]
- * github: https://github.com/mrdotx/zenith-usb
- * date:   2021-02-27T18:35:32+0100
+ * github: https://github.com/mrdotx/zenith-xt-usb
+ * date:   2023-04-06T18:27:59+0200
  */
 
 #ifndef IBMPC_USB_H
