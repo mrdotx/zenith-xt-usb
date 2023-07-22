@@ -33,6 +33,20 @@ e-mail   :  support@circuitsathome.com
 #define totalEndpoints(p) ((bitsEndpoints(p) == 3) ? 3 : 2)
 #define epMUL(p) ((((p) & USB_HID_PROTOCOL_KEYBOARD)? 1 : 0) + (((p) & USB_HID_PROTOCOL_MOUSE)? 1 : 0))
 
+
+// keyboard may have a few extra boot endpoints: https://github.com/tmk/tmk_keyboard/issues/764
+#define EXTRA_BOOT_EP   1
+
+// max size of bootIf[]
+#define MAX_BOOT_EP     (epMUL(BOOT_PROTOCOL) + EXTRA_BOOT_EP)
+
+// number of boot endpoint actually found
+#define NUM_BOOT_EP     (bNumEP - 1)
+
+// max size of epInfo[]: boot endpoints plus control endpoint
+#define MAX_TOTAL_EP    (MAX_BOOT_EP + 1)
+
+
 // Already defined in hid.h
 // #define HID_MAX_HID_CLASS_DESCRIPTORS 5
 
@@ -200,9 +214,9 @@ protected:
 template <const uint8_t BOOT_PROTOCOL>
 class HIDBoot : public USBHID //public USBDeviceConfig, public UsbConfigXtracter
 {
-        EpInfo epInfo[totalEndpoints(BOOT_PROTOCOL)];
+        EpInfo epInfo[MAX_TOTAL_EP];
         HIDReportParser *pRptParser[epMUL(BOOT_PROTOCOL)];
-        uint8_t bootIf[epMUL(BOOT_PROTOCOL)]; // interface number of boot endpoint
+        uint8_t bootIf[MAX_BOOT_EP]; // interface number of boot endpoint
 
         uint8_t bConfNum; // configuration number
         uint8_t bIfaceNum; // Interface Number
@@ -272,7 +286,7 @@ bRptProtoEnable(bRptProtoEnable) {
 
 template <const uint8_t BOOT_PROTOCOL>
 void HIDBoot<BOOT_PROTOCOL>::Initialize() {
-        for(int i = 0; i < totalEndpoints(BOOT_PROTOCOL); i++) {
+        for(int i = 0; i < MAX_TOTAL_EP; i++) {
                 epInfo[i].epAddr = 0;
                 epInfo[i].maxPktSize = (i) ? 0 : 8;
                 epInfo[i].bmSndToggle = 0;
@@ -418,7 +432,7 @@ uint8_t HIDBoot<BOOT_PROTOCOL>::Init(uint8_t parent, uint8_t port, bool lowspeed
                                         CP_MASK_COMPARE_ALL> confDescrParserA(this);
 
                                 pUsb->getConfDescr(bAddress, 0, i, &confDescrParserA);
-                                if(bNumEP == (uint8_t)(totalEndpoints(BOOT_PROTOCOL)))
+                                if(bNumEP >= (uint8_t)(totalEndpoints(BOOT_PROTOCOL)))
                                         break;
 
                                 // Not boot in SubClass
@@ -429,7 +443,7 @@ uint8_t HIDBoot<BOOT_PROTOCOL>::Init(uint8_t parent, uint8_t port, bool lowspeed
                                         CP_MASK_COMPARE_CLASS | CP_MASK_COMPARE_PROTOCOL> confDescrParser2(this);
 
                                 pUsb->getConfDescr(bAddress, 0, i, &confDescrParser2);
-                                if(bNumEP == (uint8_t)(totalEndpoints(BOOT_PROTOCOL))) {
+                                if(bNumEP >= (uint8_t)(totalEndpoints(BOOT_PROTOCOL))) {
                                         // not boot keyboard
                                         boot_interface = false;
                                         break;
@@ -456,7 +470,7 @@ uint8_t HIDBoot<BOOT_PROTOCOL>::Init(uint8_t parent, uint8_t port, bool lowspeed
         }
         USBTRACE2("bNumEP:", bNumEP);
 
-        if(bNumEP != (uint8_t)(totalEndpoints(BOOT_PROTOCOL))) {
+        if(bNumEP < (uint8_t)(totalEndpoints(BOOT_PROTOCOL))) {
                 rcode = USB_DEV_CONFIG_ERROR_DEVICE_NOT_SUPPORTED;
                 goto Fail;
         }
@@ -480,7 +494,7 @@ uint8_t HIDBoot<BOOT_PROTOCOL>::Init(uint8_t parent, uint8_t port, bool lowspeed
         USBTRACE2("bNumIface:", bNumIface);
 
         // Yes, mouse wants SetProtocol and SetIdle too!
-        for(uint8_t i = 0; i < epMUL(BOOT_PROTOCOL); i++) {
+        for(uint8_t i = 0; i < NUM_BOOT_EP; i++) {   // number of boot endpoints
                 USBTRACE2("\r\nInterface:", bootIf[i]);
 
                 if (!boot_interface) {
@@ -559,8 +573,10 @@ template <const uint8_t BOOT_PROTOCOL>
 void HIDBoot<BOOT_PROTOCOL>::EndpointXtract(uint8_t conf, uint8_t iface, uint8_t alt, uint8_t proto, const USB_ENDPOINT_DESCRIPTOR *pep) {
 
         // If the first configuration satisfies, the others are not considered.
-        //if(bNumEP > 1 && conf != bConfNum)
-        if(bNumEP == totalEndpoints(BOOT_PROTOCOL))
+        if(bNumEP > 1 && conf != bConfNum)
+                return;
+
+        if(bNumEP >= MAX_TOTAL_EP)
                 return;
 
         bConfNum = conf;
@@ -575,7 +591,7 @@ void HIDBoot<BOOT_PROTOCOL>::EndpointXtract(uint8_t conf, uint8_t iface, uint8_t
                 epInfo[bNumEP].bmSndToggle = 0;
                 epInfo[bNumEP].bmRcvToggle = 0;
                 epInfo[bNumEP].bmNakPower = USB_NAK_NOWAIT;
-                bootIf[bNumEP - 1] = iface;
+                bootIf[NUM_BOOT_EP] = iface;
                 bNumEP++;
 
         }
@@ -602,7 +618,7 @@ uint8_t HIDBoot<BOOT_PROTOCOL>::Poll() {
         if(bPollEnable && ((int32_t)((uint32_t)millis() - qNextPollTime) >= 0L)) {
 
                 // To-do: optimize manually, using the for loop only if needed.
-                for(int i = 0; i < epMUL(BOOT_PROTOCOL); i++) {
+                for(int i = 0; i < NUM_BOOT_EP; i++) {
                         const uint16_t const_buff_len = 64;
 
                         USBTRACE3("(hidboot.h) i=", i, 0x81);
@@ -619,8 +635,14 @@ uint8_t HIDBoot<BOOT_PROTOCOL>::Poll() {
                         // SOME buggy dongles report extra keys (like sleep) using a 2 byte packet on the wrong endpoint.
                         // Since keyboard and mice must report at least 3 bytes, we ignore the extra data.
                         if(!rcode && read > 2) {
-                                if(pRptParser[i])
-                                        pRptParser[i]->Parse((USBHID*)this, 0, (uint8_t)read, buf);
+                                HIDReportParser *parser;
+                                if (i < epMUL(BOOT_PROTOCOL) && pRptParser[i])
+                                    parser = pRptParser[i];
+                                else
+                                    parser = pRptParser[0];
+
+                                if(parser)
+                                        parser->Parse((USBHID*)this, 0, (uint8_t)read, buf);
 #ifdef DEBUG_USB_HOST
                                 // We really don't care about errors and anomalies unless we are debugging.
                         } else {
@@ -651,8 +673,12 @@ uint8_t HIDBoot<BOOT_PROTOCOL>::Poll() {
 
 template <const uint8_t BOOT_PROTOCOL>
 uint8_t HIDBoot<BOOT_PROTOCOL>::SetLed(uint8_t *led) {
-        // ep, iface, report_type(output), report_id(0), nbytes(1), dataptr
-        return SetReport(0, bootIf[0], 2, 0, 1, led);
+        uint8_t result = 0;
+        for(int i = 0; i < NUM_BOOT_EP; i++) {
+            // ep, iface, report_type(output), report_id(0), nbytes(1), dataptr
+            result |= SetReport(0, bootIf[i], 2, 0, 1, led);
+        }
+        return result;
 }
 
 #endif // __HIDBOOTMOUSE_H__
