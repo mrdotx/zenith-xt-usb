@@ -803,6 +803,12 @@ uint8_t USB::ReleaseDevice(uint8_t addr) {
         return 0;
 }
 
+void USB::ReleaseAllDevices() {
+        for(uint8_t i = 0; i < USB_NUMDEVICES; i++)
+                if(devConfig[i])
+                        devConfig[i]->Release();
+}
+
 #if 1 //!defined(USB_METHODS_INLINE)
 //get device descriptor
 
@@ -852,6 +858,34 @@ uint8_t USB::setAddr(uint8_t oldaddr, uint8_t ep, uint8_t newaddr) {
 
 uint8_t USB::setConf(uint8_t addr, uint8_t ep, uint8_t conf_value) {
         return ( ctrlReq(addr, ep, bmREQ_SET, USB_REQUEST_SET_CONFIGURATION, conf_value, 0x00, 0x0000, 0x0000, 0x0000, NULL, NULL));
+}
+
+uint8_t USB::setRemoteWakeup(uint8_t addr) {
+        return setDeviceFeature(addr, USB_FEATURE_DEVICE_REMOTE_WAKEUP, 0);
+}
+
+uint8_t USB::clearRemoteWakeup(uint8_t addr) {
+        return clearDeviceFeature(addr, USB_FEATURE_DEVICE_REMOTE_WAKEUP, 0);
+}
+
+uint8_t USB::setDeviceFeature(uint8_t addr, uint8_t feature_selector, uint16_t wIndex) {
+        return ctrlReq(addr,
+                        0,                          // End Point: 0
+                        (USB_SETUP_HOST_TO_DEVICE | USB_SETUP_TYPE_STANDARD | USB_SETUP_RECIPIENT_DEVICE), // bmRequestType
+                        USB_REQUEST_SET_FEATURE,    // bRequest
+                        feature_selector, 0,        // wValue
+                        wIndex,                     // wIndex
+                        0, 0, NULL, NULL);          // wLength
+}
+
+uint8_t USB::clearDeviceFeature(uint8_t addr, uint8_t feature_selector, uint16_t wIndex) {
+        return ctrlReq(addr,
+                        0,                          // End Point: 0
+                        (USB_SETUP_HOST_TO_DEVICE | USB_SETUP_TYPE_STANDARD | USB_SETUP_RECIPIENT_DEVICE), // bmRequestType
+                        USB_REQUEST_CLEAR_FEATURE,  // bRequest
+                        feature_selector, 0,        // wValue
+                        wIndex,                     // wIndex
+                        0, 0, NULL, NULL);          // wLength
 }
 
 #endif // defined(USB_METHODS_INLINE)

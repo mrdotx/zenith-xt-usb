@@ -269,9 +269,15 @@ public:
         uint8_t DefaultAddressing(uint8_t parent, uint8_t port, bool lowspeed);
         uint8_t Configuring(uint8_t parent, uint8_t port, bool lowspeed);
         uint8_t ReleaseDevice(uint8_t addr);
+        void ReleaseAllDevices(void);
 
         uint8_t ctrlReq(uint8_t addr, uint8_t ep, uint8_t bmReqType, uint8_t bRequest, uint8_t wValLo, uint8_t wValHi,
                 uint16_t wInd, uint16_t total, uint16_t nbytes, uint8_t* dataptr, USBReadParser *p);
+
+        uint8_t setRemoteWakeup(uint8_t addr);
+        uint8_t clearRemoteWakeup(uint8_t addr);
+        uint8_t setDeviceFeature(uint8_t addr, uint8_t feature_selector, uint16_t wIndex);
+        uint8_t clearDeviceFeature(uint8_t addr, uint8_t feature_selector, uint16_t wIndex);
 
 private:
         void init();

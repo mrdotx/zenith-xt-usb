@@ -158,6 +158,12 @@ public:
         uint8_t GpxHandler();
         uint8_t IntHandler();
         uint8_t Task();
+
+        void suspend();
+        void resume();
+        bool checkRemoteWakeup();
+        void powerDown();
+        void powerUp();
 };
 
 template< typename SPI_SS, typename INTR >
@@ -611,5 +617,67 @@ uint8_t MAX3421e< SPI_SS, INTR >::IntHandler() {
 ////    }
 //    return( GPINIRQ );
 //}
+
+template< typename SPI_SS, typename INTR >
+void MAX3421e< SPI_SS, INTR >::suspend() {
+        // clear RWUIRQ bit
+        regWr(rHIRQ, bmRWUIRQ);
+
+        // stop SOF
+        regWr(rMODE, (regRd(rMODE) & ~bmSOFKAENAB));
+}
+
+template< typename SPI_SS, typename INTR >
+void MAX3421e< SPI_SS, INTR >::resume() {
+        // resume
+        regWr(rHCTL, bmSIGRSM);
+        while ((regRd(rHCTL) & bmSIGRSM)) { ; }
+
+        // start SOF
+        regWr(rHIRQ, bmFRAMEIRQ);
+        regWr(rMODE, regRd(rMODE) | bmSOFKAENAB);
+        while (!(regRd(rHIRQ) & bmFRAMEIRQ)) { ; }
+}
+
+template< typename SPI_SS, typename INTR >
+bool MAX3421e< SPI_SS, INTR >::checkRemoteWakeup() {
+        if (regRd(rHIRQ) & bmRWUIRQ) {
+            // clear the bit
+            regWr(rHIRQ, bmRWUIRQ);
+            return true;
+        }
+
+        // sample bus in case RWUIRQ is not triggered
+        // https://github.com/tmk/tmk_keyboard/issues/769#issuecomment-1856023601
+        regWr(rHCTL, bmSAMPLEBUS);
+        while(!(regRd(rHCTL) & bmSAMPLEBUS));
+
+        uint8_t bus_sample;
+        bus_sample = regRd(rHRSL);
+        bus_sample &= (bmJSTATUS | bmKSTATUS);
+
+        if (bus_sample == bmKSTATUS) {
+            // K-state means remote wakeup when suspended
+            return true;
+        }
+
+        return false;
+}
+
+template< typename SPI_SS, typename INTR >
+void MAX3421e< SPI_SS, INTR >::powerDown() {
+        // clear for next powerUp here
+        regWr(rUSBIRQ, bmOSCOKIRQ);
+
+        // power down
+        regWr(rUSBCTL, bmPWRDOWN);
+}
+
+template< typename SPI_SS, typename INTR >
+void MAX3421e< SPI_SS, INTR >::powerUp() {
+        // power up
+        regWr(rUSBCTL, 0x00);
+        while (!regRd(rUSBIRQ) & bmOSCOKIRQ) { ; }
+}
 
 #endif // _USBHOST_H_

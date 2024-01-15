@@ -516,6 +516,11 @@ SKIP_SET_PROTOCOL:
                 USBTRACE2("RPIPE: ", rcode);
         }
 
+        // TODO: check bmAttributes of configuration descriptor
+        // SET_FEATURE(DEVICE_REMOTE_WAKEUP)
+        rcode = pUsb->setRemoteWakeup(bAddress);
+        USBTRACE2("RWU: ", rcode);
+
         // Get RPIPE and throw it away.
 
 /* Remove LED blinking. This is unnecessary and may cause unclear problem with some keyboard.
