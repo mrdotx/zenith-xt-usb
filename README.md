@@ -15,7 +15,7 @@ Wire controller pins below to keyboard signals, besides VCC and GND. This is com
 
 ### 5-Pin DIN 180° (DIN41524) female assignment
 
-![Pro Micro 5-Pin DIN Pinout](5-pin_din_pinout.png)
+![Pro Micro 5-Pin DIN Pinout](images/5-pin_din_pinout.png)
 
 | 5-Pin DIN | Description | Cable color | Board Pin |
 | :-------: | :---------- | :---------- | :-------: |
@@ -57,9 +57,9 @@ Now we can discriminate the keyboard and determine suitable protocol and scan co
 
 The next descriptions refer to Linux, but can certainly also be applied to windows systems, in a slightly modified form. The unimap layers are configured as shown in the following pictures:
 
-![Layer 0](layer_0.png)
-![Layer 1](layer_1.png)
-![Layer 2](layer_2.png)
+![Layer 0](images/layer_0.png)
+![Layer 1](images/layer_1.png)
+![Layer 2](images/layer_2.png)
 
 ### Flash firmware
 
