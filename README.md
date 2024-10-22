@@ -4,6 +4,8 @@ The converter translates IBM PC keyboard protocols to use classic keyboards with
 
 This project is intended to integrated existent TMK XT, PS/2 and Terminal converters.
 
+![Zenith XT](images/zenith_xt.jpg)
+
 ## Hardware
 
 Firmware supports ATMega32u4 and ATMega32u2 by default, Teensy2 or ProMicro can be used.
@@ -82,11 +84,25 @@ First of all, we should identify to which serial device the Pro Micro is connect
 ls /dev/tty*
 ```
 
-Navigate to the directory where the firmware is downloaded or compiled. Quickly connect GND + RST pins on the Pro Micro to enter the Bootloader mode and execute the following command to flash the firmware:
+Navigate to the directory where the firmware is downloaded or compiled. Quickly connect `GND + RST` pins on the Pro Micro to enter the Bootloader mode and execute the following command to flash the firmware:
 
 ```bash
 sudo avrdude -p atmega32u4 -P /dev/ttyACM0 -c avr109 -U flash:w:zenith_usb.hex
 ```
+
+### Update firmware
+
+If you want to update the firmware you can execute the following command:
+
+```bash
+sleep 3 && sudo avrdude -p atmega32u4 -P /dev/ttyACM0 -c avr109 -U flash:w:zenith_usb.hex
+```
+
+Afterwards you have 3 seconds to press `Numpad 0 + Caps Lock` to enter the Bootloader mode
+
+## beeper
+
+To dis-/enable the piezoelectric beeper press `Alt + Esc`
 
 ## Links
 
