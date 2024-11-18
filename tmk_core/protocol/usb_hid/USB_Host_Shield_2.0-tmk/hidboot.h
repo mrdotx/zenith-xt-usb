@@ -405,6 +405,8 @@ uint8_t HIDBoot<BOOT_PROTOCOL>::Init(uint8_t parent, uint8_t port, bool lowspeed
         num_of_conf = device->bNumConfigurations;
 
         USBTRACE2("NC:", num_of_conf);
+        USBTRACE2("vid:", device->idVendor);
+        USBTRACE2("pid:", device->idProduct);
 
         // GCC will optimize unused stuff away.
         if((BOOT_PROTOCOL & (USB_HID_PROTOCOL_KEYBOARD | USB_HID_PROTOCOL_MOUSE)) == (USB_HID_PROTOCOL_KEYBOARD | USB_HID_PROTOCOL_MOUSE)) {
@@ -435,7 +437,8 @@ uint8_t HIDBoot<BOOT_PROTOCOL>::Init(uint8_t parent, uint8_t port, bool lowspeed
                                 if(bNumEP >= (uint8_t)(totalEndpoints(BOOT_PROTOCOL)))
                                         break;
 
-                                // Not boot in SubClass
+                                // https://github.com/tmk/tmk_keyboard/issues/697   vid:3233 pid:6301
+                                // HID / not boot / keyboard
                                 ConfigDescParser<
                                         USB_CLASS_HID,
                                         HID_BOOT_INTF_SUBCLASS,
@@ -444,9 +447,26 @@ uint8_t HIDBoot<BOOT_PROTOCOL>::Init(uint8_t parent, uint8_t port, bool lowspeed
 
                                 pUsb->getConfDescr(bAddress, 0, i, &confDescrParser2);
                                 if(bNumEP >= (uint8_t)(totalEndpoints(BOOT_PROTOCOL))) {
-                                        // not boot keyboard
                                         boot_interface = false;
                                         break;
+                                }
+
+                                // https://github.com/tmk/tmk_keyboard/issues/778
+                                if (device->idVendor == 0x0c45 && device->idProduct == 0xfefe) {
+                                    // HID / not boot / not keyboard
+                                    ConfigDescParser<
+                                            USB_CLASS_HID,
+                                            HID_BOOT_INTF_SUBCLASS,
+                                            USB_HID_PROTOCOL_KEYBOARD,
+                                            CP_MASK_COMPARE_CLASS> confDescrParser3(this);
+
+                                    pUsb->getConfDescr(bAddress, 0, i, &confDescrParser3);
+                                    if(bNumEP >= (uint8_t)(totalEndpoints(BOOT_PROTOCOL))) {
+                                            // assume first endpoint is boot keyboard compatible
+                                            bNumEP = totalEndpoints(BOOT_PROTOCOL);
+                                            boot_interface = true;
+                                            break;
+                                    }
                                 }
                         }
                 }
