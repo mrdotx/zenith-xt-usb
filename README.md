@@ -68,7 +68,7 @@ The next descriptions refer to Linux, but can certainly also be applied to windo
 First (if not already done) install the Arduino environment to compile and flash the firmware:
 
 ```bash
-sudo pacman -S arduino-avr-core
+sudo pacman -S avr-libc avrdude
 ```
 
 Download the precompiled firmware from [zenith-xt-usb/firmware](https://github.com/mrdotx/zenith-xt-usb/tree/master/firmware) or build it by yourself:
