@@ -2,8 +2,8 @@
 
 # path:   /home/klassiker/.local/share/repos/zenith-xt-usb/tmk_core.sh
 # author: klassiker [mrdotx]
-# github: https://github.com/mrdotx/zenith-xt-usb
-# date:   2025-04-01T07:15:22+0200
+# url:    https://github.com/mrdotx/zenith-xt-usb
+# date:   2025-08-14T03:49:48+0200
 
 tmk_core_path="$HOME/.local/share/repos/zenith-xt-usb/tmk_core"
 
