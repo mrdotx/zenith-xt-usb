@@ -3,15 +3,16 @@
 # path:   /home/klassiker/.local/share/repos/zenith-xt-usb/tmk_core.sh
 # author: klassiker [mrdotx]
 # url:    https://github.com/mrdotx/zenith-xt-usb
-# date:   2025-11-18T06:38:25+0100
+# date:   2026-02-17T05:58:05+0100
 
 tmk_core_path="$HOME/.local/share/repos/zenith-xt-usb/tmk_core"
 
-# color variables
-reset="\033[0m"
-bold="\033[1m"
-blue="\033[94m"
-cyan="\033[96m"
+# color variables for interactive shell
+tty -s \
+    && reset="\033[0m" \
+    && bold="\033[1m" \
+    && blue="\033[94m" \
+    && cyan="\033[96m"
 
 printf '%b%b::%b %bremove folder%b %b%s%b\n' \
         "$bold" "$blue" "$reset" "$bold" "$reset" "$cyan" "$tmk_core_path" "$reset"
