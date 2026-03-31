@@ -3,11 +3,11 @@
 # path:   /home/klassiker/.local/share/repos/zenith-xt-usb/tmk_core.sh
 # author: klassiker [mrdotx]
 # url:    https://github.com/mrdotx/zenith-xt-usb
-# date:   2026-02-17T05:58:05+0100
+# date:   2026-03-31T05:34:45+0200
 
 tmk_core_path="$HOME/.local/share/repos/zenith-xt-usb/tmk_core"
 
-# color variables for interactive shell
+# color variables for the interactive shell
 tty -s \
     && reset="\033[0m" \
     && bold="\033[1m" \
