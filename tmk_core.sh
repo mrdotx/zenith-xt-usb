@@ -3,7 +3,7 @@
 # path:   /home/klassiker/.local/share/repos/zenith-xt-usb/tmk_core.sh
 # author: klassiker [mrdotx]
 # url:    https://github.com/mrdotx/zenith-xt-usb
-# date:   2026-03-31T05:34:45+0200
+# date:   2026-04-29T05:12:17+0200
 
 tmk_core_path="$HOME/.local/share/repos/zenith-xt-usb/tmk_core"
 
@@ -14,11 +14,11 @@ tty -s \
     && blue="\033[94m" \
     && cyan="\033[96m"
 
-printf '%b%b::%b %bremove folder%b %b%s%b\n' \
+printf '%b%b::%b %bremove directory%b %b%s%b\n' \
         "$bold" "$blue" "$reset" "$bold" "$reset" "$cyan" "$tmk_core_path" "$reset"
 rm -rf "$tmk_core_path"
 
-printf '%b%b::%b %bclone tmk_core and remove .git files/folders%b\n' \
+printf '%b%b::%b %bclone tmk_core and remove .git files/directories%b\n' \
         "$bold" "$blue" "$reset" "$bold" "$reset"
 git clone git@github.com:tmk/tmk_core.git \
     "$tmk_core_path"
@@ -27,7 +27,7 @@ rm -rf \
     "$tmk_core_path/.gitignore" \
     "$tmk_core_path/.gitmodules"
 
-printf '%b%b::%b %bclone submodule lufa and remove .git files/folders%b\n' \
+printf '%b%b::%b %bclone submodule lufa and remove .git files/directories%b\n' \
         "$bold" "$blue" "$reset" "$bold" "$reset"
 git clone git@github.com:abcminiuser/lufa.git \
     "$tmk_core_path/protocol/lufa/lufa-abcminiuser"
@@ -35,7 +35,7 @@ rm -rf \
     "$tmk_core_path/protocol/lufa/lufa-abcminiuser/.git" \
     "$tmk_core_path/protocol/lufa/lufa-abcminiuser/.gitignore"
 
-printf '%b%b::%b %bclone submodule usb host shield 2.0 and remove .git files/folders%b\n' \
+printf '%b%b::%b %bclone submodule usb host shield 2.0 and remove .git files/directories%b\n' \
         "$bold" "$blue" "$reset" "$bold" "$reset"
 git clone git@github.com:tmk/USB_Host_Shield_2.0.git \
     "$tmk_core_path/protocol/usb_hid/USB_Host_Shield_2.0-tmk"
