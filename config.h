@@ -1,8 +1,8 @@
 /*
- * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/config.h
+ * path:   /home/klassiker/Projects/repos/zenith-xt-usb/config.h
  * author: klassiker [mrdotx]
  * url:    https://github.com/mrdotx/zenith-xt-usb
- * date:   2025-08-14T03:49:36+0200
+ * date:   2026-06-14T04:59:04+0200
  */
 
 #ifndef CONFIG_H

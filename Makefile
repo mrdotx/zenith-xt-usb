@@ -1,7 +1,7 @@
-# path:   /home/klassiker/.local/share/repos/zenith-xt-usb/Makefile
+# path:   /home/klassiker/Projects/repos/zenith-xt-usb/Makefile
 # author: klassiker [mrdotx]
 # url:    https://github.com/mrdotx/zenith-xt-usb
-# date:   2025-08-14T03:49:41+0200
+# date:   2026-06-14T04:59:08+0200
 
 # Target file name (without extension).
 TARGET = firmware/zenith_usb

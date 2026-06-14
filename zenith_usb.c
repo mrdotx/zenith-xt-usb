@@ -1,8 +1,8 @@
 /*
- * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/zenith_usb.c
+ * path:   /home/klassiker/Projects/repos/zenith-xt-usb/zenith_usb.c
  * author: klassiker [mrdotx]
  * url:    https://github.com/mrdotx/zenith-xt-usb
- * date:   2025-08-14T03:50:13+0200
+ * date:   2026-06-14T04:59:36+0200
  */
 
 #include <stdint.h>

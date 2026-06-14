@@ -1,11 +1,11 @@
 #!/bin/sh
 
-# path:   /home/klassiker/.local/share/repos/zenith-xt-usb/tmk_core.sh
+# path:   /home/klassiker/Projects/repos/zenith-xt-usb/tmk_core.sh
 # author: klassiker [mrdotx]
 # url:    https://github.com/mrdotx/zenith-xt-usb
-# date:   2026-04-29T05:12:17+0200
+# date:   2026-06-14T04:59:13+0200
 
-tmk_core_path="$HOME/.local/share/repos/zenith-xt-usb/tmk_core"
+tmk_core_path="tmk_core"
 
 # color variables for the interactive shell
 tty -s \

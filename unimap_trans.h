@@ -1,8 +1,8 @@
 /*
- * path:   /home/klassiker/.local/share/repos/zenith-xt-usb/unimap_trans.h
+ * path:   /home/klassiker/Projects/repos/zenith-xt-usb/unimap_trans.h
  * author: klassiker [mrdotx]
  * url:    https://github.com/mrdotx/zenith-xt-usb
- * date:   2025-08-14T03:50:03+0200
+ * date:   2026-06-14T04:59:27+0200
  */
 
 #ifndef UNIMAP_TRANS_H

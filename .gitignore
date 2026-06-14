@@ -1,7 +1,7 @@
-# path:   /home/klassiker/.local/share/repos/zenith-xt-usb/.gitignore
+# path:   /home/klassiker/Projects/repos/zenith-xt-usb/.gitignore
 # author: klassiker [mrdotx]
 # url:    https://github.com/mrdotx/zenith-xt-usb
-# date:   2025-08-14T03:49:29+0200
+# date:   2026-06-14T04:58:59+0200
 
 /.dep/
 /firmware/*
