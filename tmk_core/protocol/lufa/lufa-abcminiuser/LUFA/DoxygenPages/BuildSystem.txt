@@ -271,7 +271,7 @@
  *        version of the compiler being used. Make sure the model name is correct, or upgrade to the latest Atmel Toolchain to obtain newer device support.</td>
  *   </tr>
  *   <tr>
- *    <td>Error &quot;<b><tt>undefined reference to `<i>{X}</i>'</tt></b>&quot; shown when compiling.</td>
+ *    <td>Error &quot;<b><tt>undefined reference to '<i>{X}</i>'</tt></b>&quot; shown when compiling.</td>
  *    <td>This is usually caused by a missing source file in the user application's <tt>SRC</tt> configuration parameter. If the indicated symbol is one from the LUFA
  *        library, you may be missing a LUFA source makefile module (see \ref Page_BuildModule_LUFA_SOURCES).</td>
  *   </tr>
